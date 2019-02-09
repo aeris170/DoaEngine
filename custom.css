@@ -1,0 +1,43 @@
+body {
+  margin: 0px 0px 0px 30px;
+  background-color: #141414;
+  color: #ffffff;
+  font-family: 'Eczar', serif;
+}
+img {
+  border: 2px solid #284628;
+  margin: 0px 5px 0px 0px;
+}
+h1 {
+  color: rgb(21,151,0);
+}
+h2 {
+  color: rgb(21,121,0);
+}
+h3 {
+  color: rgb(31,101,10);
+}
+ul {
+  border: 2px dotted #284628;
+  float: left;
+  margin-left: 20px;
+}
+ul li {
+  background-color: #282828;
+  margin: 5px 5px 5px -18px;
+}
+.subsection {
+  position: relative;
+  margin-top: -30px;
+  margin-left: 20px;
+}
+.high {
+  margin-top: -20px;
+  margin-left: 2px;
+}
+.gettingstartedcode {
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  float: left;
+}
