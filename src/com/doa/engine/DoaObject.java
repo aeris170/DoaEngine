@@ -294,7 +294,7 @@ public abstract class DoaObject {
 	/**
 	 * Exists due to DoaObject being an abstract class. See Null Object design
 	 * pattern for more info.
-	 * 
+	 *
 	 * @author Doga Oruc
 	 * @since DoaEngine 1.2
 	 * @version 1.2
@@ -309,7 +309,7 @@ public abstract class DoaObject {
 		public void tick() {}
 
 		@Override
-		public void render(DoaGraphicsContext g) {}
+		public void render(final DoaGraphicsContext g) {}
 
 		@Override
 		public Shape getBounds() {

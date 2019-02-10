@@ -17,7 +17,7 @@ public class DoaSoundClip {
 	/**
 	 * The actual sound clip. This is the object that stores all the information
 	 * about what sound will this object will play.
-	 * 
+	 *
 	 * @see Clip
 	 */
 	private Clip clip;
@@ -32,13 +32,13 @@ public class DoaSoundClip {
 	 * Loops the sound clip this object will play count times. If count is 0, then
 	 * invocation of this method will result in the same way as invocation of
 	 * {@code loop(Clip.LOOP_CONTINUOUSLY);}
-	 * 
+	 *
 	 * @param count loop count
 	 */
 	public void loop(final int count) {
 		if (clip != null) {
 			new Thread(() -> {
-				Clip clip = getClip();
+				final Clip clip = getClip();
 				synchronized (clip) {
 					clip.stop();
 					clip.setFramePosition(0);
@@ -55,7 +55,7 @@ public class DoaSoundClip {
 	public void stop() {
 		if (clip != null) {
 			new Thread(() -> {
-				Clip clip = getClip();
+				final Clip clip = getClip();
 				synchronized (clip) {
 					setMicrosecondPosition(0);
 					clip.stop();
@@ -71,7 +71,7 @@ public class DoaSoundClip {
 	public void pause() {
 		if (clip != null) {
 			new Thread(() -> {
-				Clip clip = getClip();
+				final Clip clip = getClip();
 				synchronized (clip) {
 					setMicrosecondPosition(clip.getMicrosecondPosition());
 					clip.stop();
@@ -86,7 +86,7 @@ public class DoaSoundClip {
 	public void resume() {
 		if (clip != null) {
 			new Thread(() -> {
-				Clip clip = getClip();
+				final Clip clip = getClip();
 				synchronized (clip) {
 					clip.setMicrosecondPosition(getMicrosecondPosition());
 					clip.start();
@@ -103,11 +103,11 @@ public class DoaSoundClip {
 		return microsecondPosition;
 	}
 
-	public void setClip(Clip clip) {
+	public void setClip(final Clip clip) {
 		this.clip = clip;
 	}
 
-	public void setMicrosecondPosition(long microsecondPosition) {
+	public void setMicrosecondPosition(final long microsecondPosition) {
 		this.microsecondPosition = microsecondPosition;
 	}
 }

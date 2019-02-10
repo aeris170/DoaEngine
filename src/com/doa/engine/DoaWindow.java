@@ -53,7 +53,7 @@ public final class DoaWindow extends JFrame {
 	/**
 	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the
 	 * parameter will start DoaEngine.</strong>
-	 * 
+	 *
 	 * @see java.awt.Component
 	 */
 	@Override
@@ -69,7 +69,7 @@ public final class DoaWindow extends JFrame {
 	/**
 	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the
 	 * parameter will stop DoaEngine.</strong>
-	 * 
+	 *
 	 * @see java.awt.Component
 	 */
 	@Override

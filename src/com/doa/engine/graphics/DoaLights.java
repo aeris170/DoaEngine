@@ -55,8 +55,8 @@ public final class DoaLights {
 
 	// TODO FIX THE DYNAMIC LIGHTING CHANGE BUG
 	static void applyAmbientLight(final String spriteName, final BufferedImage bf) {
-		BufferedImage bfclone = new BufferedImage(bf.getWidth(), bf.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2d = bfclone.createGraphics();
+		final BufferedImage bfclone = new BufferedImage(bf.getWidth(), bf.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D g2d = bfclone.createGraphics();
 		g2d.drawImage(bf, 0, 0, null);
 		g2d.dispose();
 

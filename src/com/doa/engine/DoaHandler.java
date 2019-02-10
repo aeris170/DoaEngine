@@ -19,7 +19,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
  * {@link DoaObject#tick()} and {@link DoaObject#render(DoaGraphicsContext)}
  * methods called by {@code DoaEngine}. This class is static, therefore has no
  * objects.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 1.0
  * @version 2.0
@@ -41,16 +41,16 @@ public final class DoaHandler {
 
 	/**
 	 * Instantiates a new {@code DoaObject} and adds it to {@code DoaHandler}.
-	 * 
+	 *
 	 * @param clazz the class of the {@code DoaObject} to be instantiated
 	 * @param constructorArgs arguments for the constructor
 	 * @return the instantiated {@code DoaObject} or {@link DoaObject#NULL} if
 	 *         instantiation is unsuccessful
 	 */
-	public static DoaObject instantiateDoaObject(Class<?> clazz, Object... constructorArgs) {
+	public static DoaObject instantiateDoaObject(final Class<?> clazz, final Object... constructorArgs) {
 		if (constructorArgs == null || constructorArgs.length == 0) {
 			try {
-				DoaObject d = (DoaObject) clazz.newInstance();
+				final DoaObject d = (DoaObject) clazz.newInstance();
 				add(d);
 				return d;
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException ex) {
@@ -59,10 +59,10 @@ public final class DoaHandler {
 				return DoaObject.NULL;
 			}
 		}
-		Constructor<?>[] constructors = clazz.getConstructors();
-		for (Constructor<?> c : constructors) {
+		final Constructor<?>[] constructors = clazz.getConstructors();
+		for (final Constructor<?> c : constructors) {
 			if (c.getParameterCount() == constructorArgs.length) {
-				Class<?>[] parameterTypes = c.getParameterTypes();
+				final Class<?>[] parameterTypes = c.getParameterTypes();
 				boolean isSuitable = true;
 				for (int i = 0; i < parameterTypes.length; i++) {
 					if (!parameterTypes[i].getTypeName().equals(constructorArgs[i].getClass().getTypeName())) {
@@ -72,7 +72,7 @@ public final class DoaHandler {
 				}
 				if (isSuitable) {
 					try {
-						DoaObject d = (DoaObject) c.newInstance(constructorArgs);
+						final DoaObject d = (DoaObject) c.newInstance(constructorArgs);
 						add(d);
 						return d;
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -85,7 +85,7 @@ public final class DoaHandler {
 		}
 		try {
 			throw new InstantiationException();
-		} catch (InstantiationException ex) {
+		} catch (final InstantiationException ex) {
 			System.err.println("DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler");
 			ex.printStackTrace();
 			return DoaObject.NULL;
@@ -100,19 +100,19 @@ public final class DoaHandler {
 	 * the time of this method's illegal invocation.
 	 */
 	public static void tick() {
-		for (DoaObject o : STATIC_BACK_OBJECTS) {
+		for (final DoaObject o : STATIC_BACK_OBJECTS) {
 			EXECUTOR.execute(() -> o.tick());
 		}
-		for (DoaObject o : BACK_OBJECTS) {
+		for (final DoaObject o : BACK_OBJECTS) {
 			EXECUTOR.execute(() -> o.tick());
 		}
-		for (DoaObject o : GAME_OBJECTS) {
+		for (final DoaObject o : GAME_OBJECTS) {
 			EXECUTOR.execute(() -> o.tick());
 		}
-		for (DoaObject o : FRONT_OBJECTS) {
+		for (final DoaObject o : FRONT_OBJECTS) {
 			EXECUTOR.execute(() -> o.tick());
 		}
-		for (DoaObject o : STATIC_FRONT_OBJECTS) {
+		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			EXECUTOR.execute(() -> o.tick());
 		}
 	}
@@ -127,8 +127,8 @@ public final class DoaHandler {
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
 	public static void renderStaticBackground(final DoaGraphicsContext g) {
-		List<Callable<Void>> tasks = new ArrayList<>();
-		for (DoaObject o : STATIC_BACK_OBJECTS) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
+		for (final DoaObject o : STATIC_BACK_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
@@ -136,7 +136,7 @@ public final class DoaHandler {
 		}
 		try {
 			EXECUTOR.invokeAll(tasks);
-		} catch (InterruptedException ex) {
+		} catch (final InterruptedException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -151,20 +151,20 @@ public final class DoaHandler {
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
 	public static void render(final DoaGraphicsContext g) {
-		List<Callable<Void>> tasks = new ArrayList<>();
-		for (DoaObject o : BACK_OBJECTS) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
+		for (final DoaObject o : BACK_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
 			});
 		}
-		for (DoaObject o : GAME_OBJECTS) {
+		for (final DoaObject o : GAME_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
 			});
 		}
-		for (DoaObject o : FRONT_OBJECTS) {
+		for (final DoaObject o : FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
@@ -172,7 +172,7 @@ public final class DoaHandler {
 		}
 		try {
 			EXECUTOR.invokeAll(tasks);
-		} catch (InterruptedException ex) {
+		} catch (final InterruptedException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -187,8 +187,8 @@ public final class DoaHandler {
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
 	public static void renderStaticForeground(final DoaGraphicsContext g) {
-		List<Callable<Void>> tasks = new ArrayList<>();
-		for (DoaObject o : STATIC_FRONT_OBJECTS) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
+		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
@@ -196,7 +196,7 @@ public final class DoaHandler {
 		}
 		try {
 			EXECUTOR.invokeAll(tasks);
-		} catch (InterruptedException ex) {
+		} catch (final InterruptedException ex) {
 			ex.printStackTrace();
 		}
 	}

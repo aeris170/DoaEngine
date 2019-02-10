@@ -35,17 +35,17 @@ public final class DoaSounds {
 	 * Sets the global volume level. The parameter newVolume must be in the range
 	 * [0, 1]. When newVolume = 0, volume is mute. When newVolume = 1, volume is
 	 * max. When newVolume = 0.5, volume is midpoint of mute and max.
-	 * 
+	 *
 	 * @param newVolume the new value of the global volume level
 	 * @throws IllegalArgumentException if newVolume is not in range [0, 1]
 	 */
-	public static void setGlobalVolume(float newVolume) {
+	public static void setGlobalVolume(final float newVolume) {
 		if (newVolume > 1.0 || newVolume < 0.0) {
 			throw new IllegalArgumentException("newVolume is not in range [0, 1]");
 		}
-		float dB = (float) (Math.log(newVolume) / Math.log(10) * 20) + 6;
+		final float dB = (float) (Math.log(newVolume) / Math.log(10) * 20) + 6;
 		for (final Entry<String, DoaSoundClip> entry : DoaSounds.SOUND_CLIPS.entrySet()) {
-			FloatControl gainControl = (FloatControl) entry.getValue().getClip().getControl(FloatControl.Type.MASTER_GAIN);
+			final FloatControl gainControl = (FloatControl) entry.getValue().getClip().getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(dB);
 		}
 		// System.out.println("Vol : " + newVolume + " Gain: " + dB);
@@ -66,10 +66,12 @@ public final class DoaSounds {
 	 *         unavailable. This situation arises most commonly when a requested
 	 *         line is already in use by another application.
 	 */
-	public static DoaSoundClip createSoundClip(String soundName, String soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-		DoaSoundClip sound = new DoaSoundClip();
-		AudioInputStream stream = AudioSystem.getAudioInputStream(DoaSounds.class.getResource(soundFile));
-		Clip clip = AudioSystem.getClip();
+	public static DoaSoundClip createSoundClip(final String soundName, final String soundFile)
+	        throws IOException, UnsupportedAudioFileException, LineUnavailableException
+	{
+		final DoaSoundClip sound = new DoaSoundClip();
+		final AudioInputStream stream = AudioSystem.getAudioInputStream(DoaSounds.class.getResource(soundFile));
+		final Clip clip = AudioSystem.getClip();
 		clip.open(stream);
 		sound.setClip(clip);
 		SOUND_CLIPS.put(soundName, sound);
