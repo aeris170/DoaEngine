@@ -199,13 +199,7 @@ public class DoaVectorD implements Cloneable {
 			return false;
 		}
 		final DoaVectorD other = (DoaVectorD) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) {
-			return false;
-		}
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) {
-			return false;
-		}
-		return true;
+		return Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x) && Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y);
 	}
 
 	/**

@@ -201,17 +201,17 @@ public abstract class DoaObject {
 	}
 
 	/**
-	 * Since DoaEngine v1.1 it is ill-advised to use this method. This method only
-	 * exists for backwards compatibility. Use
-	 * {@link DoaHandler#instantiateDoaObject(Class, Object...)} for instantiating
-	 * objects instead.
-	 * <p>
-	 * <s> Finalises this {@code DoaObject}'s instantiation by adding it to
-	 * {@code DoaHandler}. This method should only be called once, STRICTLY after
-	 * ALL constructor related tasks are finished. Otherwise, {@code DoaEngine}
-	 * might run into a NullPointerException. </s>
-	 * </p>
-	 *
+	 * @deprecated Since DoaEngine v1.1 it is ill-advised to use this method. This
+	 *             method only exists for backwards compatibility. Use
+	 *             {@link DoaHandler#instantiateDoaObject(Class, Object...)} for
+	 *             instantiating objects instead.
+	 *             <p>
+	 *             <s> Finalises this {@code DoaObject}'s instantiation by adding it
+	 *             to {@code DoaHandler}. This method should only be called once,
+	 *             STRICTLY after ALL constructor related tasks are finished.
+	 *             Otherwise, {@code DoaEngine} might run into a
+	 *             NullPointerException. </s>
+	 *             </p>
 	 * @see java.lang.NullPointerException
 	 */
 	@Deprecated
@@ -306,14 +306,18 @@ public abstract class DoaObject {
 		}
 
 		@Override
-		public void tick() {}
+		public void tick() {
+			throw new UnsupportedOperationException();
+		}
 
 		@Override
-		public void render(final DoaGraphicsContext g) {}
+		public void render(final DoaGraphicsContext g) {
+			throw new UnsupportedOperationException();
+		}
 
 		@Override
 		public Shape getBounds() {
-			return null;
+			throw new UnsupportedOperationException();
 		}
 	}
 }

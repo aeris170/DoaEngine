@@ -57,7 +57,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public Component add(final Component c) {
+	public synchronized Component add(final Component c) {
 		final Component rv = super.add(c);
 		if (c instanceof DoaEngine) {
 			((DoaEngine) c).start();
@@ -73,7 +73,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public void remove(final Component c) {
+	public synchronized void remove(final Component c) {
 		if (c instanceof DoaEngine) {
 			((DoaEngine) c).stop();
 		}
@@ -87,7 +87,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public void setSize(final Dimension d) {
+	public synchronized void setSize(final Dimension d) {
 		super.setSize(d);
 		DoaWindow.WINDOW_WIDTH = (int) d.getWidth();
 		DoaWindow.WINDOW_HEIGHT = (int) d.getHeight();
@@ -99,7 +99,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public void setSize(final int width, final int height) {
+	public synchronized void setSize(final int width, final int height) {
 		super.setSize(width, height);
 		DoaWindow.WINDOW_WIDTH = width;
 		DoaWindow.WINDOW_HEIGHT = height;
@@ -111,7 +111,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public void setBounds(final int x, final int y, final int width, final int height) {
+	public synchronized void setBounds(final int x, final int y, final int width, final int height) {
 		super.setBounds(x, y, width, height);
 		DoaWindow.WINDOW_WIDTH = width;
 		DoaWindow.WINDOW_HEIGHT = height;
@@ -123,7 +123,7 @@ public final class DoaWindow extends JFrame {
 	 * @see java.awt.Component
 	 */
 	@Override
-	public void setBounds(final Rectangle r) {
+	public synchronized void setBounds(final Rectangle r) {
 		super.setBounds(r);
 		DoaWindow.WINDOW_WIDTH = r.width;
 		DoaWindow.WINDOW_HEIGHT = r.height;

@@ -202,13 +202,7 @@ public class DoaVectorI implements Cloneable {
 			return false;
 		}
 		final DoaVectorI other = (DoaVectorI) obj;
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
+		return x == other.x && y == other.y;
 	}
 
 	/**

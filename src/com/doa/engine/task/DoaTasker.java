@@ -32,6 +32,7 @@ public final class DoaTasker {
 				Thread.sleep(waitTime);
 				guard.set(true);
 			} catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 		}).start();
@@ -57,6 +58,7 @@ public final class DoaTasker {
 				Thread.sleep(waitTime);
 				guard.set(true);
 			} catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 		}).start();
@@ -89,6 +91,7 @@ public final class DoaTasker {
 			try {
 				Thread.sleep(waitTime);
 			} catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 			after.run();
@@ -108,6 +111,7 @@ public final class DoaTasker {
 			try {
 				Thread.sleep(waitTime);
 			} catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 			task.run();

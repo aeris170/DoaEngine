@@ -32,7 +32,9 @@ public final class DoaHandler {
 	private static final List<DoaObject> FRONT_OBJECTS = new CopyOnWriteArrayList<>();
 	private static final List<DoaObject> STATIC_FRONT_OBJECTS = new CopyOnWriteArrayList<>();
 
-	private static ExecutorService EXECUTOR = DoaEngine.MULTI_THREAD_ENABLED ? Executors.newCachedThreadPool() : Executors.newSingleThreadExecutor();
+	private static final ExecutorService EXECUTOR = DoaEngine.MULTI_THREAD_ENABLED ? Executors.newCachedThreadPool() : Executors.newSingleThreadExecutor();
+
+	private static final String EXCEPTION_MSG = "DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler";
 
 	/**
 	 * Constructor.
@@ -54,7 +56,7 @@ public final class DoaHandler {
 				add(d);
 				return d;
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException ex) {
-				System.err.println("DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler");
+				System.err.println(EXCEPTION_MSG);
 				ex.printStackTrace();
 				return DoaObject.NULL;
 			}
@@ -76,7 +78,7 @@ public final class DoaHandler {
 						add(d);
 						return d;
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-						System.err.println("DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler");
+						System.err.println(EXCEPTION_MSG);
 						ex.printStackTrace();
 						return DoaObject.NULL;
 					}
@@ -86,7 +88,7 @@ public final class DoaHandler {
 		try {
 			throw new InstantiationException();
 		} catch (final InstantiationException ex) {
-			System.err.println("DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler");
+			System.err.println(EXCEPTION_MSG);
 			ex.printStackTrace();
 			return DoaObject.NULL;
 		}
@@ -137,6 +139,7 @@ public final class DoaHandler {
 		try {
 			EXECUTOR.invokeAll(tasks);
 		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
 			ex.printStackTrace();
 		}
 	}
@@ -173,6 +176,7 @@ public final class DoaHandler {
 		try {
 			EXECUTOR.invokeAll(tasks);
 		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
 			ex.printStackTrace();
 		}
 	}
@@ -197,6 +201,7 @@ public final class DoaHandler {
 		try {
 			EXECUTOR.invokeAll(tasks);
 		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
 			ex.printStackTrace();
 		}
 	}
@@ -310,7 +315,7 @@ public final class DoaHandler {
 			case 3:
 				return STATIC_FRONT_OBJECTS;
 			default:
-				return null;
+				return new ArrayList<>();
 		}
 	}
 }

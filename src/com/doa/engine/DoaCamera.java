@@ -54,8 +54,8 @@ public final class DoaCamera {
 	public static void tick() {
 		if (objectToFollow != null) {
 			final DoaVectorF pos = objectToFollow.getPosition();
-			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2) * 0.05f;
-			y += (pos.y - y - DoaWindow.WINDOW_HEIGHT / 2) * 0.05f;
+			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2.0) * 0.05f;
+			y += (pos.y - y - DoaWindow.WINDOW_HEIGHT / 2.0) * 0.05f;
 		}
 		x = DoaMath.clamp(x, minX, maxX - DoaWindow.WINDOW_WIDTH);
 		y = DoaMath.clamp(y, minY, maxY - DoaWindow.WINDOW_HEIGHT);

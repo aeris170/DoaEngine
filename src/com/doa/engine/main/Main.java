@@ -31,13 +31,12 @@ public class Main {
 	private static File tmpDirectory;
 	private static JWindow loading;
 	private static JPanel panel;
-	private static JProgressBar loadingBar;
 	private static int extractedFiles = 0;
 
 	public static void main(final String[] args) throws IOException, URISyntaxException {
 		tmpDirectory = new File(TMP_DIR);
 		if (tmpDirectory.exists()) {
-			if (new File(tmpDirectory.getPath().toString() + File.separator + "lockFile" + DoaEngine.VERSION).exists()) {
+			if (new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).exists()) {
 				showPage();
 			} else {
 				delete(new File(TMP_DIR));
@@ -88,7 +87,7 @@ public class Main {
 		final List<JarEntry> entryList = Collections.list(enumEntries);
 		final Iterator<JarEntry> listIterator = entryList.iterator();
 		final int totalFiles = entryList.size();
-		loadingBar = new JProgressBar();
+		JProgressBar loadingBar = new JProgressBar();
 		loadingBar.setForeground(Color.GREEN);
 		loadingBar.setBackground(new Color(20, 20, 20));
 		loadingBar.setBorderPainted(false);
@@ -120,18 +119,16 @@ public class Main {
 			is.close();
 			extractedFiles++;
 			try {
-				SwingUtilities.invokeAndWait(() -> {
-					loadingBar.setValue(extractedFiles);
-				});
+				SwingUtilities.invokeAndWait(() -> loadingBar.setValue(extractedFiles));
 			} catch (InvocationTargetException | InterruptedException ex) {
 				ex.printStackTrace();
 			}
 		}
 		jar.close();
-		new File(tmpDirectory.getPath().toString() + File.separator + "lockFile" + DoaEngine.VERSION).createNewFile();
-		delete(new File(TMP_DIR.toString() + File.separator + "com"));
-		delete(new File(TMP_DIR.toString() + File.separator + "1.gif"));
-		delete(new File(TMP_DIR.toString() + File.separator + "2.gif"));
+		new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).createNewFile();
+		delete(new File(TMP_DIR + File.separator + "com"));
+		delete(new File(TMP_DIR + File.separator + "1.gif"));
+		delete(new File(TMP_DIR + File.separator + "2.gif"));
 	}
 
 	private static void delete(final File f) throws IOException {

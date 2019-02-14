@@ -2,6 +2,7 @@ package com.doa.engine.sound;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.sound.sampled.AudioInputStream;
@@ -24,7 +25,7 @@ public final class DoaSounds {
 	/**
 	 * Collection that maps Strings(clipNames) to DoaSoundClips.
 	 */
-	public final static HashMap<String, DoaSoundClip> SOUND_CLIPS = new HashMap<>();
+	public static final Map<String, DoaSoundClip> SOUND_CLIPS = new HashMap<>();
 
 	/**
 	 * Constructor.
@@ -48,7 +49,6 @@ public final class DoaSounds {
 			final FloatControl gainControl = (FloatControl) entry.getValue().getClip().getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(dB);
 		}
-		// System.out.println("Vol : " + newVolume + " Gain: " + dB);
 	}
 
 	/**

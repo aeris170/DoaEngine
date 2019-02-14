@@ -113,7 +113,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	}
 
 	private boolean isRunning = false;
-	private Thread gameThread;
+	private transient Thread gameThread;
 	private static DoaEngine ENGINE = null;
 
 	/**
@@ -159,6 +159,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			try {
 				gameThread.join();
 			} catch (final InterruptedException ex) {
+				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 		} else {
@@ -177,8 +178,8 @@ public final class DoaEngine extends Canvas implements Runnable {
 		int frames = 0;
 		this.requestFocus();
 		long lastTime = System.nanoTime();
-		long thisTime = System.nanoTime();
-		final double nanoseconds = 1000000000 / TICK_RATE;
+		long thisTime;
+		final double nanoseconds = 1000000000.0 / TICK_RATE;
 		double deltaTime = 0;
 		while (isRunning) {
 			thisTime = System.nanoTime();

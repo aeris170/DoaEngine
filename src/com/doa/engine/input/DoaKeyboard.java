@@ -32,12 +32,12 @@ public final class DoaKeyboard {
 	public static final KeyAdapter INPUT = new KeyAdapter() {
 
 		@Override
-		public void keyPressed(final KeyEvent e) {
+		public synchronized void keyPressed(final KeyEvent e) {
 			press[e.getKeyCode()] = true;
 		}
 
 		@Override
-		public void keyReleased(final KeyEvent e) {
+		public synchronized void keyReleased(final KeyEvent e) {
 			press[e.getKeyCode()] = false;
 		}
 	};
@@ -51,7 +51,7 @@ public final class DoaKeyboard {
 	 * {@code DoaEngine} provides no guarantees on the consistency of the KeyEvent
 	 * catching mechanism.
 	 */
-	public synchronized static void tick() {
+	public static synchronized void tick() {
 		ESCAPE = press[KeyEvent.VK_ESCAPE];
 		F1 = press[KeyEvent.VK_F1];
 		F2 = press[KeyEvent.VK_F2];

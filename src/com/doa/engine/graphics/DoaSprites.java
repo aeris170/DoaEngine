@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -21,14 +22,14 @@ public final class DoaSprites {
 	 * Collection that maps {@code String}s(spriteNames) to
 	 * {@code BufferedImage}s(sprites).
 	 */
-	public final static HashMap<String, BufferedImage> ORIGINAL_SPRITES = new HashMap<>();
+	public static final Map<String, BufferedImage> ORIGINAL_SPRITES = new HashMap<>();
 
 	/**
 	 * Collection that maps {@code String}s(spriteNames) to
 	 * {@code BufferedImage}s(sprites) that are shaded according to the lights the
 	 * scene has.
 	 */
-	public final static HashMap<String, BufferedImage> SHADED_SPRITES = new HashMap<>();
+	public static final Map<String, BufferedImage> SHADED_SPRITES = new HashMap<>();
 
 	/**
 	 * Constructor.

@@ -37,7 +37,7 @@ public final class DoaMouse extends MouseInputAdapter {
 	public static final MouseInputAdapter INPUT = new MouseInputAdapter() {
 
 		@Override
-		public void mousePressed(final MouseEvent e) {
+		public synchronized void mousePressed(final MouseEvent e) {
 			press[e.getButton()] = true;
 			hold[e.getButton()] = true;
 			mouseX = e.getX();
@@ -45,7 +45,7 @@ public final class DoaMouse extends MouseInputAdapter {
 		}
 
 		@Override
-		public void mouseReleased(final MouseEvent e) {
+		public synchronized void mouseReleased(final MouseEvent e) {
 			press[e.getButton()] = false;
 			hold[e.getButton()] = false;
 			mouseX = e.getX();
@@ -53,19 +53,18 @@ public final class DoaMouse extends MouseInputAdapter {
 		}
 
 		@Override
-		public void mouseMoved(final MouseEvent e) {
+		public synchronized void mouseMoved(final MouseEvent e) {
 			mouseX = e.getX();
 			mouseY = e.getY();
 		}
 
 		@Override
-		public void mouseDragged(final MouseEvent e) {
-			mouseX = e.getX();
-			mouseY = e.getY();
+		public synchronized void mouseDragged(final MouseEvent e) {
+			mouseMoved(e);
 		}
 
 		@Override
-		public void mouseWheelMoved(final MouseWheelEvent e) {
+		public synchronized void mouseWheelMoved(final MouseWheelEvent e) {
 			mouseZ -= e.getPreciseWheelRotation() * 0.5;
 			mouseZ = DoaMath.clamp(mouseZ, 0.5, 10);
 		}
@@ -83,7 +82,7 @@ public final class DoaMouse extends MouseInputAdapter {
 	 * {@code DoaEngine} provides no guarantees on the consistency of the MouseEvent
 	 * catching mechanism.
 	 */
-	public synchronized static void tick() {
+	public static synchronized void tick() {
 		MB1 = press[MouseEvent.BUTTON1];
 		MB2 = press[MouseEvent.BUTTON2];
 		MB3 = press[MouseEvent.BUTTON3];

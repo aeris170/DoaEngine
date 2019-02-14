@@ -354,12 +354,6 @@ public final class DoaGraphicsContext {
 		return g.getClipBounds(r);
 	}
 
-	@Override
-	public void finalize() throws Throwable {
-		super.finalize();
-		g.finalize();
-	}
-
 	public void fillPolygon(final Polygon p) {
 		g.fillPolygon(p);
 	}

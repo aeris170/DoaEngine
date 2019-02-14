@@ -38,11 +38,11 @@ public class DoaSoundClip {
 	public void loop(final int count) {
 		if (clip != null) {
 			new Thread(() -> {
-				final Clip clip = getClip();
-				synchronized (clip) {
-					clip.stop();
-					clip.setFramePosition(0);
-					clip.loop(count);
+				final Clip c = getClip();
+				synchronized (c) {
+					c.stop();
+					c.setFramePosition(0);
+					c.loop(count);
 				}
 			}).start();
 		}
@@ -55,10 +55,10 @@ public class DoaSoundClip {
 	public void stop() {
 		if (clip != null) {
 			new Thread(() -> {
-				final Clip clip = getClip();
-				synchronized (clip) {
+				final Clip c = getClip();
+				synchronized (c) {
 					setMicrosecondPosition(0);
-					clip.stop();
+					c.stop();
 				}
 			}).start();
 		}
@@ -71,10 +71,10 @@ public class DoaSoundClip {
 	public void pause() {
 		if (clip != null) {
 			new Thread(() -> {
-				final Clip clip = getClip();
-				synchronized (clip) {
-					setMicrosecondPosition(clip.getMicrosecondPosition());
-					clip.stop();
+				final Clip c = getClip();
+				synchronized (c) {
+					setMicrosecondPosition(c.getMicrosecondPosition());
+					c.stop();
 				}
 			}).start();
 		}
@@ -86,10 +86,10 @@ public class DoaSoundClip {
 	public void resume() {
 		if (clip != null) {
 			new Thread(() -> {
-				final Clip clip = getClip();
-				synchronized (clip) {
-					clip.setMicrosecondPosition(getMicrosecondPosition());
-					clip.start();
+				final Clip c = getClip();
+				synchronized (c) {
+					c.setMicrosecondPosition(getMicrosecondPosition());
+					c.start();
 				}
 			}).start();
 		}
