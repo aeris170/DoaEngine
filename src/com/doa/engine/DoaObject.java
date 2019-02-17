@@ -1,6 +1,7 @@
 package com.doa.engine;
 
 import java.awt.Shape;
+import java.io.Serializable;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
@@ -13,9 +14,11 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.0
+ * @version 2.1
  */
-public abstract class DoaObject {
+public abstract class DoaObject implements Serializable {
+
+	private static final long serialVersionUID = -3293257583358544377L;
 
 	/**
 	 * {@code DoaObject}s with a zOrder of {@link DoaObject#STATIC_BACK} will be
@@ -64,8 +67,7 @@ public abstract class DoaObject {
 	 * Null Object of {@code DoaObject}. See the Null Object design pattern for more
 	 * info.
 	 */
-	@SuppressWarnings("synthetic-access")
-	public static final DoaObject NULL = new NullDoaObject();
+	public static final transient DoaObject NULL = new NullDoaObject();
 
 	/**
 	 * position of {@code DoaObject}
@@ -301,7 +303,9 @@ public abstract class DoaObject {
 	 */
 	private static class NullDoaObject extends DoaObject {
 
-		private NullDoaObject() {
+		private static final long serialVersionUID = 0;
+
+		NullDoaObject() {
 			super(0f, 0f, 0, 0);
 		}
 

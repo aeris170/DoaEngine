@@ -1,5 +1,7 @@
 package com.doa.engine;
 
+import java.io.Serializable;
+
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 
@@ -10,9 +12,11 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.1
  */
-public final class DoaCamera {
+public final class DoaCamera implements Serializable {
+
+	private static final long serialVersionUID = 1363138494050985299L;
 
 	private static DoaObject objectToFollow;
 	private static float x = 0;

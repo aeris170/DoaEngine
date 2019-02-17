@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,7 +23,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.0
+ * @version 2.1.1
  */
 public final class DoaHandler {
 
@@ -33,6 +34,7 @@ public final class DoaHandler {
 	private static final List<DoaObject> STATIC_FRONT_OBJECTS = new CopyOnWriteArrayList<>();
 
 	private static final ExecutorService EXECUTOR = DoaEngine.MULTI_THREAD_ENABLED ? Executors.newCachedThreadPool() : Executors.newSingleThreadExecutor();
+	private static CountDownLatch LATCH;
 
 	private static final String EXCEPTION_MSG = "DoaEngine ==> UNHANDLED EXCEPTION @ DoaHandler";
 
@@ -101,21 +103,56 @@ public final class DoaHandler {
 	 * state of any {@code DoaObject} that is present in the {@code DoaHandler} at
 	 * the time of this method's illegal invocation.
 	 */
-	public static void tick() {
+	public static synchronized void tick() {
+		final List<Callable<Void>> tasks = new ArrayList<>();
+		int numObjects = 0;
 		for (final DoaObject o : STATIC_BACK_OBJECTS) {
-			EXECUTOR.execute(() -> o.tick());
+			tasks.add(() -> {
+				o.tick();
+				LATCH.countDown();
+				return null;
+			});
+			numObjects++;
 		}
 		for (final DoaObject o : BACK_OBJECTS) {
-			EXECUTOR.execute(() -> o.tick());
+			tasks.add(() -> {
+				o.tick();
+				LATCH.countDown();
+				return null;
+			});
+			numObjects++;
 		}
 		for (final DoaObject o : GAME_OBJECTS) {
-			EXECUTOR.execute(() -> o.tick());
+			tasks.add(() -> {
+				o.tick();
+				LATCH.countDown();
+				return null;
+			});
+			numObjects++;
 		}
 		for (final DoaObject o : FRONT_OBJECTS) {
-			EXECUTOR.execute(() -> o.tick());
+			tasks.add(() -> {
+				o.tick();
+				LATCH.countDown();
+				return null;
+			});
+			numObjects++;
 		}
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
-			EXECUTOR.execute(() -> o.tick());
+			tasks.add(() -> {
+				o.tick();
+				LATCH.countDown();
+				return null;
+			});
+			numObjects++;
+		}
+		LATCH = new CountDownLatch(numObjects);
+		try {
+			EXECUTOR.invokeAll(tasks);
+			LATCH.await();
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
 		}
 	}
 
@@ -128,16 +165,19 @@ public final class DoaHandler {
 	 *
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
-	public static void renderStaticBackground(final DoaGraphicsContext g) {
+	public static synchronized void renderStaticBackground(final DoaGraphicsContext g) {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : STATIC_BACK_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
+				LATCH.countDown();
 				return null;
 			});
 		}
+		LATCH = new CountDownLatch(STATIC_BACK_OBJECTS.size());
 		try {
 			EXECUTOR.invokeAll(tasks);
+			LATCH.await();
 		} catch (final InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			ex.printStackTrace();
@@ -153,28 +193,37 @@ public final class DoaHandler {
 	 *
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
-	public static void render(final DoaGraphicsContext g) {
+	public static synchronized void render(final DoaGraphicsContext g) {
 		final List<Callable<Void>> tasks = new ArrayList<>();
+		int numObjects = 0;
 		for (final DoaObject o : BACK_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
+				LATCH.countDown();
 				return null;
 			});
+			numObjects++;
 		}
 		for (final DoaObject o : GAME_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
+				LATCH.countDown();
 				return null;
 			});
+			numObjects++;
 		}
 		for (final DoaObject o : FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
+				LATCH.countDown();
 				return null;
 			});
+			numObjects++;
 		}
+		LATCH = new CountDownLatch(numObjects);
 		try {
 			EXECUTOR.invokeAll(tasks);
+			LATCH.await();
 		} catch (final InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			ex.printStackTrace();
@@ -190,16 +239,19 @@ public final class DoaHandler {
 	 *
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
-	public static void renderStaticForeground(final DoaGraphicsContext g) {
+	public static synchronized void renderStaticForeground(final DoaGraphicsContext g) {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
+				LATCH.countDown();
 				return null;
 			});
 		}
+		LATCH = new CountDownLatch(STATIC_FRONT_OBJECTS.size());
 		try {
 			EXECUTOR.invokeAll(tasks);
+			LATCH.await();
 		} catch (final InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			ex.printStackTrace();

@@ -1,0 +1,4 @@
+autoEnabled=true
+eclipse.preferences.version=1
+extraProperties=
+fileExclusions=FILE\:src/com/doa/engine/main/Main.java\r\nFILE\:doc/type-search-index.js\r\nFILE\:doc/search.js\r\nFILE\:doc/script.js\r\nFILE\:doc/package-search-index.js\r\nFILE\:doc/member-search-index.js\r\nFILE\:doc/jquery/jquery-3.3.1.js\r\nFILE\:doc/jquery/jquery-ui.min.js\r\nFILE\:doc/jquery/jquery-ui.js\r\nFILE\:doc/jquery/jquery-migrate-3.0.1.js\r\nFILE\:doc/jquery/jszip-utils/dist/jszip-utils.js\r\nFILE\:doc/jquery/jszip-utils/dist/jszip-utils-ie.js\r\nFILE\:doc/jquery/jszip-utils/dist/jszip-utils.min.js\r\nFILE\:doc/jquery/jszip-utils/dist/jszip-utils-ie.min.js\r\nFILE\:doc/jquery/jszip/dist/jszip.js\r\nFILE\:doc/jquery/jszip/dist/jszip.min.js\r\nFILE\:doc/jquery/external/jquery/jquery.js

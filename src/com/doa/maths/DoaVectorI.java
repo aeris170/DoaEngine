@@ -1,13 +1,17 @@
 package com.doa.maths;
 
+import java.io.Serializable;
+
 /**
  * 2D int vector.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.0
+ * @version 2.1
  */
-public class DoaVectorI implements Cloneable {
+public class DoaVectorI implements Cloneable, Serializable {
+
+	private static final long serialVersionUID = 947702833498717348L;
 
 	/**
 	 * the displacement in x this vector represents

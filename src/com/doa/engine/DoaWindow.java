@@ -3,6 +3,8 @@ package com.doa.engine;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.io.IOException;
+import java.io.NotSerializableException;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -12,7 +14,7 @@ import javax.swing.WindowConstants;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.1
  */
 public final class DoaWindow extends JFrame {
 
@@ -31,7 +33,8 @@ public final class DoaWindow extends JFrame {
 	 */
 	public static DoaWindow createWindow() {
 		if (Window == null) {
-			return Window = new DoaWindow();
+			Window = new DoaWindow();
+			return Window;
 		}
 		throw new DoaEngineInstanceException("Multiple DoaWindows are disallowed", "engine.DoaWindow", "Window != null");
 	}
@@ -127,5 +130,15 @@ public final class DoaWindow extends JFrame {
 		super.setBounds(r);
 		DoaWindow.WINDOW_WIDTH = r.width;
 		DoaWindow.WINDOW_HEIGHT = r.height;
+	}
+
+	@SuppressWarnings({ "static-method", "unused" })
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		throw new NotSerializableException("DoaWindow Serialization Disallowed");
+	}
+
+	@SuppressWarnings({ "static-method", "unused" })
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		throw new NotSerializableException("DoaWindow Serialization Disallowed");
 	}
 }

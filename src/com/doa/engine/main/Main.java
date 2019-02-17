@@ -2,13 +2,17 @@ package com.doa.engine.main;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -31,9 +35,17 @@ public class Main {
 	private static File tmpDirectory;
 	private static JWindow loading;
 	private static JPanel panel;
+	private static JProgressBar loadingBar;
+	private static Font font;
 	private static int extractedFiles = 0;
 
-	public static void main(final String[] args) throws IOException, URISyntaxException {
+	public static void main(final String[] args) {
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/TOFFEE.otf")).deriveFont(Font.ITALIC, 10f);
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
+		} catch (IOException | FontFormatException ex) {
+			ex.printStackTrace();
+		}
 		tmpDirectory = new File(TMP_DIR);
 		if (tmpDirectory.exists()) {
 			if (new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).exists()) {
@@ -53,8 +65,12 @@ public class Main {
 		}
 	}
 
-	private static void showPage() throws IOException {
-		Desktop.getDesktop().browse(new File(TMP_DIR + "/doc/index.html").toURI());
+	private static void showPage() {
+		try {
+			Desktop.getDesktop().browse(new File(TMP_DIR + "/doc/index.html").toURI());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private static void showLoading() {
@@ -62,11 +78,22 @@ public class Main {
 		panel = new JPanel(null);
 		final JLabel top = new JLabel(new ImageIcon(Main.class.getClassLoader().getResource("1.gif")));
 		final JLabel bottom = new JLabel(new ImageIcon(Main.class.getClassLoader().getResource("2.gif")));
+		final JLabel v = new JLabel("v");
+		final JLabel version = new JLabel(DoaEngine.VERSION);
+		v.setFont(font.deriveFont(Font.ITALIC, 6f));
+		v.setForeground(new Color(255, 255, 255, 200));
+		v.setBackground(new Color(0, 0, 0, 0));
+		version.setFont(font);
+		version.setForeground(new Color(255, 255, 255, 200));
+		version.setBackground(new Color(0, 0, 0, 0));
 		top.setBounds(0, -80, 640, 360);
 		bottom.setBounds(0, 180, 640, 180);
+		v.setBounds(452, 159, 102, 39);
+		version.setBounds(460, 160, 102, 39);
 		panel.add(top);
-		panel.add(bottom);
 		panel.setComponentZOrder(bottom, 0);
+		panel.setComponentZOrder(v, 0);
+		panel.setComponentZOrder(version, 0);
 		loading.add(panel);
 		loading.setBounds(0, 0, 640, 350);
 		loading.setLocationRelativeTo(null);
@@ -79,66 +106,80 @@ public class Main {
 		loading.dispose();
 	}
 
-	@SuppressWarnings("resource")
-	private static void extractRequiredContent() throws IOException, URISyntaxException {
+	private static void extractRequiredContent() {
 		tmpDirectory.mkdir();
-		final JarFile jar = new JarFile(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()));
-		final Enumeration<JarEntry> enumEntries = jar.entries();
-		final List<JarEntry> entryList = Collections.list(enumEntries);
-		final Iterator<JarEntry> listIterator = entryList.iterator();
-		final int totalFiles = entryList.size();
-		JProgressBar loadingBar = new JProgressBar();
-		loadingBar.setForeground(Color.GREEN);
-		loadingBar.setBackground(new Color(20, 20, 20));
-		loadingBar.setBorderPainted(false);
-		loadingBar.setMinimum(0);
-		loadingBar.setMaximum(totalFiles);
-		loadingBar.setBounds(0, 330, 640, 20);
-		loadingBar.setValue(extractedFiles);
-		panel.add(loadingBar);
-		while (listIterator.hasNext()) {
-			final JarEntry file = listIterator.next();
-			File f = new File(TMP_DIR + File.separator, file.getName());
-			if (!f.exists()) {
-				final File parent = f.getParentFile();
-				if (parent.getName().equals("com") || parent.getName().equals("META-INF")) {
-					continue;
+		try (final JarFile jar = new JarFile(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()))) {
+			final Enumeration<JarEntry> enumEntries = jar.entries();
+			final List<JarEntry> entryList = Collections.list(enumEntries);
+			final Iterator<JarEntry> listIterator = entryList.iterator();
+			final int totalFiles = entryList.size();
+			loadingBar = new JProgressBar();
+			loadingBar.setForeground(Color.GREEN);
+			loadingBar.setBackground(new Color(20, 20, 20));
+			loadingBar.setBorderPainted(false);
+			loadingBar.setMinimum(0);
+			loadingBar.setMaximum(totalFiles);
+			loadingBar.setBounds(0, 330, 640, 20);
+			loadingBar.setValue(extractedFiles);
+			panel.add(loadingBar);
+			while (listIterator.hasNext()) {
+				final JarEntry file = listIterator.next();
+				File f = new File(TMP_DIR + File.separator, file.getName());
+				if (!f.exists()) {
+					final File parent = f.getParentFile();
+					if (parent.getName().equals("com") || parent.getName().equals("META-INF")) {
+						continue;
+					}
+					parent.mkdirs();
+					f = new File(TMP_DIR + File.separator, file.getName());
 				}
-				parent.mkdirs();
-				f = new File(TMP_DIR + File.separator, file.getName());
+				if (!file.isDirectory()) {
+					try (final InputStream is = jar.getInputStream(file)) {
+						try (final FileOutputStream fos = new FileOutputStream(f)) {
+							while (is.available() > 0) {
+								fos.write(is.read());
+							}
+						}
+					}
+					updateLoadingBar(extractedFiles++);
+				}
 			}
-			if (file.isDirectory()) {
-				continue;
-			}
-			final InputStream is = jar.getInputStream(file);
-			final FileOutputStream fos = new FileOutputStream(f);
-			while (is.available() > 0) {
-				fos.write(is.read());
-			}
-			fos.close();
-			is.close();
-			extractedFiles++;
-			try {
-				SwingUtilities.invokeAndWait(() -> loadingBar.setValue(extractedFiles));
-			} catch (InvocationTargetException | InterruptedException ex) {
-				ex.printStackTrace();
-			}
+		} catch (IOException | URISyntaxException ex) {
+			ex.printStackTrace();
 		}
-		jar.close();
-		new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).createNewFile();
+		try {
+			new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).createNewFile();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		delete(new File(TMP_DIR + File.separator + "com"));
 		delete(new File(TMP_DIR + File.separator + "1.gif"));
 		delete(new File(TMP_DIR + File.separator + "2.gif"));
 	}
 
-	private static void delete(final File f) throws IOException {
+	private static void delete(final File f) {
 		if (f.isDirectory()) {
 			for (final File c : f.listFiles()) {
-				delete(c);
+				if (c != null) {
+					delete(c);
+				}
 			}
 		}
-		if (!f.delete()) {
-			throw new FileNotFoundException("Failed to delete file: " + f);
+		try {
+			Files.delete(Paths.get(f.getPath()));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private static void updateLoadingBar(int newValue) {
+		try {
+			SwingUtilities.invokeAndWait(() -> loadingBar.setValue(newValue));
+		} catch (InvocationTargetException ex) {
+			ex.printStackTrace();
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
 		}
 	}
 }

@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+import java.io.NotSerializableException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.0";
+	public static final String VERSION = "2.1.1";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -38,7 +40,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Enable/Disable verbose debugging to console.
 	 */
-	public static boolean DEBUG_ENABLED = true;
+	public static boolean DEBUG_ENABLED = false;
 
 	/**
 	 * <strong>EXPERIMENTAL</strong>
@@ -49,6 +51,11 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 * </p>
 	 */
 	public static boolean MULTI_THREAD_ENABLED = false;
+
+	/**
+	 * Default background color of render canvas.
+	 */
+	public static Color CLEAR_COLOR = Color.BLACK;
 
 	/**
 	 * Rendering mode of {@code DoaEngine}. Default is
@@ -121,6 +128,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 */
 	public DoaEngine() {
 		if (DoaEngine.ENGINE == null) {
+			System.setProperty("sun.java2d.opengl", "True");
 			addKeyListener(DoaKeyboard.INPUT);
 			addMouseListener(DoaMouse.INPUT);
 			addMouseMotionListener(DoaMouse.INPUT);
@@ -216,11 +224,11 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 * {@code DoaEngine} render method.
 	 */
 	private void render() {
-		final BufferStrategy bs = super.getBufferStrategy();
-		if (bs == null) {
+		if (getBufferStrategy() == null) {
 			super.createBufferStrategy(3);
-			return;
 		}
+		final BufferStrategy bs = getBufferStrategy();
+
 		final DoaGraphicsContext g = new DoaGraphicsContext((Graphics2D) bs.getDrawGraphics());
 
 		if (RENDERING_MODE == DoaRenderingMode.QUALITY) {
@@ -234,7 +242,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 		}
 
 		g.clearRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
-		g.setColor(Color.BLACK);
+		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
 		g.fillRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
 
 		/* PRE RENDERING STARTS HERE */
@@ -267,5 +275,15 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 		bs.show();
 		g.dispose();
+	}
+
+	@SuppressWarnings({ "static-method", "unused" })
+	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		throw new NotSerializableException("DoaEngine Serialization Disallowed");
+	}
+
+	@SuppressWarnings({ "static-method", "unused" })
+	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		throw new NotSerializableException("DoaEngine Serialization Disallowed");
 	}
 }
