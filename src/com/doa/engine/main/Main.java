@@ -41,9 +41,15 @@ public class Main {
 
 	public static void main(final String[] args) {
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/TOFFEE.otf")).deriveFont(Font.ITALIC, 10f);
+			font = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/TOFFEE.otf"));
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
 		} catch (IOException | FontFormatException ex) {
+			ex.printStackTrace();
+		}
+		try {
+			Thread.sleep(100);
+		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
 			ex.printStackTrace();
 		}
 		tmpDirectory = new File(TMP_DIR);
@@ -68,7 +74,7 @@ public class Main {
 	private static void showPage() {
 		try {
 			Desktop.getDesktop().browse(new File(TMP_DIR + "/doc/index.html").toURI());
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -81,9 +87,11 @@ public class Main {
 		final JLabel v = new JLabel("v");
 		final JLabel version = new JLabel(DoaEngine.VERSION);
 		v.setFont(font.deriveFont(Font.ITALIC, 6f));
+		System.out.println(v.getFont().getSize());
 		v.setForeground(new Color(255, 255, 255, 200));
 		v.setBackground(new Color(0, 0, 0, 0));
-		version.setFont(font);
+		version.setFont(font.deriveFont(Font.ITALIC, 10f));
+		System.out.println(version.getFont().getSize());
 		version.setForeground(new Color(255, 255, 255, 200));
 		version.setBackground(new Color(0, 0, 0, 0));
 		top.setBounds(0, -80, 640, 360);
@@ -149,7 +157,7 @@ public class Main {
 		}
 		try {
 			new File(tmpDirectory.getPath() + File.separator + "lockFile" + DoaEngine.VERSION).createNewFile();
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
 		delete(new File(TMP_DIR + File.separator + "com"));
@@ -167,17 +175,17 @@ public class Main {
 		}
 		try {
 			Files.delete(Paths.get(f.getPath()));
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	private static void updateLoadingBar(int newValue) {
+	private static void updateLoadingBar(final int newValue) {
 		try {
 			SwingUtilities.invokeAndWait(() -> loadingBar.setValue(newValue));
-		} catch (InvocationTargetException ex) {
+		} catch (final InvocationTargetException ex) {
 			ex.printStackTrace();
-		} catch (InterruptedException ex) {
+		} catch (final InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			ex.printStackTrace();
 		}

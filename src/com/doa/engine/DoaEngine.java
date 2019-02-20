@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -29,7 +30,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.1.1";
+	public static final String VERSION = "2.1.2";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -132,6 +133,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			addKeyListener(DoaKeyboard.INPUT);
 			addMouseListener(DoaMouse.INPUT);
 			addMouseMotionListener(DoaMouse.INPUT);
+			addMouseWheelListener(DoaMouse.INPUT);
 			DoaEngine.ENGINE = this;
 		} else {
 			throw new DoaEngineInstanceException("Multiple DoaEngines are disallowed", "engine.Engine", "Engine != null");
@@ -143,6 +145,13 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 */
 	public static DoaEngine getInstance() {
 		return DoaEngine.ENGINE;
+	}
+
+	/**
+	 * @return true if and only if DoaEngine is running
+	 */
+	public boolean isRunning() {
+		return isRunning;
 	}
 
 	/**
@@ -200,7 +209,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
-			if (System.currentTimeMillis() - timer > 1000 && DEBUG_ENABLED) {
+			if (DEBUG_ENABLED && System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS: " + frames + " TICKS: " + ticks);
 				ticks = 0;
@@ -241,6 +250,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			g.setRenderingHints(USER_HINTS);
 		}
 
+		restoreTransform(g);
 		g.clearRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
 		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
 		g.fillRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
@@ -253,12 +263,13 @@ public final class DoaEngine extends Canvas implements Runnable {
 		/* RELATIVE RENDERING ENDS HERE */
 
 		/* RELATIVE RENDERING STARTS HERE */
-		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
+		/* | */zoomToLookAt(g);
 		/* | */
+		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
 		/* | */DoaHandler.render(g);
 		/* | */g.turnOffLightContribution();
 		/* | */
-		/* V */g.translate(DoaCamera.getX(), DoaCamera.getY());
+		/* | */restoreTransform(g);
 		/* RELATIVE RENDERING ENDS HERE */
 
 		/* ADDITIONAL RENDERING STARTS HERE */
@@ -275,6 +286,23 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 		bs.show();
 		g.dispose();
+	}
+
+	private static void zoomToLookAt(final DoaGraphicsContext g) {
+		if (DoaCamera.getObjectToFollow() != null) {
+			final DoaObject centerOfZoom = DoaCamera.getObjectToFollow();
+			g.translate(DoaCamera.getX() + centerOfZoom.position.x + centerOfZoom.width / 2.0, DoaCamera.getY() + centerOfZoom.position.y + centerOfZoom.height / 2.0);
+			g.scale(DoaCamera.getZ(), DoaCamera.getZ());
+			g.translate(-DoaCamera.getX() - centerOfZoom.position.x - centerOfZoom.width / 2.0, -DoaCamera.getY() - centerOfZoom.position.y - centerOfZoom.height / 2.0);
+		} else {
+			g.translate(DoaCamera.getX() + DoaWindow.WINDOW_WIDTH / 2.0, DoaCamera.getY() + DoaWindow.WINDOW_HEIGHT / 2.0);
+			g.scale(DoaCamera.getZ(), DoaCamera.getZ());
+			g.translate(-DoaCamera.getX() - DoaWindow.WINDOW_WIDTH / 2.0, -DoaCamera.getY() - DoaWindow.WINDOW_HEIGHT / 2.0);
+		}
+	}
+
+	private static void restoreTransform(final DoaGraphicsContext g) {
+		g.setTransform(new AffineTransform());
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })

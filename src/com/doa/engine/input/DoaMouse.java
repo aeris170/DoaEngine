@@ -6,15 +6,13 @@ import java.util.Arrays;
 
 import javax.swing.event.MouseInputAdapter;
 
-import com.doa.maths.DoaMath;
-
 /**
  * Responsible for catching all fired mouse inputs at any logical frame. This
  * class is static, therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.1.2
  */
 public final class DoaMouse extends MouseInputAdapter {
 
@@ -66,7 +64,6 @@ public final class DoaMouse extends MouseInputAdapter {
 		@Override
 		public synchronized void mouseWheelMoved(final MouseWheelEvent e) {
 			mouseZ -= e.getPreciseWheelRotation() * 0.5;
-			mouseZ = DoaMath.clamp(mouseZ, 0.5, 10);
 		}
 	};
 
@@ -74,7 +71,7 @@ public final class DoaMouse extends MouseInputAdapter {
 	static boolean[] hold = new boolean[20];
 	static double mouseX = 0;
 	static double mouseY = 0;
-	static double mouseZ = 4;
+	static double mouseZ = 1;
 
 	/**
 	 * This method is required to be public, but should never be called explicitly
