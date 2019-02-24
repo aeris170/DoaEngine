@@ -13,13 +13,14 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.2
+ * @version 2.1.4
  */
 public final class DoaCamera implements Serializable {
 
 	private static final long serialVersionUID = 1363138494050985299L;
 
 	private static DoaObject objectToFollow;
+	private static DoaObject objectToZoomInto;
 	private static float x = 0;
 	private static float y = 0;
 	private static float z = 1;
@@ -31,6 +32,9 @@ public final class DoaCamera implements Serializable {
 	private static float maxZ = 1;
 	private static boolean isObjectToFollowInitialized = false;
 	private static boolean isMouseZoomingEnabled = false;
+	private static float tweenAmountX = 0.005f;
+	private static float tweenAmountY = 0.005f;
+	private static float tweenAmountZ = 0.025f;
 
 	/**
 	 * Constructor.
@@ -39,19 +43,22 @@ public final class DoaCamera implements Serializable {
 
 	/**
 	 * Re-initialises the object to follow, maxX and maxY values of the camera
-	 * construct. If {@code objectToFollow == null}, DoaEngine will throw a
-	 * NullPointerException.
+	 * construct. If {@code objectToFollow == null}, DoaCamera will not follow any
+	 * object.
 	 *
 	 * @param objectToFollow object to follow
 	 * @param minX camera's min x coordinate bound
 	 * @param minY camera's min y coordinate bound
 	 * @param maxX camera's max x coordinate bound
 	 * @param maxY camera's max y coordinate bound
-	 * @see NullPointerException
 	 */
 	public static void adjustCamera(final DoaObject objectToFollow, final int minX, final int minY, final int maxX, final int maxY) {
-		isObjectToFollowInitialized = true;
-		DoaCamera.objectToFollow = objectToFollow;
+		if (objectToFollow != null) {
+			isObjectToFollowInitialized = true;
+			DoaCamera.objectToFollow = objectToFollow;
+		} else {
+			isObjectToFollowInitialized = false;
+		}
 		DoaCamera.minX = minX;
 		DoaCamera.minY = minY;
 		DoaCamera.maxX = maxX;
@@ -61,12 +68,14 @@ public final class DoaCamera implements Serializable {
 	/**
 	 * Enables {@code DoaCamera}'s zoom capabilities. MouseWheel is used to control
 	 * the zoom level. If, however, mouseWheel isn't wanted, one can directly change
-	 * {@code DoaMouse.WHEEL}.
-	 *
+	 * {@code DoaMouse.WHEEL}. If {@code objectToZoom == null}, DoaCamera will use
+	 * (0, 0) as center of zoom.
+	 * 
+	 * @param objectToZoomInto object to zoom into
 	 * @param minZ camera's min z coordinate bound(min zoom)
 	 * @param maxZ camera's max z coordinate bound(max zoom)
 	 */
-	public static void enableMouseZoom(final float minZ, final float maxZ) {
+	public static void enableMouseZoom(final DoaObject objectToZoomInto, final float minZ, final float maxZ) {
 		isMouseZoomingEnabled = true;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
@@ -96,23 +105,71 @@ public final class DoaCamera implements Serializable {
 	public static void tick() {
 		if (isObjectToFollowInitialized) {
 			final DoaVectorF pos = objectToFollow.getPosition();
-			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2.0) * 0.05f;
-			y += (pos.y - y - DoaWindow.WINDOW_HEIGHT / 2.0) * 0.05f;
+			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2.0) * tweenAmountX;
+			y += (pos.y - y - DoaWindow.WINDOW_HEIGHT / 2.0) * tweenAmountY;
 		}
 		if (isMouseZoomingEnabled) {
-			// TODO MOVE THIS TO DoaMouse, because of the pipeline it doens't work. To do
-			// this, create a getter for the booleans. TOO MUCH WORK!!!! Please, fork and
-			// fix.
-			DoaMath.clamp(DoaMouse.WHEEL, minZ, maxZ);
-			z += (DoaMouse.WHEEL - z) * 0.025f;
+			z += (DoaMouse.WHEEL - z) * tweenAmountZ;
 		}
 		x = DoaMath.clamp(x, minX, maxX - DoaWindow.WINDOW_WIDTH);
 		y = DoaMath.clamp(y, minY, maxY - DoaWindow.WINDOW_HEIGHT);
 		z = DoaMath.clamp(z, minZ, maxZ);
 	}
 
+	public static void setX(float newX) {
+		x = newX;
+	}
+
+	public static void setY(float newY) {
+		y = newY;
+	}
+
+	public static void setZ(float newZ) {
+		y = newZ;
+	}
+
+	public static void setMinX(float newMinX) {
+		minX = newMinX;
+	}
+
+	public static void setMinY(float newMinY) {
+		minY = newMinY;
+	}
+
+	public static void setMinZ(float newMinZ) {
+		minZ = newMinZ;
+	}
+
+	public static void setMaxX(float newMaxX) {
+		maxX = newMaxX;
+	}
+
+	public static void setMaxY(float newMaxY) {
+		maxY = newMaxY;
+	}
+
+	public static void setMaxZ(float newMaxZ) {
+		maxY = newMaxZ;
+	}
+
+	public static void setTweenAmountX(float tweenAmountX) {
+		DoaCamera.tweenAmountX = tweenAmountX;
+	}
+
+	public static void setTweenAmountY(float tweenAmountY) {
+		DoaCamera.tweenAmountY = tweenAmountY;
+	}
+
+	public static void setTweenAmountZ(float tweenAmountZ) {
+		DoaCamera.tweenAmountZ = tweenAmountZ;
+	}
+
 	public static DoaObject getObjectToFollow() {
 		return objectToFollow;
+	}
+
+	public static DoaObject getObjectToZoomInto() {
+		return objectToZoomInto;
 	}
 
 	public static float getX() {
@@ -149,5 +206,25 @@ public final class DoaCamera implements Serializable {
 
 	public static float getMaxZ() {
 		return maxZ;
+	}
+
+	public static float getTweenAmountX() {
+		return tweenAmountX;
+	}
+
+	public static float getTweenAmountY() {
+		return tweenAmountY;
+	}
+
+	public static float getTweenAmountZ() {
+		return tweenAmountZ;
+	}
+
+	public static boolean isObjectToFollowInitialized() {
+		return isObjectToFollowInitialized;
+	}
+
+	public static boolean isMouseZoomingEnabled() {
+		return isMouseZoomingEnabled;
 	}
 }

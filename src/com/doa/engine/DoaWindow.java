@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1
+ * @version 2.1.4
  */
 public final class DoaWindow extends JFrame {
 
@@ -134,11 +134,11 @@ public final class DoaWindow extends JFrame {
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
-		throw new NotSerializableException("DoaWindow Serialization Disallowed");
+		throw new NotSerializableException("DoaWindow");
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
-		throw new NotSerializableException("DoaWindow Serialization Disallowed");
+		throw new NotSerializableException("DoaWindow");
 	}
 }

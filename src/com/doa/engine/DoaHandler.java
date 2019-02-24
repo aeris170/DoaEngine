@@ -22,7 +22,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.1
+ * @version 2.1.4
  */
 public final class DoaHandler {
 
@@ -175,7 +175,7 @@ public final class DoaHandler {
 	 *
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
-	public static void render(final DoaGraphicsContext g) {
+	public static void renderBackground(final DoaGraphicsContext g) {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : BACK_OBJECTS) {
 			tasks.add(() -> {
@@ -183,12 +183,50 @@ public final class DoaHandler {
 				return null;
 			});
 		}
+		try {
+			EXECUTOR.invokeAll(tasks);
+		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method is required to be public, but should never be called explicitly
+	 * by any class at any time except {@code DoaEngine}. {@code DoaEngine} provides
+	 * no guarantees on the quality and consistency of rendering of any
+	 * {@code DoaObject} that is present in the {@code DoaHandler} at the time of
+	 * this method's illegal invocation.
+	 *
+	 * @param g the graphics context of {@code DoaEngine}
+	 */
+	public static void render(final DoaGraphicsContext g) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : GAME_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);
 				return null;
 			});
 		}
+		try {
+			EXECUTOR.invokeAll(tasks);
+		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method is required to be public, but should never be called explicitly
+	 * by any class at any time except {@code DoaEngine}. {@code DoaEngine} provides
+	 * no guarantees on the quality and consistency of rendering of any
+	 * {@code DoaObject} that is present in the {@code DoaHandler} at the time of
+	 * this method's illegal invocation.
+	 *
+	 * @param g the graphics context of {@code DoaEngine}
+	 */
+	public static void renderForeground(final DoaGraphicsContext g) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.render(g);

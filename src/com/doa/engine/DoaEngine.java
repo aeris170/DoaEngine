@@ -30,7 +30,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.1.2";
+	public static final String VERSION = "2.1.4";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -250,7 +250,6 @@ public final class DoaEngine extends Canvas implements Runnable {
 			g.setRenderingHints(USER_HINTS);
 		}
 
-		restoreTransform(g);
 		g.clearRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
 		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
 		g.fillRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
@@ -263,13 +262,16 @@ public final class DoaEngine extends Canvas implements Runnable {
 		/* RELATIVE RENDERING ENDS HERE */
 
 		/* RELATIVE RENDERING STARTS HERE */
+		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
 		/* | */zoomToLookAt(g);
 		/* | */
-		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
+		/* | */
+		/* | */DoaHandler.renderBackground(g);
 		/* | */DoaHandler.render(g);
+		/* | */DoaHandler.renderForeground(g);
 		/* | */g.turnOffLightContribution();
 		/* | */
-		/* | */restoreTransform(g);
+		/* V */restoreTransform(g);
 		/* RELATIVE RENDERING ENDS HERE */
 
 		/* ADDITIONAL RENDERING STARTS HERE */
@@ -289,15 +291,19 @@ public final class DoaEngine extends Canvas implements Runnable {
 	}
 
 	private static void zoomToLookAt(final DoaGraphicsContext g) {
-		if (DoaCamera.getObjectToFollow() != null) {
-			final DoaObject centerOfZoom = DoaCamera.getObjectToFollow();
-			g.translate(DoaCamera.getX() + centerOfZoom.position.x + centerOfZoom.width / 2.0, DoaCamera.getY() + centerOfZoom.position.y + centerOfZoom.height / 2.0);
-			g.scale(DoaCamera.getZ(), DoaCamera.getZ());
-			g.translate(-DoaCamera.getX() - centerOfZoom.position.x - centerOfZoom.width / 2.0, -DoaCamera.getY() - centerOfZoom.position.y - centerOfZoom.height / 2.0);
-		} else {
-			g.translate(DoaCamera.getX() + DoaWindow.WINDOW_WIDTH / 2.0, DoaCamera.getY() + DoaWindow.WINDOW_HEIGHT / 2.0);
-			g.scale(DoaCamera.getZ(), DoaCamera.getZ());
-			g.translate(-DoaCamera.getX() - DoaWindow.WINDOW_WIDTH / 2.0, -DoaCamera.getY() - DoaWindow.WINDOW_HEIGHT / 2.0);
+		if (DoaCamera.isMouseZoomingEnabled()) {
+			final DoaObject centerOfZoom = DoaCamera.getObjectToZoomInto();
+			if (centerOfZoom != null) {
+				g.translate(DoaCamera.getX() + centerOfZoom.position.x + centerOfZoom.width / 2.0,
+				        DoaCamera.getY() + centerOfZoom.position.y + centerOfZoom.height / 2.0);
+				g.scale(DoaCamera.getZ(), DoaCamera.getZ());
+				g.translate(-DoaCamera.getX() - centerOfZoom.position.x - centerOfZoom.width / 2.0,
+				        -DoaCamera.getY() - centerOfZoom.position.y - centerOfZoom.height / 2.0);
+			} else {
+				g.translate(DoaCamera.getX() + DoaWindow.WINDOW_WIDTH / 2.0, DoaCamera.getY() + DoaWindow.WINDOW_HEIGHT / 2.0);
+				g.scale(DoaCamera.getZ(), DoaCamera.getZ());
+				g.translate(-DoaCamera.getX() - DoaWindow.WINDOW_WIDTH / 2.0, -DoaCamera.getY() - DoaWindow.WINDOW_HEIGHT / 2.0);
+			}
 		}
 	}
 
