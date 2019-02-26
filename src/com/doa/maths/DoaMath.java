@@ -102,7 +102,7 @@ public final class DoaMath {
 	 * Re-maps a number from one range to another. Value not being in the range
 	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
 	 * own risk!
-	 * 
+	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
 	 * @param sourceRangeMax upper bound of the value's current range
@@ -118,7 +118,7 @@ public final class DoaMath {
 	 * Re-maps a number from one range to another. Value not being in the range
 	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
 	 * own risk!
-	 * 
+	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
 	 * @param sourceRangeMax upper bound of the value's current range
@@ -134,7 +134,7 @@ public final class DoaMath {
 	 * Re-maps a number from one range to another. Value not being in the range
 	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
 	 * own risk!
-	 * 
+	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
 	 * @param sourceRangeMax upper bound of the value's current range

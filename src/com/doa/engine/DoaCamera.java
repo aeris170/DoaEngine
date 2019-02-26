@@ -70,7 +70,7 @@ public final class DoaCamera implements Serializable {
 	 * the zoom level. If, however, mouseWheel isn't wanted, one can directly change
 	 * {@code DoaMouse.WHEEL}. If {@code objectToZoom == null}, DoaCamera will use
 	 * (0, 0) as center of zoom.
-	 * 
+	 *
 	 * @param objectToZoomInto object to zoom into
 	 * @param minZ camera's min z coordinate bound(min zoom)
 	 * @param maxZ camera's max z coordinate bound(max zoom)
@@ -116,51 +116,51 @@ public final class DoaCamera implements Serializable {
 		z = DoaMath.clamp(z, minZ, maxZ);
 	}
 
-	public static void setX(float newX) {
+	public static void setX(final float newX) {
 		x = newX;
 	}
 
-	public static void setY(float newY) {
+	public static void setY(final float newY) {
 		y = newY;
 	}
 
-	public static void setZ(float newZ) {
+	public static void setZ(final float newZ) {
 		y = newZ;
 	}
 
-	public static void setMinX(float newMinX) {
+	public static void setMinX(final float newMinX) {
 		minX = newMinX;
 	}
 
-	public static void setMinY(float newMinY) {
+	public static void setMinY(final float newMinY) {
 		minY = newMinY;
 	}
 
-	public static void setMinZ(float newMinZ) {
+	public static void setMinZ(final float newMinZ) {
 		minZ = newMinZ;
 	}
 
-	public static void setMaxX(float newMaxX) {
+	public static void setMaxX(final float newMaxX) {
 		maxX = newMaxX;
 	}
 
-	public static void setMaxY(float newMaxY) {
+	public static void setMaxY(final float newMaxY) {
 		maxY = newMaxY;
 	}
 
-	public static void setMaxZ(float newMaxZ) {
+	public static void setMaxZ(final float newMaxZ) {
 		maxY = newMaxZ;
 	}
 
-	public static void setTweenAmountX(float tweenAmountX) {
+	public static void setTweenAmountX(final float tweenAmountX) {
 		DoaCamera.tweenAmountX = tweenAmountX;
 	}
 
-	public static void setTweenAmountY(float tweenAmountY) {
+	public static void setTweenAmountY(final float tweenAmountY) {
 		DoaCamera.tweenAmountY = tweenAmountY;
 	}
 
-	public static void setTweenAmountZ(float tweenAmountZ) {
+	public static void setTweenAmountZ(final float tweenAmountZ) {
 		DoaCamera.tweenAmountZ = tweenAmountZ;
 	}
 

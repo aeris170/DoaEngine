@@ -99,11 +99,11 @@ public final class DoaMouse extends MouseInputAdapter {
 
 	/**
 	 * Clamps the WHEEL property with the parameters.
-	 * 
+	 *
 	 * @param min minimum value for the WHEEL property
 	 * @param max max value for the WHEEL property
 	 */
-	public static void clampWheel(double min, double max) {
+	public static void clampWheel(final double min, final double max) {
 		minZ = min;
 		maxZ = max;
 	}
