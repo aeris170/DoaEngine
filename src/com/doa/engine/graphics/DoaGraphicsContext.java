@@ -20,7 +20,6 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
-import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
@@ -34,7 +33,7 @@ import java.util.Map;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 1.1
+ * @version 2.1.4
  * @see java.awt.Graphics
  * @see java.awt.Graphics2D
  * @see com.doa.engine.graphics.DoaSprites
@@ -48,68 +47,68 @@ public final class DoaGraphicsContext {
 		this.g = g;
 	}
 
-	public void clearRect(final double x, final double y, final int width, final int height) {
-		g.clearRect((int) x, (int) y, width, height);
+	public void clearRect(final double x, final double y, final double width, final double height) {
+		g.clearRect((int) x, (int) y, (int) width, (int) height);
 	}
 
-	public void clipRect(final double x, final double y, final int width, final int height) {
-		g.clipRect((int) x, (int) y, width, height);
+	public void clipRect(final double x, final double y, final double width, final double height) {
+		g.clipRect((int) x, (int) y, (int) width, (int) height);
 	}
 
-	public void copyArea(final double x, final double y, final int width, final int height, final double dx, final double dy) {
-		g.copyArea((int) x, (int) y, width, height, (int) dx, (int) dy);
+	public void copyArea(final double x, final double y, final double width, final double height, final double dx, final double dy) {
+		g.copyArea((int) x, (int) y, (int) width, (int) height, (int) dx, (int) dy);
 	}
 
 	public Graphics create() {
 		return g.create();
 	}
 
-	public Graphics create(final double x, final double y, final int width, final int height) {
-		return g.create((int) x, (int) y, width, height);
+	public Graphics create(final double x, final double y, final double width, final double height) {
+		return g.create((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void dispose() {
 		g.dispose();
 	}
 
-	public void drawArc(final double x, final double y, final int width, final int height, final double startAngle, final double arcAngle) {
-		g.drawArc((int) x, (int) y, width, height, (int) startAngle, (int) arcAngle);
+	public void drawArc(final double x, final double y, final double width, final double height, final double startAngle, final double arcAngle) {
+		g.drawArc((int) x, (int) y, (int) width, (int) height, (int) startAngle, (int) arcAngle);
 	}
 
-	public boolean drawImage(final Image img, final double x, final double y, final ImageObserver observer) {
-		return g.drawImage(img, (int) x, (int) y, observer);
+	public boolean drawImage(final Image img, final double x, final double y) {
+		return g.drawImage(img, (int) x, (int) y, null);
 	}
 
-	public boolean drawImage(final Image img, final double x, final double y, final Color bgcolor, final ImageObserver observer) {
-		return g.drawImage(img, (int) x, (int) y, bgcolor, observer);
+	public boolean drawImage(final Image img, final double x, final double y, final Color bgcolor) {
+		return g.drawImage(img, (int) x, (int) y, bgcolor, null);
 	}
 
-	public boolean drawImage(final Image img, final double x, final double y, final int width, final int height, final ImageObserver observer) {
-		return g.drawImage(img, (int) x, (int) y, width, height, observer);
+	public boolean drawImage(final Image img, final double x, final double y, final double width, final double height) {
+		return g.drawImage(img, (int) x, (int) y, (int) width, (int) height, null);
 	}
 
-	public boolean drawImage(final Image img, final double x, final double y, final int width, final int height, final Color bgcolor, final ImageObserver observer) {
-		return g.drawImage(img, (int) x, (int) y, width, height, bgcolor, observer);
-	}
-
-	public boolean drawImage(final Image img, final double dx1, final double dy1, final double dx2, final double dy2, final double sx1, final double sy1,
-	        final double sx2, final double sy2, final ImageObserver observer)
-	{
-		return g.drawImage(img, (int) dx1, (int) dy1, (int) dx2, (int) dy2, (int) sx1, (int) sy1, (int) sx2, (int) sy2, observer);
+	public boolean drawImage(final Image img, final double x, final double y, final double width, final double height, final Color bgcolor) {
+		return g.drawImage(img, (int) x, (int) y, (int) width, (int) height, bgcolor, null);
 	}
 
 	public boolean drawImage(final Image img, final double dx1, final double dy1, final double dx2, final double dy2, final double sx1, final double sy1,
-	        final double sx2, final double sy2, final Color bgcolor, final ImageObserver observer)
+	        final double sx2, final double sy2)
 	{
-		return g.drawImage(img, (int) dx1, (int) dy1, (int) dx2, (int) dy2, (int) sx1, (int) sy1, (int) sx2, (int) sy2, bgcolor, observer);
+		return g.drawImage(img, (int) dx1, (int) dy1, (int) dx2, (int) dy2, (int) sx1, (int) sy1, (int) sx2, (int) sy2, null);
+	}
+
+	public boolean drawImage(final Image img, final double dx1, final double dy1, final double dx2, final double dy2, final double sx1, final double sy1,
+	        final double sx2, final double sy2, final Color bgcolor)
+	{
+		return g.drawImage(img, (int) dx1, (int) dy1, (int) dx2, (int) dy2, (int) sx1, (int) sy1, (int) sx2, (int) sy2, bgcolor, null);
 	}
 
 	public void drawLine(final double x1, final double y1, final double x2, final double y2) {
 		g.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
 	}
 
-	public void drawOval(final double x, final double y, final int width, final int height) {
-		g.drawOval((int) x, (int) y, width, height);
+	public void drawOval(final double x, final double y, final double width, final double height) {
+		g.drawOval((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void drawPolygon(final double[] xPoints, final double[] yPoints, final int nPoints) {
@@ -120,28 +119,28 @@ public final class DoaGraphicsContext {
 		g.drawPolyline(doubleArrToIntArr(xPoints), doubleArrToIntArr(yPoints), nPoints);
 	}
 
-	public void drawRoundRect(final double x, final double y, final int width, final int height, final int arcWidth, final int arcHeight) {
-		g.drawRoundRect((int) x, (int) y, width, height, arcWidth, arcHeight);
+	public void drawRoundRect(final double x, final double y, final double width, final double height, final double arcWidth, final double arcHeight) {
+		g.drawRoundRect((int) x, (int) y, (int) width, (int) height, (int) arcWidth, (int) arcHeight);
 	}
 
-	public void fillArc(final double x, final double y, final int width, final int height, final double startAngle, final double arcAngle) {
-		g.fillArc((int) x, (int) y, width, height, (int) startAngle, (int) arcAngle);
+	public void fillArc(final double x, final double y, final double width, final double height, final double startAngle, final double arcAngle) {
+		g.fillArc((int) x, (int) y, (int) width, (int) height, (int) startAngle, (int) arcAngle);
 	}
 
-	public void fillOval(final double x, final double y, final int width, final int height) {
-		g.fillOval((int) x, (int) y, width, height);
+	public void fillOval(final double x, final double y, final double width, final double height) {
+		g.fillOval((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void fillPolygon(final double[] xPoints, final double[] yPoints, final int nPoints) {
 		g.fillPolygon(doubleArrToIntArr(xPoints), doubleArrToIntArr(yPoints), nPoints);
 	}
 
-	public void fillRect(final double x, final double y, final int width, final int height) {
-		g.fillRect((int) x, (int) y, width, height);
+	public void fillRect(final double x, final double y, final double width, final double height) {
+		g.fillRect((int) x, (int) y, (int) width, (int) height);
 	}
 
-	public void fillRoundRect(final double x, final double y, final int width, final int height, final int arcWidth, final int arcHeight) {
-		g.fillRoundRect((int) x, (int) y, width, height, arcWidth, arcHeight);
+	public void fillRoundRect(final double x, final double y, final double width, final double height, final double arcWidth, final double arcHeight) {
+		g.fillRoundRect((int) x, (int) y, (int) width, (int) height, (int) arcWidth, (int) arcHeight);
 	}
 
 	public Shape getClip() {
@@ -168,8 +167,8 @@ public final class DoaGraphicsContext {
 		g.setClip(clip);
 	}
 
-	public void setClip(final double x, final double y, final int width, final int height) {
-		g.setClip((int) x, (int) y, width, height);
+	public void setClip(final double x, final double y, final double width, final double height) {
+		g.setClip((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void setColor(final Color c) {
@@ -213,8 +212,8 @@ public final class DoaGraphicsContext {
 		this.g.drawGlyphVector(g, (int) x, (int) y);
 	}
 
-	public boolean drawImage(final Image img, final AffineTransform xform, final ImageObserver obs) {
-		return g.drawImage(img, xform, obs);
+	public boolean drawImage(final Image img, final AffineTransform xform) {
+		return g.drawImage(img, xform, null);
 	}
 
 	public void drawImage(final BufferedImage img, final BufferedImageOp op, final double x, final double y) {
@@ -237,8 +236,8 @@ public final class DoaGraphicsContext {
 		g.drawString(iterator, (int) x, (int) y);
 	}
 
-	public void drawRect(final double x, final double y, final int width, final int height) {
-		g.drawRect((int) x, (int) y, width, height);
+	public void drawRect(final double x, final double y, final double width, final double height) {
+		g.drawRect((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public void fill(final Shape s) {
@@ -342,8 +341,8 @@ public final class DoaGraphicsContext {
 		return getClass().getName() + "[font=" + getFont() + ",color=" + getColor() + "]";
 	}
 
-	public boolean hitClip(final double x, final double y, final int width, final int height) {
-		return g.hitClip((int) x, (int) y, width, height);
+	public boolean hitClip(final double x, final double y, final double width, final double height) {
+		return g.hitClip((int) x, (int) y, (int) width, (int) height);
 	}
 
 	public FontMetrics getFontMetrics() {
@@ -358,8 +357,8 @@ public final class DoaGraphicsContext {
 		g.fillPolygon(p);
 	}
 
-	public void fill3DRect(final double x, final double y, final int width, final int height, final boolean raised) {
-		g.fill3DRect((int) x, (int) y, width, height, raised);
+	public void fill3DRect(final double x, final double y, final double width, final double height, final boolean raised) {
+		g.fill3DRect((int) x, (int) y, (int) width, (int) height, raised);
 	}
 
 	public void drawPolygon(final Polygon p) {
@@ -374,8 +373,8 @@ public final class DoaGraphicsContext {
 		g.drawBytes(data, offset, length, (int) x, (int) y);
 	}
 
-	public void draw3DRect(final double x, final double y, final int width, final int height, final boolean raised) {
-		g.draw3DRect((int) x, (int) y, width, height, raised);
+	public void draw3DRect(final double x, final double y, final double width, final double height, final boolean raised) {
+		g.draw3DRect((int) x, (int) y, (int) width, (int) height, raised);
 	}
 
 	public void turnOnLightContribution() {

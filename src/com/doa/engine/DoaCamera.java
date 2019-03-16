@@ -76,6 +76,7 @@ public final class DoaCamera implements Serializable {
 	 * @param maxZ camera's max z coordinate bound(max zoom)
 	 */
 	public static void enableMouseZoom(final DoaObject objectToZoomInto, final float minZ, final float maxZ) {
+		DoaCamera.objectToZoomInto = objectToZoomInto;
 		isMouseZoomingEnabled = true;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
