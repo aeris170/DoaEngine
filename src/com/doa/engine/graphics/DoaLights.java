@@ -3,6 +3,8 @@ package com.doa.engine.graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.doa.engine.DoaObject;
@@ -13,7 +15,7 @@ import com.doa.engine.DoaObject;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 1.1
+ * @version 2.2
  */
 public final class DoaLights {
 
@@ -38,7 +40,11 @@ public final class DoaLights {
 	public static void ambientLight(final Color newAmbientLightColor) {
 		ambientLightColor = newAmbientLightColor;
 		DoaSprites.SHADED_SPRITES.clear();
-		for (final Entry<String, BufferedImage> entry : DoaSprites.ORIGINAL_SPRITES.entrySet()) {
+		for (final Entry<String, DoaSprite> entry : DoaSprites.ORIGINAL_SPRITES.entrySet()) {
+			applyAmbientLight(entry.getKey(), entry.getValue());
+		}
+		DoaAnimations.SHADED_ANIMATIONS.clear();
+		for (final Entry<String, DoaAnimation> entry : DoaAnimations.ORIGINAL_ANIMATIONS.entrySet()) {
 			applyAmbientLight(entry.getKey(), entry.getValue());
 		}
 	}
@@ -54,22 +60,46 @@ public final class DoaLights {
 	}
 
 	// TODO FIX THE DYNAMIC LIGHTING CHANGE BUG
-	static void applyAmbientLight(final String spriteName, final BufferedImage bf) {
-		final BufferedImage bfclone = new BufferedImage(bf.getWidth(), bf.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		final Graphics2D g2d = bfclone.createGraphics();
-		g2d.drawImage(bf, 0, 0, null);
+	static void applyAmbientLight(final String spriteName, final DoaSprite sp) {
+		final BufferedImage spclone = new BufferedImage(sp.getWidth(), sp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D g2d = spclone.createGraphics();
+		g2d.drawImage(sp, 0, 0, null);
 		g2d.dispose();
 
-		for (int xx = 0; xx < bfclone.getWidth(); xx++) {
-			for (int yy = 0; yy < bfclone.getHeight(); yy++) {
-				final Color objColor = new Color(bfclone.getRGB(xx, yy), true);
+		for (int xx = 0; xx < spclone.getWidth(); xx++) {
+			for (int yy = 0; yy < spclone.getHeight(); yy++) {
+				final Color objColor = new Color(spclone.getRGB(xx, yy), true);
 				final int r = objColor.getRed() * ambientLightColor.getRed() / 255;
 				final int g = objColor.getGreen() * ambientLightColor.getGreen() / 255;
 				final int b = objColor.getBlue() * ambientLightColor.getBlue() / 255;
 				final int a = objColor.getAlpha();
-				bfclone.setRGB(xx, yy, new Color(r, g, b, a).getRGB());
+				spclone.setRGB(xx, yy, new Color(r, g, b, a).getRGB());
 			}
 		}
-		DoaSprites.SHADED_SPRITES.put(spriteName, bfclone);
+		DoaSprites.SHADED_SPRITES.put(spriteName, new DoaSprite(spclone));
+	}
+
+	// TODO FIX THE DYNAMIC LIGHTING CHANGE BUG
+	static void applyAmbientLight(final String spriteName, final DoaAnimation anim) {
+		List<DoaSprite> frames = new ArrayList<>();
+		for (DoaSprite sp : anim.getFrames()) {
+			final BufferedImage spclone = new BufferedImage(sp.getWidth(), sp.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			final Graphics2D g2d = spclone.createGraphics();
+			g2d.drawImage(sp, 0, 0, null);
+			g2d.dispose();
+
+			for (int xx = 0; xx < spclone.getWidth(); xx++) {
+				for (int yy = 0; yy < spclone.getHeight(); yy++) {
+					final Color objColor = new Color(spclone.getRGB(xx, yy), true);
+					final int r = objColor.getRed() * ambientLightColor.getRed() / 255;
+					final int g = objColor.getGreen() * ambientLightColor.getGreen() / 255;
+					final int b = objColor.getBlue() * ambientLightColor.getBlue() / 255;
+					final int a = objColor.getAlpha();
+					spclone.setRGB(xx, yy, new Color(r, g, b, a).getRGB());
+				}
+			}
+			frames.add(new DoaSprite(spclone));
+		}
+		DoaAnimations.SHADED_ANIMATIONS.put(spriteName, new DoaAnimation(frames, anim.getDelay()));
 	}
 }

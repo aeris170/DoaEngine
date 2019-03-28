@@ -23,7 +23,11 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
+import java.util.HashMap;
 import java.util.Map;
+
+import com.doa.engine.task.DoaTaskGuard;
+import com.doa.engine.task.DoaTasker;
 
 /**
  * Responsible for wrapping the {@code Graphics2D} class Sun Microsystems
@@ -33,12 +37,17 @@ import java.util.Map;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.1.4
+ * @version 2.2
  * @see java.awt.Graphics
  * @see java.awt.Graphics2D
+ * @see com.doa.engine.graphics.DoaSprite
  * @see com.doa.engine.graphics.DoaSprites
+ * @see com.doa.engine.graphics.DoaAnimation
+ * @see com.doa.engine.graphics.DoaAnimations
  */
 public final class DoaGraphicsContext {
+
+	private static final Map<DoaAnimation, DoaTaskGuard> animationGuards = new HashMap<>();
 
 	private Graphics2D g = null;
 	private boolean ligtsShouldContribute = true;
@@ -69,6 +78,20 @@ public final class DoaGraphicsContext {
 
 	public void dispose() {
 		g.dispose();
+	}
+
+	public void drawAnimation(final DoaAnimation anim, final double x, final double y, final double width, final double height) {
+		DoaTaskGuard guard = animationGuards.get(anim);
+		if (guard == null) {
+			guard = new DoaTaskGuard();
+			animationGuards.put(anim, guard);
+		}
+		if (guard.get()) {
+			DoaTasker.guard(guard, anim.getDelay());
+			drawImage(anim.next(), x, y, width, height);
+		} else {
+			drawImage(anim.current(), x, y, width, height);
+		}
 	}
 
 	public void drawArc(final double x, final double y, final double width, final double height, final double startAngle, final double arcAngle) {

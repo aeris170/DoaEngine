@@ -1,5 +1,10 @@
 package com.doa.engine.task;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import com.doa.utils.DoaUtils;
+
 /**
  * Abstracts threading and all it's related functionality from the common
  * {@code DoaEngine} user. This class' methods are not a must to use. If
@@ -9,9 +14,11 @@ package com.doa.engine.task;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.2
  */
 public final class DoaTasker {
+
+	private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
 	private DoaTasker() {}
 
@@ -25,17 +32,12 @@ public final class DoaTasker {
 	 *        guarding
 	 * @see java.lang.Thread
 	 */
-	public static void guard(final DoaTaskGuard guard, final int waitTime) {
-		new Thread(() -> {
-			try {
-				guard.set(false);
-				Thread.sleep(waitTime);
-				guard.set(true);
-			} catch (final InterruptedException ex) {
-				Thread.currentThread().interrupt();
-				ex.printStackTrace();
-			}
-		}).start();
+	public static void guard(final DoaTaskGuard guard, final long waitTime) {
+		guard.set(false);
+		EXECUTOR.execute(() -> {
+			DoaUtils.sleepFor(waitTime);
+			guard.set(true);
+		});
 	}
 
 	/**
@@ -50,18 +52,13 @@ public final class DoaTasker {
 	 *        guarding
 	 * @see java.lang.Thread
 	 */
-	public static void guardExecution(final Runnable task, final DoaTaskGuard guard, final int waitTime) {
-		new Thread(() -> {
-			try {
-				guard.set(false);
-				task.run();
-				Thread.sleep(waitTime);
-				guard.set(true);
-			} catch (final InterruptedException ex) {
-				Thread.currentThread().interrupt();
-				ex.printStackTrace();
-			}
-		}).start();
+	public static void guardExecution(final Runnable task, final DoaTaskGuard guard, final long waitTime) {
+		guard.set(false);
+		EXECUTOR.execute(() -> {
+			task.run();
+			DoaUtils.sleepFor(waitTime);
+			guard.set(true);
+		});
 	}
 
 	/**
@@ -72,7 +69,7 @@ public final class DoaTasker {
 	 * @see java.lang.Thread
 	 */
 	public static void executeNow(final Runnable task) {
-		new Thread(task).start();
+		EXECUTOR.execute(task);
 	}
 
 	/**
@@ -85,17 +82,12 @@ public final class DoaTasker {
 	 * @param waitTime the amount of delay in milliseconds between the two tasks
 	 * @see java.lang.Thread
 	 */
-	public static void executeAndWait(final Runnable task, final Runnable after, final int waitTime) {
-		new Thread(() -> {
+	public static void executeAndWait(final Runnable task, final Runnable after, final long waitTime) {
+		EXECUTOR.execute(() -> {
 			task.run();
-			try {
-				Thread.sleep(waitTime);
-			} catch (final InterruptedException ex) {
-				Thread.currentThread().interrupt();
-				ex.printStackTrace();
-			}
+			DoaUtils.sleepFor(waitTime);
 			after.run();
-		}).start();
+		});
 	}
 
 	/**
@@ -106,15 +98,10 @@ public final class DoaTasker {
 	 * @param waitTime the amount of delay in milliseconds
 	 * @see java.lang.Thread
 	 */
-	public static void executeLater(final Runnable task, final int waitTime) {
-		new Thread(() -> {
-			try {
-				Thread.sleep(waitTime);
-			} catch (final InterruptedException ex) {
-				Thread.currentThread().interrupt();
-				ex.printStackTrace();
-			}
+	public static void executeLater(final Runnable task, final long waitTime) {
+		EXECUTOR.execute(() -> {
+			DoaUtils.sleepFor(waitTime);
 			task.run();
-		}).start();
+		});
 	}
 }

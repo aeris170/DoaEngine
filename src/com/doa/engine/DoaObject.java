@@ -14,7 +14,7 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1
+ * @version 2.3
  */
 public abstract class DoaObject implements Serializable {
 
@@ -164,7 +164,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param position position of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final int zOrder) {
+	public DoaObject(final DoaVectorF position, final Integer zOrder) {
 		this(position, 0, 0, zOrder);
 	}
 
@@ -178,7 +178,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param height height of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final float x, final float y, final int width, final int height, final int zOrder) {
+	public DoaObject(final Float x, final Float y, final Integer width, final Integer height, final Integer zOrder) {
 		position.x = x;
 		position.y = y;
 		this.width = width;
@@ -195,7 +195,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param height height of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final int width, final int height, final int zOrder) {
+	public DoaObject(final DoaVectorF position, final Integer width, final Integer height, final Integer zOrder) {
 		this.position = position;
 		this.width = width;
 		this.height = height;
@@ -249,7 +249,9 @@ public abstract class DoaObject implements Serializable {
 	 *
 	 * @return the bounding shape of {@code DoaObject}
 	 */
-	public abstract Shape getBounds();
+	public Shape getBounds() {
+		return null;
+	}
 
 	public DoaVectorF getPosition() {
 		return position;
