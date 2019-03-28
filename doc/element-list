@@ -7,4 +7,5 @@ com.doa.maths
 com.doa.ui
 com.doa.ui.action
 com.doa.ui.button
+com.doa.ui.panel
 com.doa.utils

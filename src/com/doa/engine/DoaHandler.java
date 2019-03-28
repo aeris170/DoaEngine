@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.ui.DoaUIComponent;
 
 /**
  * Responsible for keeping track of all {@code DoaObject}s. All
@@ -46,19 +47,20 @@ public final class DoaHandler {
 	 *
 	 * @param clazz the class of the {@code DoaObject} to be instantiated
 	 * @param constructorArgs arguments for the constructor
-	 * @return the instantiated {@code DoaObject} or {@link DoaObject#NULL} if
-	 *         instantiation is unsuccessful
+	 * @param <T> type of the class
+	 * @return the instantiated {@code DoaObject} or null if instantiation is
+	 *         unsuccessful
 	 */
-	public static DoaObject instantiateDoaObject(final Class<?> clazz, final Object... constructorArgs) {
+	public static <T extends DoaObject> T instantiateDoaObject(final Class<T> clazz, final Object... constructorArgs) {
 		if (constructorArgs == null || constructorArgs.length == 0) {
 			try {
-				final DoaObject d = (DoaObject) clazz.newInstance();
+				final T d = clazz.newInstance();
 				add(d);
 				return d;
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException ex) {
 				System.err.println(EXCEPTION_MSG);
 				ex.printStackTrace();
-				return DoaObject.NULL;
+				return null;
 			}
 		}
 		final Constructor<?>[] constructors = clazz.getConstructors();
@@ -67,20 +69,24 @@ public final class DoaHandler {
 				final Class<?>[] parameterTypes = c.getParameterTypes();
 				boolean isSuitable = true;
 				for (int i = 0; i < parameterTypes.length; i++) {
-					if (!parameterTypes[i].getTypeName().equals(constructorArgs[i].getClass().getTypeName())) {
+					if (!parameterTypes[i].isAssignableFrom(constructorArgs[i].getClass())) {
 						isSuitable = false;
 						break;
 					}
 				}
 				if (isSuitable) {
 					try {
-						final DoaObject d = (DoaObject) c.newInstance(constructorArgs);
-						add(d);
-						return d;
+						Object o = c.newInstance(constructorArgs);
+						if (clazz.isInstance(o)) {
+							final T d = clazz.cast(o);
+							add(d);
+							return d;
+						}
+						return null;
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
 						System.err.println(EXCEPTION_MSG);
 						ex.printStackTrace();
-						return DoaObject.NULL;
+						return null;
 					}
 				}
 			}
@@ -90,7 +96,7 @@ public final class DoaHandler {
 		} catch (final InstantiationException ex) {
 			System.err.println(EXCEPTION_MSG);
 			ex.printStackTrace();
-			return DoaObject.NULL;
+			return null;
 		}
 	}
 
@@ -129,6 +135,12 @@ public final class DoaHandler {
 		}
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
+				if (o instanceof DoaUIComponent) {
+					DoaUIComponent component = (DoaUIComponent) o;
+					if (!component.getActive()) {
+						return null;
+					}
+				}
 				o.tick();
 				return null;
 			});
@@ -254,6 +266,12 @@ public final class DoaHandler {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
+				if (o instanceof DoaUIComponent) {
+					DoaUIComponent component = (DoaUIComponent) o;
+					if (!component.getActive()) {
+						return null;
+					}
+				}
 				o.render(g);
 				return null;
 			});

@@ -22,7 +22,13 @@ public abstract class DoaUIComponent extends DoaObject implements DoaUIComponent
 
 	private static final long serialVersionUID = -6344812227089227175L;
 
+	/**
+	 * Whether or not this component will be rendered.
+	 */
+	protected boolean active;
+
 	private transient Rectangle2D bounds;
+	private DoaUIContainer parent;
 
 	/**
 	 * Instantiates a UI component with the specified bounds
@@ -53,6 +59,49 @@ public abstract class DoaUIComponent extends DoaObject implements DoaUIComponent
 	 * {@inheritDoc}
 	 */
 	@Override
+	public DoaUIContainer getParent() {
+		return parent;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean getActive() {
+		return active;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setParent(DoaUIContainer parent) {
+		if (parent != null) {
+			parent.remove(this);
+		}
+		this.parent = parent;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void recalibrateBounds() {
+		bounds = new Rectangle2D.Float(position.x, position.y, width, height);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public void setPosition(final DoaVectorF newPosition) {
 		super.setPosition(newPosition);
 		recalibrateBounds();
@@ -74,14 +123,6 @@ public abstract class DoaUIComponent extends DoaObject implements DoaUIComponent
 	public void setHeight(final int height) {
 		super.setHeight(height);
 		recalibrateBounds();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void recalibrateBounds() {
-		bounds = new Rectangle2D.Float(position.x, position.y, width, height);
 	}
 
 	/**
