@@ -70,11 +70,12 @@ public final class DoaSounds {
 	        throws IOException, UnsupportedAudioFileException, LineUnavailableException
 	{
 		final DoaSoundClip sound = new DoaSoundClip();
-		final AudioInputStream stream = AudioSystem.getAudioInputStream(DoaSounds.class.getResource(soundFile));
-		final Clip clip = AudioSystem.getClip();
-		clip.open(stream);
-		sound.setClip(clip);
-		SOUND_CLIPS.put(soundName, sound);
+		try (final AudioInputStream stream = AudioSystem.getAudioInputStream(DoaSounds.class.getResource(soundFile))) {
+			final Clip clip = AudioSystem.getClip();
+			clip.open(stream);
+			sound.setClip(clip);
+			SOUND_CLIPS.put(soundName, sound);
+		}
 		return sound;
 	}
 

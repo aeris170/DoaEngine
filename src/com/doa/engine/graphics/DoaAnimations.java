@@ -16,7 +16,7 @@ import javax.imageio.stream.ImageInputStream;
  *
  * @author Doga Oruc
  * @since DoaEngine 2.2
- * @version 2.2
+ * @version 2.3.1
  */
 public final class DoaAnimations {
 
@@ -57,6 +57,25 @@ public final class DoaAnimations {
 			frames.add(new DoaSprite(reader.read(i)));
 		}
 		DoaAnimation anim = new DoaAnimation(frames, delay);
+		ORIGINAL_ANIMATIONS.put(animationName, anim);
+		DoaLights.applyAmbientLight(animationName, anim);
+		return anim;
+	}
+
+	/**
+	 * Creates an animation from a collection of DoaSprites, adds the created
+	 * animation to{@code DoaAnimations.ORIGINAL_ANIMATIONS}, and returns the newly
+	 * created animation.
+	 *
+	 * @param animationName name of the animation that will be created
+	 * @param keyframes list that contains the frames of the animation
+	 * @param delay delay between each frame of animation in milliseconds
+	 * @return the animation in {@code DoaSprites.ORIGINAL_ANIMATIONS} whose name is
+	 *         animationName
+	 * @throws IOException if sprite cannot be loaded by {@code DoaEngine}
+	 */
+	public static DoaAnimation createAnimation(final String animationName, List<DoaSprite> keyframes, final long delay) throws IOException {
+		DoaAnimation anim = new DoaAnimation(keyframes, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
 		DoaLights.applyAmbientLight(animationName, anim);
 		return anim;

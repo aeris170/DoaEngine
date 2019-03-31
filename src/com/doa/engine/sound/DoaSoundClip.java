@@ -9,14 +9,14 @@ import javax.sound.sampled.Clip;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 1.1
+ * @version 2.3.1
  * @see Clip
  */
 public class DoaSoundClip {
 
 	/**
 	 * The actual sound clip. This is the object that stores all the information
-	 * about what sound will this object will play.
+	 * about what sound this object will play.
 	 *
 	 * @see Clip
 	 */
@@ -29,9 +29,7 @@ public class DoaSoundClip {
 	private long microsecondPosition;
 
 	/**
-	 * Loops the sound clip this object will play count times. If count is 0, then
-	 * invocation of this method will result in the same way as invocation of
-	 * {@code loop(Clip.LOOP_CONTINUOUSLY);}
+	 * Loops the sound clip this object will play count times.
 	 *
 	 * @param count loop count
 	 */
@@ -43,6 +41,22 @@ public class DoaSoundClip {
 					c.stop();
 					c.setFramePosition(0);
 					c.loop(count);
+				}
+			}).start();
+		}
+	}
+
+	/**
+	 * Plays the sound clip this object will play from the beginning.
+	 */
+	public void play() {
+		if (clip != null) {
+			new Thread(() -> {
+				final Clip c = getClip();
+				synchronized (c) {
+					c.stop();
+					c.setFramePosition(0);
+					c.start();
 				}
 			}).start();
 		}
@@ -65,8 +79,8 @@ public class DoaSoundClip {
 	}
 
 	/**
-	 * Pauses the sound clip. This method will not change set the microsecond
-	 * position of the clip.
+	 * Pauses the sound clip. This method will not change the microsecond position
+	 * of the clip.
 	 */
 	public void pause() {
 		if (clip != null) {

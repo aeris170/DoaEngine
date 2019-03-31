@@ -30,7 +30,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.3";
+	public static final String VERSION = "2.3.1";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,

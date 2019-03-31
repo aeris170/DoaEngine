@@ -37,7 +37,7 @@ import com.doa.engine.task.DoaTasker;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.2
+ * @version 2.3.1
  * @see java.awt.Graphics
  * @see java.awt.Graphics2D
  * @see com.doa.engine.graphics.DoaSprite
@@ -81,16 +81,26 @@ public final class DoaGraphicsContext {
 	}
 
 	public void drawAnimation(final DoaAnimation anim, final double x, final double y, final double width, final double height) {
+		animationGuards.computeIfAbsent(anim, k -> new DoaTaskGuard());
 		DoaTaskGuard guard = animationGuards.get(anim);
-		if (guard == null) {
-			guard = new DoaTaskGuard();
-			animationGuards.put(anim, guard);
-		}
 		if (guard.get()) {
 			DoaTasker.guard(guard, anim.getDelay());
 			drawImage(anim.next(), x, y, width, height);
 		} else {
 			drawImage(anim.current(), x, y, width, height);
+		}
+	}
+
+	public void drawAnimation(final DoaAnimation anim, final double x, final double y) {
+		animationGuards.computeIfAbsent(anim, k -> new DoaTaskGuard());
+		DoaTaskGuard guard = animationGuards.get(anim);
+		if (guard.get()) {
+			DoaTasker.guard(guard, anim.getDelay());
+			DoaSprite spr = anim.next();
+			drawImage(spr, x, y, spr.getWidth(), spr.getHeight());
+		} else {
+			DoaSprite spr = anim.current();
+			drawImage(spr, x, y, spr.getWidth(), spr.getHeight());
 		}
 	}
 
