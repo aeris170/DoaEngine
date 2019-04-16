@@ -82,4 +82,25 @@ public class DoaButton extends DoaUIComponent {
 			}
 		}
 	}
+
+	/**
+	 * Adds the specified action to this button's action list. When a button is
+	 * clicked, all actions in the button's action list will be executed.
+	 * 
+	 * @param action action to add to this button's action list
+	 * @return true (as specified by Collection.add(E))
+	 */
+	public boolean addAction(DoaUIAction action) {
+		return actionList.add(action);
+	}
+
+	/**
+	 * Removes the specified action to this button's action list.
+	 * 
+	 * @param action action to be removed from this button's action list, if present
+	 * @return true if this button's action list contained the specified action
+	 */
+	public boolean removeAction(DoaUIAction action) {
+		return actionList.remove(action);
+	}
 }
