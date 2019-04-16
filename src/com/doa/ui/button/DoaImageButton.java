@@ -3,7 +3,6 @@ package com.doa.ui.button;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.graphics.DoaSprite;
 import com.doa.maths.DoaVectorF;
-import com.doa.ui.action.DoaUIAction;
 
 /**
  * A button that can render {@code DoaSprite}s onto itself. When hovered over,
@@ -12,7 +11,7 @@ import com.doa.ui.action.DoaUIAction;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3
+ * @version 2.3.2
  */
 public class DoaImageButton extends DoaButton {
 
@@ -33,12 +32,11 @@ public class DoaImageButton extends DoaButton {
 	 * @param y y coordinate of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 */
-	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage) {
-		super(x, y, width, height, action);
+	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaSprite idleImage) {
+		super(x, y, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -53,12 +51,11 @@ public class DoaImageButton extends DoaButton {
 	 * @param position position of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 */
-	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage) {
-		super(position, width, height, action);
+	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage) {
+		super(position, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -74,14 +71,13 @@ public class DoaImageButton extends DoaButton {
 	 * @param y y coordinate of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 * @param hoverImage sprite that will be rendered onto this button when the
 	 *        mouse pointer hovers over the button, cannot be null
 	 */
-	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage, DoaSprite hoverImage) {
-		super(x, y, width, height, action);
+	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage) {
+		super(x, y, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -99,14 +95,13 @@ public class DoaImageButton extends DoaButton {
 	 * @param position position of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 * @param hoverImage sprite that will be rendered onto this button when the
 	 *        mouse pointer hovers over the button, cannot be null
 	 */
-	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage, DoaSprite hoverImage) {
-		super(position, width, height, action);
+	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage) {
+		super(position, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -125,7 +120,6 @@ public class DoaImageButton extends DoaButton {
 	 * @param y y coordinate of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 * @param hoverImage sprite that will be rendered onto this button when the
@@ -133,8 +127,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param clickImage sprite that will be rendered onto this button when the
 	 *        mouse clicks the button, cannot be null
 	 */
-	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage, DoaSprite hoverImage, DoaSprite clickImage) {
-		super(x, y, width, height, action);
+	public DoaImageButton(Float x, Float y, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage, DoaSprite clickImage) {
+		super(x, y, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -155,7 +149,6 @@ public class DoaImageButton extends DoaButton {
 	 * @param position position of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 * @param idleImage sprite that will be rendered onto this button when the
 	 *        button is idle, cannot be null
 	 * @param hoverImage sprite that will be rendered onto this button when the
@@ -163,8 +156,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param clickImage sprite that will be rendered onto this button when the
 	 *        mouse clicks the button, cannot be null
 	 */
-	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaUIAction action, DoaSprite idleImage, DoaSprite hoverImage, DoaSprite clickImage) {
-		super(position, width, height, action);
+	public DoaImageButton(DoaVectorF position, Integer width, Integer height, DoaSprite idleImage, DoaSprite hoverImage, DoaSprite clickImage) {
+		super(position, width, height);
 		if (idleImage == null) {
 			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
 		}
@@ -181,6 +174,7 @@ public class DoaImageButton extends DoaButton {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
+		super.render(g);
 		if (click) {
 			g.drawImage(clickImage, position.x, position.y, width, height);
 		} else if (hover) {

@@ -1,5 +1,8 @@
 package com.doa.ui.button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.doa.engine.input.DoaMouse;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIComponent;
@@ -12,9 +15,9 @@ import com.doa.ui.action.DoaUIAction;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3
+ * @version 2.3.2
  */
-public abstract class DoaButton extends DoaUIComponent {
+public class DoaButton extends DoaUIComponent {
 
 	private static final long serialVersionUID = 8880492250633733283L;
 
@@ -29,8 +32,8 @@ public abstract class DoaButton extends DoaUIComponent {
 	protected boolean hover;
 
 	/**
-	 * Indicates if the mouse pointer is inside this buttons bounds and if mouse is
-	 * being pressed. As described by the <a href=
+	 * Indicates if the mouse pointer is inside this buttons bounds and if mouse
+	 * button 1 is pressed and released. As described by the <a href=
 	 * "https://docs.oracle.com/javase/10/docs/api/java/awt/Shape.html#def_insideness">
 	 * definition of insideness</a>.
 	 * 
@@ -39,9 +42,9 @@ public abstract class DoaButton extends DoaUIComponent {
 	protected boolean click;
 
 	/**
-	 * The event the button will do when it is clicked.
+	 * The events the button will do when it is clicked.
 	 */
-	protected transient DoaUIAction action = () -> {};
+	protected transient List<DoaUIAction> actionList = new ArrayList<>();
 
 	/**
 	 * Instantiates a button with the bounds and action.
@@ -50,13 +53,9 @@ public abstract class DoaButton extends DoaUIComponent {
 	 * @param y y coordinate of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 */
-	public DoaButton(Float x, Float y, Integer width, Integer height, DoaUIAction action) {
+	public DoaButton(Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
-		if (action != null) {
-			this.action = action;
-		}
 	}
 
 	/**
@@ -65,24 +64,21 @@ public abstract class DoaButton extends DoaUIComponent {
 	 * @param position position of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
-	 * @param action action to execute upon click
 	 */
-	public DoaButton(DoaVectorF position, Integer width, Integer height, DoaUIAction action) {
+	public DoaButton(DoaVectorF position, Integer width, Integer height) {
 		super(position, width, height);
-		if (action != null) {
-			this.action = action;
-		}
 	}
 
 	@Override
 	public void tick() {
+		super.tick();
 		hover = false;
 		click = false;
 		if (getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
 			hover = true;
-			if (DoaMouse.MB1) {
+			if (DoaMouse.MB1_RELEASE) {
 				click = true;
-				action.execute();
+				actionList.forEach(action -> action.execute());
 			}
 		}
 	}

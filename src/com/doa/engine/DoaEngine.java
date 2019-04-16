@@ -30,7 +30,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.3.1";
+	public static final String VERSION = "2.3.2";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -264,8 +264,8 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 		/* RELATIVE RENDERING STARTS HERE */
 		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
-		/* | */zoomToLookAt(g);
 		/* | */
+		/* | */zoomToLookAt(g);
 		/* | */
 		/* | */DoaHandler.renderBackground(g);
 		/* | */DoaHandler.render(g);
@@ -278,6 +278,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 		/* ADDITIONAL RENDERING STARTS HERE */
 		/* | */
 		/* | */DoaHandler.renderStaticForeground(g);
+		/* | */DoaHandler.renderUI(g);
 		/* V */
 		/* ADDITIONAL RENDERING ENDS HERE */
 

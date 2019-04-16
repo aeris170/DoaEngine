@@ -14,7 +14,7 @@ import com.doa.maths.DoaMath;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.4
+ * @version 2.3.2
  */
 public final class DoaMouse extends MouseInputAdapter {
 
@@ -48,6 +48,7 @@ public final class DoaMouse extends MouseInputAdapter {
 		public synchronized void mouseReleased(final MouseEvent e) {
 			press[e.getButton()] = false;
 			hold[e.getButton()] = false;
+			release[e.getButton()] = true;
 			mouseX = e.getX();
 			mouseY = e.getY();
 		}
@@ -71,6 +72,7 @@ public final class DoaMouse extends MouseInputAdapter {
 
 	static boolean[] press = new boolean[20];
 	static boolean[] hold = new boolean[20];
+	static boolean[] release = new boolean[20];
 	static double mouseX = 0;
 	static double mouseY = 0;
 	static double mouseZ = 1;
@@ -91,6 +93,10 @@ public final class DoaMouse extends MouseInputAdapter {
 		MB1_HOLD = hold[MouseEvent.BUTTON1];
 		MB2_HOLD = hold[MouseEvent.BUTTON2];
 		MB3_HOLD = hold[MouseEvent.BUTTON3];
+		MB1_RELEASE = release[MouseEvent.BUTTON1];
+		MB2_RELEASE = release[MouseEvent.BUTTON2];
+		MB3_RELEASE = release[MouseEvent.BUTTON3];
+		Arrays.fill(release, false);
 		X = mouseX;
 		Y = mouseY;
 		mouseZ = DoaMath.clamp(mouseZ, minZ, maxZ);
@@ -113,6 +119,7 @@ public final class DoaMouse extends MouseInputAdapter {
 	 */
 	public static boolean MB1, MB2, MB3;
 	public static boolean MB1_HOLD, MB2_HOLD, MB3_HOLD;
+	public static boolean MB1_RELEASE, MB2_RELEASE, MB3_RELEASE;
 	public static double X = mouseX;
 	public static double Y = mouseY;
 	public static double WHEEL = mouseZ;

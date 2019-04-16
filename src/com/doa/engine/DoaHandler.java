@@ -23,7 +23,7 @@ import com.doa.ui.DoaUIComponent;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.4
+ * @version 2.3.2
  */
 public final class DoaHandler {
 
@@ -32,6 +32,7 @@ public final class DoaHandler {
 	private static final List<DoaObject> GAME_OBJECTS = new CopyOnWriteArrayList<>();
 	private static final List<DoaObject> FRONT_OBJECTS = new CopyOnWriteArrayList<>();
 	private static final List<DoaObject> STATIC_FRONT_OBJECTS = new CopyOnWriteArrayList<>();
+	private static final List<DoaObject> UI_COMPONENTS = new CopyOnWriteArrayList<>();
 
 	private static final ExecutorService EXECUTOR = DoaEngine.MULTI_THREAD_ENABLED ? Executors.newCachedThreadPool() : Executors.newSingleThreadExecutor();
 
@@ -135,13 +136,22 @@ public final class DoaHandler {
 		}
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
-				if (o instanceof DoaUIComponent) {
-					DoaUIComponent component = (DoaUIComponent) o;
-					if (!component.getActive()) {
-						return null;
-					}
-				}
 				o.tick();
+				return null;
+			});
+		}
+		try {
+			EXECUTOR.invokeAll(tasks);
+		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
+		}
+		for (final DoaObject o : UI_COMPONENTS) {
+			tasks.add(() -> {
+				DoaUIComponent component = (DoaUIComponent) o;
+				if (component.isVisible()) {
+					o.tick();
+				}
 				return null;
 			});
 		}
@@ -266,13 +276,35 @@ public final class DoaHandler {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
-				if (o instanceof DoaUIComponent) {
-					DoaUIComponent component = (DoaUIComponent) o;
-					if (!component.getActive()) {
-						return null;
-					}
-				}
 				o.render(g);
+				return null;
+			});
+		}
+		try {
+			EXECUTOR.invokeAll(tasks);
+		} catch (final InterruptedException ex) {
+			Thread.currentThread().interrupt();
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method is required to be public, but should never be called explicitly
+	 * by any class at any time except {@code DoaEngine}. {@code DoaEngine} provides
+	 * no guarantees on the quality and consistency of rendering of any
+	 * {@code DoaObject} that is present in the {@code DoaHandler} at the time of
+	 * this method's illegal invocation.
+	 *
+	 * @param g the graphics context of {@code DoaEngine}
+	 */
+	public static void renderUI(final DoaGraphicsContext g) {
+		final List<Callable<Void>> tasks = new ArrayList<>();
+		for (final DoaObject o : UI_COMPONENTS) {
+			tasks.add(() -> {
+				DoaUIComponent component = (DoaUIComponent) o;
+				if (component.isVisible()) {
+					o.render(g);
+				}
 				return null;
 			});
 		}
@@ -321,6 +353,7 @@ public final class DoaHandler {
 		GAME_OBJECTS.clear();
 		FRONT_OBJECTS.clear();
 		STATIC_FRONT_OBJECTS.clear();
+		UI_COMPONENTS.clear();
 	}
 
 	/**
@@ -376,8 +409,15 @@ public final class DoaHandler {
 	 *         will not move relative to the {@code DoaCamera}.
 	 * @see DoaObject#STATIC_FRONT
 	 */
-	public static List<DoaObject> getHudAndMenuObjects() {
+	public static List<DoaObject> getStaticFrontObjects() {
 		return STATIC_FRONT_OBJECTS;
+	}
+
+	/**
+	 * @return {@code DoaUIComponents}s that are rendered to the screen.
+	 */
+	public static List<DoaObject> getUIComponents() {
+		return UI_COMPONENTS;
 	}
 
 	private static List<DoaObject> findListAccordingToZOrder(final DoaObject o) {
@@ -392,6 +432,8 @@ public final class DoaHandler {
 				return FRONT_OBJECTS;
 			case 3:
 				return STATIC_FRONT_OBJECTS;
+			case 999:
+				return UI_COMPONENTS;
 			default:
 				return new ArrayList<>();
 		}

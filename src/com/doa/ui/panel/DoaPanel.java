@@ -8,9 +8,9 @@ import com.doa.ui.DoaUIContainer;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3
+ * @version 2.3.2
  */
-public abstract class DoaPanel extends DoaUIContainer {
+public class DoaPanel extends DoaUIContainer {
 
 	private static final long serialVersionUID = -955184547040405826L;
 

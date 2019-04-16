@@ -1,7 +1,7 @@
 package com.doa.ui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.doa.maths.DoaVectorF;
 
@@ -14,13 +14,13 @@ import com.doa.maths.DoaVectorF;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3
+ * @version 2.3.2
  */
-public abstract class DoaUIContainer extends DoaUIComponent implements DoaUIContainerI {
+public abstract class DoaUIContainer extends DoaUIComponent {
 
 	private static final long serialVersionUID = -485166756790159338L;
 
-	private List<DoaUIComponent> components = new ArrayList<>();
+	private Set<DoaUIComponent> components = new HashSet<>();
 
 	/**
 	 * Instantiates a UI component container with the specified bounds
@@ -49,45 +49,70 @@ public abstract class DoaUIContainer extends DoaUIComponent implements DoaUICont
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setActive(boolean active) {
-		super.setActive(active);
-		components.forEach(component -> component.setActive(active));
+	public void show() {
+		super.show();
+		components.forEach(component -> component.show());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DoaUIComponent> add(DoaUIComponent component) {
+	public void hide() {
+		super.hide();
+		components.forEach(component -> component.hide());
+	}
+
+	/**
+	 * Adds the specified component the this container.
+	 * 
+	 * @param component component to add to this container
+	 * @return the added component
+	 */
+	public Set<DoaUIComponent> add(DoaUIComponent component) {
 		component.setParent(this);
 		components.add(component);
 		return components;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Removes the specified component from this container.
+	 * 
+	 * @param component component to remove from this container
+	 * @return the removed component
 	 */
-	@Override
-	public List<DoaUIComponent> remove(DoaUIComponent component) {
+	public Set<DoaUIComponent> remove(DoaUIComponent component) {
 		component.setParent(null);
 		components.remove(component);
 		return components;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Removes all components from this container, effectively rendering it empty.
+	 * 
+	 * @return components inside this container after before the removal
 	 */
-	@Override
-	public List<DoaUIComponent> removeAll() {
+	public Set<DoaUIComponent> removeAll() {
 		components.clear();
 		return components;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the list of components held by this container.
+	 * 
+	 * @return components inside this container
 	 */
-	@Override
-	public List<DoaUIComponent> getComponents() {
+	public Set<DoaUIComponent> getComponents() {
 		return components;
+	}
+
+	/**
+	 * Returns whether the passed component is added to this container.
+	 * 
+	 * @param component component whose presence is to be tested
+	 * @return true if and only if getComponents.contains(component) == true
+	 */
+	public boolean contains(DoaUIComponent component) {
+		return components.contains(component);
 	}
 }
