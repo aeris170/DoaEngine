@@ -174,7 +174,6 @@ public class DoaImageButton extends DoaButton {
 
 	@Override
 	public void render(DoaGraphicsContext g) {
-		super.render(g);
 		if (click) {
 			g.drawImage(clickImage, position.x, position.y, width, height);
 		} else if (hover) {

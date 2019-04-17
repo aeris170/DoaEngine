@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 
 import com.doa.engine.DoaObject;
-import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
 
 /**
@@ -62,16 +61,6 @@ public abstract class DoaUIComponent extends DoaObject {
 	@Override
 	public void tick() {
 		recalibrateBounds();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void render(DoaGraphicsContext g) {
-		if (!isVisible) {
-			return;
-		}
 	}
 
 	/**

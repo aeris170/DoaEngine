@@ -9,6 +9,7 @@ package com.doa.ui.action;
  * @since DoaEngine 2.3
  * @version 2.3
  */
+@FunctionalInterface
 public interface DoaUIAction {
 
 	/**

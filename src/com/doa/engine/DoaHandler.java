@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.ui.DoaUIComponent;
+import com.doa.ui.DoaUIContainer;
 
 /**
  * Responsible for keeping track of all {@code DoaObject}s. All
@@ -139,12 +140,6 @@ public final class DoaHandler {
 				o.tick();
 				return null;
 			});
-		}
-		try {
-			EXECUTOR.invokeAll(tasks);
-		} catch (final InterruptedException ex) {
-			Thread.currentThread().interrupt();
-			ex.printStackTrace();
 		}
 		for (final DoaObject o : UI_COMPONENTS) {
 			tasks.add(() -> {
@@ -301,8 +296,10 @@ public final class DoaHandler {
 		final List<Callable<Void>> tasks = new ArrayList<>();
 		for (final DoaObject o : UI_COMPONENTS) {
 			tasks.add(() -> {
-				DoaUIComponent component = (DoaUIComponent) o;
-				if (component.isVisible()) {
+				if (o instanceof DoaUIContainer && ((DoaUIContainer) o).isVisible()) {
+					o.render(g);
+					((DoaUIContainer) o).getComponents().forEach(c -> c.render(g));
+				} else if (o instanceof DoaUIComponent && ((DoaUIComponent) o).getParent() == null && ((DoaUIComponent) o).isVisible()) {
 					o.render(g);
 				}
 				return null;

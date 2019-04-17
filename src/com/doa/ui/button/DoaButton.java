@@ -17,7 +17,7 @@ import com.doa.ui.action.DoaUIAction;
  * @since DoaEngine 2.3
  * @version 2.3.2
  */
-public class DoaButton extends DoaUIComponent {
+public abstract class DoaButton extends DoaUIComponent {
 
 	private static final long serialVersionUID = 8880492250633733283L;
 
