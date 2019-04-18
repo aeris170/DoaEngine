@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
+import com.doa.engine.input.DoaMouse;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.DoaUIContainer;
 
@@ -111,6 +112,32 @@ public final class DoaHandler {
 	 */
 	public static void tick() {
 		final List<Callable<Void>> tasks = new ArrayList<>();
+		for (final DoaObject o : UI_COMPONENTS) {
+			tasks.add(() -> {
+				DoaUIComponent component = (DoaUIComponent) o;
+				if (component.isVisible()) {
+					o.tick();
+					if (o.getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
+						if (DoaMouse.MB1) {
+							DoaMouse.MB1 = false;
+							DoaMouse.MB1_HOLD = false;
+							DoaMouse.MB1_RELEASE = false;
+						}
+						if (DoaMouse.MB2) {
+							DoaMouse.MB2 = false;
+							DoaMouse.MB2_HOLD = false;
+							DoaMouse.MB2_RELEASE = false;
+						}
+						if (DoaMouse.MB3) {
+							DoaMouse.MB3 = false;
+							DoaMouse.MB3_HOLD = false;
+							DoaMouse.MB3_RELEASE = false;
+						}
+					}
+				}
+				return null;
+			});
+		}
 		for (final DoaObject o : STATIC_BACK_OBJECTS) {
 			tasks.add(() -> {
 				o.tick();
@@ -138,15 +165,6 @@ public final class DoaHandler {
 		for (final DoaObject o : STATIC_FRONT_OBJECTS) {
 			tasks.add(() -> {
 				o.tick();
-				return null;
-			});
-		}
-		for (final DoaObject o : UI_COMPONENTS) {
-			tasks.add(() -> {
-				DoaUIComponent component = (DoaUIComponent) o;
-				if (component.isVisible()) {
-					o.tick();
-				}
 				return null;
 			});
 		}
