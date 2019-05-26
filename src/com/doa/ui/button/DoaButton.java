@@ -15,7 +15,7 @@ import com.doa.ui.action.DoaUIAction;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3.2
+ * @version 2.5
  */
 public abstract class DoaButton extends DoaUIComponent {
 
@@ -71,14 +71,20 @@ public abstract class DoaButton extends DoaUIComponent {
 
 	@Override
 	public void tick() {
-		super.tick();
-		hover = false;
-		click = false;
-		if (getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
-			hover = true;
-			if (DoaMouse.MB1_RELEASE) {
-				click = true;
-				actionList.forEach(action -> action.execute());
+		if (isEnabled) {
+			hover = false;
+			click = false;
+			if (getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
+				hover = true;
+				if (DoaMouse.MB1_HOLD) {
+					click = true;
+				}
+				if (DoaMouse.MB1_RELEASE) {
+					actionList.forEach(action -> action.execute());
+					DoaMouse.MB1 = false;
+					DoaMouse.MB1_HOLD = false;
+					DoaMouse.MB1_RELEASE = false;
+				}
 			}
 		}
 	}

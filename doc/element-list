@@ -1,6 +1,7 @@
 com.doa.engine
 com.doa.engine.graphics
 com.doa.engine.input
+com.doa.engine.main
 com.doa.engine.sound
 com.doa.engine.task
 com.doa.maths

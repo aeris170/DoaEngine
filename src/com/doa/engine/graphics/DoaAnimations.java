@@ -1,5 +1,6 @@
 package com.doa.engine.graphics;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import javax.imageio.stream.ImageInputStream;
  *
  * @author Doga Oruc
  * @since DoaEngine 2.2
- * @version 2.3.1
+ * @version 2.5
  */
 public final class DoaAnimations {
 
@@ -31,9 +32,6 @@ public final class DoaAnimations {
 	 */
 	public static final Map<String, DoaAnimation> SHADED_ANIMATIONS = new HashMap<>();
 
-	/**
-	 * Constructor.
-	 */
 	private DoaAnimations() {}
 
 	/**
@@ -52,9 +50,9 @@ public final class DoaAnimations {
 		ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
 		ImageInputStream in = ImageIO.createImageInputStream(DoaSprites.class.getResourceAsStream(animationFile));
 		reader.setInput(in);
-		List<DoaSprite> frames = new ArrayList<>();
+		List<BufferedImage> frames = new ArrayList<>();
 		for (int i = 0, count = reader.getNumImages(true); i < count; i++) {
-			frames.add(new DoaSprite(reader.read(i)));
+			frames.add(reader.read(i));
 		}
 		DoaAnimation anim = new DoaAnimation(frames, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
@@ -74,7 +72,7 @@ public final class DoaAnimations {
 	 *         animationName
 	 * @throws IOException if sprite cannot be loaded by {@code DoaEngine}
 	 */
-	public static DoaAnimation createAnimation(final String animationName, List<DoaSprite> keyframes, final long delay) throws IOException {
+	public static DoaAnimation createAnimation(final String animationName, List<BufferedImage> keyframes, final long delay) throws IOException {
 		DoaAnimation anim = new DoaAnimation(keyframes, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
 		DoaLights.applyAmbientLight(animationName, anim);

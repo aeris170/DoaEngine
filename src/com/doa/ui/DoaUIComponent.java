@@ -16,7 +16,7 @@ import com.doa.maths.DoaVectorF;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3.2
+ * @version 2.5
  */
 public abstract class DoaUIComponent extends DoaObject {
 
@@ -25,7 +25,12 @@ public abstract class DoaUIComponent extends DoaObject {
 	/**
 	 * Whether or not this component will be rendered.
 	 */
-	protected boolean isVisible;
+	protected boolean isVisible = true;
+
+	/**
+	 * Whether or not this component is interactive.
+	 */
+	protected boolean isEnabled = true;
 
 	private transient Rectangle2D bounds;
 	private DoaUIContainer parent;
@@ -39,7 +44,7 @@ public abstract class DoaUIComponent extends DoaObject {
 	 * @param height height of the UI component
 	 */
 	public DoaUIComponent(Float x, Float y, Integer width, Integer height) {
-		super(x, y, width, height, 999);
+		super(x, y, width, height);
 		recalibrateBounds();
 	}
 
@@ -51,15 +56,7 @@ public abstract class DoaUIComponent extends DoaObject {
 	 * @param height height of the UI component
 	 */
 	public DoaUIComponent(DoaVectorF position, Integer width, Integer height) {
-		super(position, width, height, 999);
-		recalibrateBounds();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void tick() {
+		super(position, width, height);
 		recalibrateBounds();
 	}
 
@@ -71,15 +68,7 @@ public abstract class DoaUIComponent extends DoaObject {
 		return bounds;
 	}
 
-	/**
-	 * Sets the parent of this component.
-	 * 
-	 * @param parent the container which will hold this component
-	 */
-	public void setParent(DoaUIContainer parent) {
-		if (parent != null) {
-			parent.remove(this);
-		}
+	void setParent(DoaUIContainer parent) {
 		this.parent = parent;
 	}
 
@@ -107,6 +96,20 @@ public abstract class DoaUIComponent extends DoaObject {
 	}
 
 	/**
+	 * Enables interaction with this component.
+	 */
+	public void enable() {
+		isEnabled = true;
+	}
+
+	/**
+	 * Disables interaction with this component.
+	 */
+	public void disable() {
+		isEnabled = false;
+	}
+
+	/**
 	 * Return whether this component is visible or not.
 	 * 
 	 * @return true if and only if, the component will be ticked and rendered on the
@@ -116,7 +119,17 @@ public abstract class DoaUIComponent extends DoaObject {
 		return isVisible;
 	}
 
-	private void recalibrateBounds() {
+	/**
+	 * Return whether this component is enabled or not.
+	 * 
+	 * @return true if and only if, the component will be able to react to and
+	 *         absorb mouse events.
+	 */
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void recalibrateBounds() {
 		bounds = new Rectangle2D.Float(position.x, position.y, width, height);
 	}
 

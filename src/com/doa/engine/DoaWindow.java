@@ -14,14 +14,14 @@ import javax.swing.WindowConstants;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.4
+ * @version 2.5
  */
 public final class DoaWindow extends JFrame {
 
 	private static final long serialVersionUID = -2046962443183200678L;
 
-	protected static int WINDOW_WIDTH;
-	protected static int WINDOW_HEIGHT;
+	public static int WINDOW_WIDTH;
+	public static int WINDOW_HEIGHT;
 
 	private static DoaWindow Window;
 

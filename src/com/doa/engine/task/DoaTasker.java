@@ -14,7 +14,7 @@ import com.doa.utils.DoaUtils;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.2
+ * @version 2.5
  */
 public final class DoaTasker {
 
@@ -53,12 +53,14 @@ public final class DoaTasker {
 	 * @see java.lang.Thread
 	 */
 	public static void guardExecution(final Runnable task, final DoaTaskGuard guard, final long waitTime) {
-		guard.set(false);
-		EXECUTOR.execute(() -> {
-			task.run();
-			DoaUtils.sleepFor(waitTime);
-			guard.set(true);
-		});
+		if (guard.get()) {
+			guard.set(false);
+			EXECUTOR.execute(() -> {
+				task.run();
+				DoaUtils.sleepFor(waitTime);
+				guard.set(true);
+			});
+		}
 	}
 
 	/**

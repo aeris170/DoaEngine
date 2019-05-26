@@ -1,5 +1,6 @@
 package com.doa.engine.graphics;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
@@ -9,17 +10,16 @@ import java.util.List;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.2
- * @version 2.2
- * @see com.doa.engine.graphics.DoaSprite
+ * @version 2.5
  * @see com.doa.engine.graphics.DoaAnimations
  */
 public class DoaAnimation {
 
-	private List<DoaSprite> frames;
+	private List<BufferedImage> frames;
 	private long delay;
 	private int index = 0;
 
-	DoaAnimation(List<DoaSprite> frames, long delay) {
+	DoaAnimation(List<BufferedImage> frames, long delay) {
 		this.frames = frames;
 		this.delay = delay;
 	}
@@ -27,7 +27,7 @@ public class DoaAnimation {
 	/**
 	 * @return the frames of this animation
 	 */
-	public List<DoaSprite> getFrames() {
+	public List<BufferedImage> getFrames() {
 		return frames;
 	}
 
@@ -50,7 +50,7 @@ public class DoaAnimation {
 	 * 
 	 * @return current sprite to render
 	 */
-	public DoaSprite current() {
+	public BufferedImage current() {
 		return frames.get((index + frames.size()) % frames.size());
 	}
 
@@ -61,7 +61,7 @@ public class DoaAnimation {
 	 * 
 	 * @return the next sprite to render
 	 */
-	public DoaSprite next() {
+	public BufferedImage next() {
 		return frames.get((index++ + frames.size()) % frames.size());
 	}
 

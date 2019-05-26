@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
+import com.doa.maths.DoaVectorI;
 
 /**
  * Blueprint of all objects that are going to be processed by {@code DoaEngine},
@@ -14,60 +15,11 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.3
+ * @version 2.5
  */
 public abstract class DoaObject implements Serializable {
 
 	private static final long serialVersionUID = -3293257583358544377L;
-
-	/**
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#STATIC_BACK} will be
-	 * drawn first to the screen. Because they are drawn first, they will naturally
-	 * be behind all other {@code DoaObject}s with higher zOrders. Use this zOrder
-	 * if your background is inanimate.
-	 */
-	public static final int STATIC_BACK = -1;
-
-	/**
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#BACK} will be drawn
-	 * second to the screen. Because they are drawn second, they will naturally be
-	 * behind all other {@code DoaObject}s with higher zOrders except
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#STATIC_BACK}. Use this
-	 * zOrder for animate background/map images.
-	 */
-	public static final int BACK = 0;
-
-	/**
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#GAME_OBJECTS} will be
-	 * drawn in front of {@code DoaObject}s with a zOrder of {@link DoaObject#BACK}
-	 * but behind of {@code DoaObject}s with a zOrder of {@link DoaObject#FRONT}.
-	 * This value is the default zOrder of a {@code DoaObject}. Use this zOrder for
-	 * your player, enemies, blocks, items etc. etc.
-	 */
-	public static final int GAME_OBJECTS = 1;
-
-	/**
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#FRONT} will be drawn in
-	 * front of all other {@code DoaObject}s except {@code DoaObject}s with a zOrder
-	 * of {@link DoaObject#STATIC_FRONT}. Use this zOrder to prioritise certain
-	 * {@code DoaObject}s over others, like if you want your player to be never
-	 * rendered behind enemies.
-	 */
-	public static final int FRONT = 2;
-
-	/**
-	 * {@code DoaObject}s with a zOrder of {@link DoaObject#STATIC_FRONT} will be
-	 * drawn in front of all other {@code DoaObject}s, and will not be move relative
-	 * to {@code DoaCamera}. Use this zOrder to render HUDS, menus, and certain
-	 * on-screen effects like blood splattering.
-	 */
-	public static final int STATIC_FRONT = 3;
-
-	/**
-	 * Null Object of {@code DoaObject}. See the Null Object design pattern for more
-	 * info.
-	 */
-	public static final transient DoaObject NULL = new NullDoaObject();
 
 	/**
 	 * position of {@code DoaObject}
@@ -90,9 +42,15 @@ public abstract class DoaObject implements Serializable {
 	protected DoaVectorF velocity = new DoaVectorF();
 
 	/**
-	 * zOrder of {@code DoaObject}, default is {@link DoaObject#GAME_OBJECTS}
+	 * zOrder of {@code DoaObject}, default is 0.
 	 */
-	protected Integer zOrder = GAME_OBJECTS;
+	private Integer zOrder = 0;
+
+	/**
+	 * True if camera's transformation will not be concatenated to this DoaObject's
+	 * transform. False if otherwise.
+	 */
+	private boolean isFixed = false;
 
 	/**
 	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
@@ -203,25 +161,6 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * @deprecated Since DoaEngine v1.1 it is ill-advised to use this method. This
-	 *             method only exists for backwards compatibility. Use
-	 *             {@link DoaHandler#instantiateDoaObject(Class, Object...)} for
-	 *             instantiating objects instead.
-	 *             <p>
-	 *             <s> Finalises this {@code DoaObject}'s instantiation by adding it
-	 *             to {@code DoaHandler}. This method should only be called once,
-	 *             STRICTLY after ALL constructor related tasks are finished.
-	 *             Otherwise, {@code DoaEngine} might run into a
-	 *             NullPointerException. </s>
-	 *             </p>
-	 * @see java.lang.NullPointerException
-	 */
-	@Deprecated
-	public void finalise() {
-		DoaHandler.add(this);
-	}
-
-	/**
 	 * This method is required to be public, but should never be called explicitly
 	 * by any class at any time except {@code DoaEngine}. If done otherwise,
 	 * {@code DoaEngine} provides no guarantees on the consistency of the internal
@@ -273,6 +212,14 @@ public abstract class DoaObject implements Serializable {
 		return zOrder;
 	}
 
+	public DoaVectorI getSize() {
+		return new DoaVectorI(width, height);
+	}
+
+	public boolean isFixed() {
+		return isFixed;
+	}
+
 	public void setPosition(final DoaVectorF newPosition) {
 		position = newPosition;
 	}
@@ -295,35 +242,12 @@ public abstract class DoaObject implements Serializable {
 		DoaHandler.add(this);
 	}
 
-	/**
-	 * Exists due to DoaObject being an abstract class. See Null Object design
-	 * pattern for more info.
-	 *
-	 * @author Doga Oruc
-	 * @since DoaEngine 1.2
-	 * @version 1.2
-	 */
-	private static class NullDoaObject extends DoaObject {
+	public void setSize(DoaVectorI size) {
+		width = size.x;
+		height = size.y;
+	}
 
-		private static final long serialVersionUID = 0;
-
-		NullDoaObject() {
-			super(0f, 0f, 0, 0);
-		}
-
-		@Override
-		public void tick() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void render(final DoaGraphicsContext g) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Shape getBounds() {
-			throw new UnsupportedOperationException();
-		}
+	public void setFixed(boolean isFixed) {
+		this.isFixed = isFixed;
 	}
 }

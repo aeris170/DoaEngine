@@ -1,6 +1,11 @@
 package com.doa.engine.graphics;
 
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,24 +18,21 @@ import javax.imageio.ImageIO;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.2
+ * @version 2.5
  */
 public final class DoaSprites {
 
 	/**
 	 * Collection that maps sprite names to sprites.
 	 */
-	public static final Map<String, DoaSprite> ORIGINAL_SPRITES = new HashMap<>();
+	public static final Map<String, BufferedImage> ORIGINAL_SPRITES = new HashMap<>();
 
 	/**
 	 * Collection that maps sprite names to sprites that are shaded according to the
 	 * lights the scene has.
 	 */
-	public static final Map<String, DoaSprite> SHADED_SPRITES = new HashMap<>();
+	public static final Map<String, BufferedImage> SHADED_SPRITES = new HashMap<>();
 
-	/**
-	 * Constructor.
-	 */
 	private DoaSprites() {}
 
 	/**
@@ -43,11 +45,11 @@ public final class DoaSprites {
 	 *         spriteName
 	 * @throws IOException if sprite cannot be loaded by {@code DoaEngine}
 	 */
-	public static DoaSprite createSprite(final String spriteName, final String spriteFile) throws IOException {
-		DoaSprite sp = new DoaSprite(ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)));
+	public static BufferedImage createSprite(final String spriteName, final String spriteFile) throws IOException {
+		BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile));
 		ORIGINAL_SPRITES.put(spriteName, sp);
 		DoaLights.applyAmbientLight(spriteName, sp);
-		return sp;
+		return toCompat(sp);
 	}
 
 	/**
@@ -64,12 +66,12 @@ public final class DoaSprites {
 	 *         spriteName
 	 * @throws IOException if sprite-sheet cannot be loaded by {@code DoaEngine}
 	 */
-	public static DoaSprite createSpriteFromSpriteSheet(final String spriteName, final String spriteFile, final Rectangle boundaries) throws IOException {
-		final DoaSprite sp = new DoaSprite(
-		        ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)).getSubimage(boundaries.x, boundaries.y, boundaries.width, boundaries.height));
+	public static BufferedImage createSpriteFromSpriteSheet(final String spriteName, final String spriteFile, final Rectangle boundaries) throws IOException {
+		final BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)).getSubimage(boundaries.x, boundaries.y, boundaries.width,
+		        boundaries.height);
 		ORIGINAL_SPRITES.put(spriteName, sp);
 		DoaLights.applyAmbientLight(spriteName, sp);
-		return sp;
+		return toCompat(sp);
 	}
 
 	/**
@@ -82,7 +84,72 @@ public final class DoaSprites {
 	 * @return the sprite in {@code DoaSprites.SHADED_SPRITES} whose name is
 	 *         spriteName
 	 */
-	public static DoaSprite get(final String spriteName) {
+	public static BufferedImage get(final String spriteName) {
 		return SHADED_SPRITES.get(spriteName);
+	}
+
+	/**
+	 * Deep copies a {@code DoaSprite}
+	 *
+	 * @param sprite {@code DoaSprite} to deep copy
+	 * @return the deep copy of the passed {@code DoaSprites}
+	 */
+	public static BufferedImage deepCopyDoaSprite(BufferedImage sprite) {
+		return toCompat(sprite);
+	}
+
+	/**
+	 * Creates a scaled version of a {@code DoaSprite}.A new {@code DoaSprite} will
+	 * be returned as a result of this call. The returned sprite is not stored
+	 * neither inside {@code DoaSprites.ORIGINAL_SPRITES}, nor
+	 * {@code DoaSprites.SHADED_SPRITES}.
+	 * 
+	 * @param sprite {@code DoaSprite} to scale
+	 * @param width width of the scaled {@code DoaSprite}
+	 * @param height height of the scaled {@code DoaSprite}
+	 * @return the scaled instance of the passed {@code DoaSprite}
+	 */
+	public static BufferedImage scale(BufferedImage sprite, int width, int height) {
+		if (sprite == null) {
+			throw new IllegalArgumentException("sprite == null");
+		}
+		if (width < 0) {
+			throw new IllegalArgumentException("width < 0");
+		}
+		if (height < 0) {
+			throw new IllegalArgumentException("height < 0");
+		}
+		Image i = sprite.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		if (i instanceof BufferedImage) {
+			return ((BufferedImage) i);
+		}
+		BufferedImage bimage = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(i, 0, 0, null);
+		bGr.dispose();
+		return toCompat(bimage);
+	}
+
+	private static BufferedImage toCompat(BufferedImage sp) {
+		// obtain the current system graphical settings
+		GraphicsConfiguration gfxConfig = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+
+		/* if image is already compatible and optimized for current system settings,
+		 * simply return it */
+		if (sp.getColorModel().equals(gfxConfig.getColorModel()))
+			return sp;
+
+		// image is not optimized, so create a new image that is
+		BufferedImage newImage = gfxConfig.createCompatibleImage(sp.getWidth(), sp.getHeight(), sp.getTransparency());
+
+		// get the graphics context of the new image to draw the old image on
+		Graphics2D g2d = newImage.createGraphics();
+
+		// actually draw the image and dispose of context no longer needed
+		g2d.drawImage(sp, 0, 0, null);
+		g2d.dispose();
+
+		// return the new optimized image
+		return newImage;
 	}
 }

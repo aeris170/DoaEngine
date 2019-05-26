@@ -4,7 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -30,7 +29,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.3.2";
+	public static final String VERSION = "2.5";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -43,16 +42,6 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 * Enable/Disable verbose debugging to console.
 	 */
 	public static boolean DEBUG_ENABLED = false;
-
-	/**
-	 * <strong>EXPERIMENTAL</strong>
-	 * <p>
-	 * Determines if DoaEngine should run on multiple cores. The amount of cores
-	 * DoaEngine will utilise depends on the system configuration and the OS of the
-	 * machine DoaEngine runs on.
-	 * </p>
-	 */
-	public static boolean MULTI_THREAD_ENABLED = false;
 
 	/**
 	 * Default background color of render canvas.
@@ -255,62 +244,10 @@ public final class DoaEngine extends Canvas implements Runnable {
 		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
 		g.fillRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
 
-		/* PRE RENDERING STARTS HERE */
-		/* | */
-		/* | */g.turnOnLightContribution();
-		/* | */DoaHandler.renderStaticBackground(g);
-		/* V */
-		/* RELATIVE RENDERING ENDS HERE */
-
-		/* RELATIVE RENDERING STARTS HERE */
-		/* | */g.translate(-DoaCamera.getX(), -DoaCamera.getY());
-		/* | */
-		/* | */zoomToLookAt(g);
-		/* | */
-		/* | */DoaHandler.renderBackground(g);
-		/* | */DoaHandler.render(g);
-		/* | */DoaHandler.renderForeground(g);
-		/* | */g.turnOffLightContribution();
-		/* | */
-		/* V */restoreTransform(g);
-		/* RELATIVE RENDERING ENDS HERE */
-
-		/* ADDITIONAL RENDERING STARTS HERE */
-		/* | */
-		/* | */DoaHandler.renderStaticForeground(g);
-		/* | */DoaHandler.renderUI(g);
-		/* V */
-		/* ADDITIONAL RENDERING ENDS HERE */
-
-		/* LIGHTING & POST-PROCESSING STARTS HERE */
-		/* | */
-		/* | */ /* I NEED HELP WITH THIS :( */
-		/* V */
-		/* LIGHTING & POST-PROCESSING ENDS HERE */
+		DoaHandler.render(g);
 
 		bs.show();
 		g.dispose();
-	}
-
-	private static void zoomToLookAt(final DoaGraphicsContext g) {
-		if (DoaCamera.isMouseZoomingEnabled()) {
-			final DoaObject centerOfZoom = DoaCamera.getObjectToZoomInto();
-			if (centerOfZoom != null) {
-				g.translate(DoaCamera.getX() + centerOfZoom.position.x + centerOfZoom.width / 2.0,
-				        DoaCamera.getY() + centerOfZoom.position.y + centerOfZoom.height / 2.0);
-				g.scale(DoaCamera.getZ(), DoaCamera.getZ());
-				g.translate(-DoaCamera.getX() - centerOfZoom.position.x - centerOfZoom.width / 2.0,
-				        -DoaCamera.getY() - centerOfZoom.position.y - centerOfZoom.height / 2.0);
-			} else {
-				g.translate(DoaCamera.getX() + DoaWindow.WINDOW_WIDTH / 2.0, DoaCamera.getY() + DoaWindow.WINDOW_HEIGHT / 2.0);
-				g.scale(DoaCamera.getZ(), DoaCamera.getZ());
-				g.translate(-DoaCamera.getX() - DoaWindow.WINDOW_WIDTH / 2.0, -DoaCamera.getY() - DoaWindow.WINDOW_HEIGHT / 2.0);
-			}
-		}
-	}
-
-	private static void restoreTransform(final DoaGraphicsContext g) {
-		g.setTransform(new AffineTransform());
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })

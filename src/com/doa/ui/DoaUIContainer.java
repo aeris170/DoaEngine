@@ -3,6 +3,7 @@ package com.doa.ui;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.doa.engine.DoaHandler;
 import com.doa.maths.DoaVectorF;
 
 /**
@@ -14,7 +15,7 @@ import com.doa.maths.DoaVectorF;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3.2
+ * @version 2.5
  */
 public abstract class DoaUIContainer extends DoaUIComponent {
 
@@ -32,6 +33,8 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 */
 	public DoaUIContainer(Float x, Float y, Integer width, Integer height) {
 		super(x, y, width, height);
+		show();
+		enable();
 	}
 
 	/**
@@ -43,6 +46,8 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 */
 	public DoaUIContainer(DoaVectorF position, Integer width, Integer height) {
 		super(position, width, height);
+		show();
+		enable();
 	}
 
 	/**
@@ -51,7 +56,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void show() {
 		super.show();
-		components.forEach(component -> component.show());
+		components.forEach(c -> c.show());
 	}
 
 	/**
@@ -60,41 +65,63 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void hide() {
 		super.hide();
-		components.forEach(component -> component.hide());
+		components.forEach(c -> c.hide());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void enable() {
+		super.enable();
+		components.forEach(c -> c.enable());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void disable() {
+		super.disable();
+		components.forEach(c -> c.disable());
 	}
 
 	/**
 	 * Adds the specified component the this container.
 	 * 
 	 * @param component component to add to this container
-	 * @return the added component
 	 */
-	public Set<DoaUIComponent> add(DoaUIComponent component) {
-		component.setParent(this);
+	public void add(DoaUIComponent component) {
+		if (component.getParent() != null) {
+			component.getParent().remove(component);
+		}
 		components.add(component);
-		return components;
+		component.setParent(this);
+		component.isVisible = isVisible;
+		component.isEnabled = isEnabled;
+		DoaHandler.add(component);
 	}
 
 	/**
 	 * Removes the specified component from this container.
 	 * 
 	 * @param component component to remove from this container
-	 * @return the removed component
 	 */
-	public Set<DoaUIComponent> remove(DoaUIComponent component) {
-		component.setParent(null);
-		components.remove(component);
-		return components;
+	public void remove(DoaUIComponent component) {
+		if (components.contains(component)) {
+			components.remove(component);
+			component.setParent(null);
+			component.isVisible = false;
+			component.isEnabled = false;
+			DoaHandler.remove(component);
+		}
 	}
 
 	/**
-	 * Removes all components from this container, effectively rendering it empty.
-	 * 
-	 * @return components inside this container after before the removal
+	 * Removes all components from this container.
 	 */
-	public Set<DoaUIComponent> removeAll() {
-		components.clear();
-		return components;
+	public void removeAll() {
+		components.forEach(c -> remove(c));
 	}
 
 	/**
