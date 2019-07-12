@@ -126,7 +126,7 @@ public final class DoaHandler {
 			});
 		}
 		for (Map.Entry<Integer, Set<DoaObject>> e : OBJECTS.descendingMap().entrySet()) {
-			e.getValue().forEach(object -> object.tick());
+			e.getValue().forEach(DoaObject::tick);
 		}
 	}
 

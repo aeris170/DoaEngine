@@ -1,9 +1,11 @@
 package com.doa.ui;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.doa.engine.DoaHandler;
+import com.doa.engine.DoaObject;
 import com.doa.maths.DoaVectorF;
 
 /**
@@ -21,7 +23,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 
 	private static final long serialVersionUID = -485166756790159338L;
 
-	private Set<DoaUIComponent> components = new HashSet<>();
+	private List<DoaUIComponent> components = new CopyOnWriteArrayList<>();
 
 	/**
 	 * Instantiates a UI component container with the specified bounds
@@ -56,7 +58,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void show() {
 		super.show();
-		components.forEach(c -> c.show());
+		components.forEach(DoaUIComponent::show);
 	}
 
 	/**
@@ -65,7 +67,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void hide() {
 		super.hide();
-		components.forEach(c -> c.hide());
+		components.forEach(DoaUIComponent::hide);
 	}
 
 	/**
@@ -74,7 +76,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void enable() {
 		super.enable();
-		components.forEach(c -> c.enable());
+		components.forEach(DoaUIComponent::enable);
 	}
 
 	/**
@@ -83,7 +85,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	@Override
 	public void disable() {
 		super.disable();
-		components.forEach(c -> c.disable());
+		components.forEach(DoaUIComponent::disable);
 	}
 
 	/**
@@ -92,14 +94,17 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 * @param component component to add to this container
 	 */
 	public void add(DoaUIComponent component) {
-		if (component.getParent() != null) {
-			component.getParent().remove(component);
+		if (!components.contains(component)) {
+			if (component.getParent() != null) {
+				component.getParent().remove(component);
+			}
+			components.add(component);
+			components.sort(Comparator.comparing(DoaObject::getzOrder));
+			component.setParent(this);
+			component.isVisible = isVisible;
+			component.isEnabled = isEnabled;
+			DoaHandler.add(component);
 		}
-		components.add(component);
-		component.setParent(this);
-		component.isVisible = isVisible;
-		component.isEnabled = isEnabled;
-		DoaHandler.add(component);
 	}
 
 	/**
@@ -110,6 +115,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	public void remove(DoaUIComponent component) {
 		if (components.contains(component)) {
 			components.remove(component);
+			components.sort(Comparator.comparing(DoaObject::getzOrder));
 			component.setParent(null);
 			component.isVisible = false;
 			component.isEnabled = false;
@@ -121,7 +127,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 * Removes all components from this container.
 	 */
 	public void removeAll() {
-		components.forEach(c -> remove(c));
+		components.forEach(components::remove);
 	}
 
 	/**
@@ -129,7 +135,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 * 
 	 * @return components inside this container
 	 */
-	public Set<DoaUIComponent> getComponents() {
+	public List<DoaUIComponent> getComponents() {
 		return components;
 	}
 
