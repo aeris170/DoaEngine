@@ -60,6 +60,9 @@ public enum LogLevel {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param prefixSequence the coloring sequence for prefix
+	 * @param contentSequence the coloring sequence for content
 	 */
 	private LogLevel(String prefixSequence, String contentSequence) {
 		this.prefixSequence = prefixSequence;
