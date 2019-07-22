@@ -6,10 +6,10 @@ import java.io.IOException;
  * A simple logger interface.
  *
  * @author Doga Oruc
- * @version 2.6
+ * @version 2.6.1
  * @since DoaEngine 2.6
- * @see LogLevel
  * @see DoaLogger
+ * @see LogLevel
  */
 public interface Logger {
 

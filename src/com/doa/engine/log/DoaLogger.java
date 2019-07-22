@@ -9,6 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
+/**
+ * Implementation of {@link Logger}.
+ *
+ * @author Doga Oruc
+ * @version 2.6.1
+ * @since DoaEngine 2.6.1
+ * @see Logger
+ * @see LogLevel
+ */
 public final class DoaLogger implements Logger {
 
 	private static final String DATE_SEQUENCE = "\033[40;37;1m";
@@ -107,13 +116,16 @@ public final class DoaLogger implements Logger {
 	 */
 	@Override
 	public void log(LogLevel level, String message) {
+		if(level == LogLevel.OFF) {
+			return;
+		}
 		String time = " " + dt.format(Calendar.getInstance().getTime());
 		String prefix = "[" + level.toString() + "]";
-		console.print(level.getPrefixSequence());
+		console.print(level.getColorSequence());
 		console.print(prefix);
 		console.print(DATE_SEQUENCE);
 		console.print(time);
-		console.print(level.getContentSequence());
+		console.print(level.getColorSequence());
 		console.print(" " + message);
 		if (Objects.nonNull(writer)) {
 			writer.print(prefix + time + " " + message);
