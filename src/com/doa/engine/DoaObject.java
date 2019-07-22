@@ -1,6 +1,7 @@
 package com.doa.engine;
 
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
@@ -15,7 +16,7 @@ import com.doa.maths.DoaVectorI;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.5
+ * @version 2.6.1
  */
 public abstract class DoaObject implements Serializable {
 
@@ -29,12 +30,12 @@ public abstract class DoaObject implements Serializable {
 	/**
 	 * width of {@code DoaObject}
 	 */
-	protected Integer width = 0;
+	protected int width = 0;
 
 	/**
 	 * height of {@code DoaObject}
 	 */
-	protected Integer height = 0;
+	protected int height = 0;
 
 	/**
 	 * velocity of {@code DoaObject}
@@ -44,7 +45,7 @@ public abstract class DoaObject implements Serializable {
 	/**
 	 * zOrder of {@code DoaObject}, default is 0.
 	 */
-	private Integer zOrder = 0;
+	private int zOrder = 0;
 
 	/**
 	 * True if camera's transformation will not be concatenated to this DoaObject's
@@ -59,7 +60,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param x x coordinate of {@code DoaObject}
 	 * @param y y coordinate of {@code DoaObject}
 	 */
-	public DoaObject(final Float x, final Float y) {
+	public DoaObject(final float x, final float y) {
 		this(x, y, 0, 0);
 	}
 
@@ -82,7 +83,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param width width of {@code DoaObject}
 	 * @param height height of {@code DoaObject}
 	 */
-	public DoaObject(final Float x, final Float y, final Integer width, final Integer height) {
+	public DoaObject(final float x, final float y, final int width, final int height) {
 		position.x = x;
 		position.y = y;
 		this.width = width;
@@ -97,7 +98,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param width width of {@code DoaObject}
 	 * @param height height of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final Integer width, final Integer height) {
+	public DoaObject(final DoaVectorF position, final int width, final int height) {
 		this.position = position;
 		this.width = width;
 		this.height = height;
@@ -111,7 +112,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param y y coordinate of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final Float x, final Float y, final Integer zOrder) {
+	public DoaObject(final float x, final float y, final int zOrder) {
 		this(x, y, 0, 0, zOrder);
 	}
 
@@ -122,7 +123,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param position position of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final Integer zOrder) {
+	public DoaObject(final DoaVectorF position, final int zOrder) {
 		this(position, 0, 0, zOrder);
 	}
 
@@ -136,7 +137,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param height height of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final Float x, final Float y, final Integer width, final Integer height, final Integer zOrder) {
+	public DoaObject(final float x, final float y, final int width, final int height, final int zOrder) {
 		position.x = x;
 		position.y = y;
 		this.width = width;
@@ -153,7 +154,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param height height of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final Integer width, final Integer height, final Integer zOrder) {
+	public DoaObject(final DoaVectorF position, final int width, final int height, final int zOrder) {
 		this.position = position;
 		this.width = width;
 		this.height = height;
@@ -184,12 +185,12 @@ public abstract class DoaObject implements Serializable {
 
 	/**
 	 * Conveniency method to retrieve a {@code DoaObject}'s bounds, added to
-	 * {@code DoaObject} because of how useful it is for collision detection.
+	 * {@code DoaObject} because of how useful it is for collision detection. By default, returns the smallest bounding box for this object.
 	 *
 	 * @return the bounding shape of {@code DoaObject}
 	 */
 	public Shape getBounds() {
-		return null;
+		return new Rectangle2D.Float(position.x, position.y, width, height);
 	}
 
 	public DoaVectorF getPosition() {

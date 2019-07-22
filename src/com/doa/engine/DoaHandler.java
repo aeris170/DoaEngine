@@ -7,10 +7,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.DoaUIContainer;
 
@@ -25,7 +28,7 @@ import com.doa.ui.DoaUIContainer;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6
+ * @version 2.6.1
  */
 public final class DoaHandler {
 
@@ -49,6 +52,7 @@ public final class DoaHandler {
 	 */
 	public static <T extends DoaObject> T instantiate(final Class<T> clazz, final Object... constructorArgs) {
 		final Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+		String parameters = Stream.of(constructorArgs).map(Object::toString).collect(Collectors.joining(",", "[", "]"));
 		for (final Constructor<?> c : constructors) {
 			c.setAccessible(true);
 			if (c.getParameterCount() == constructorArgs.length) {
@@ -79,6 +83,11 @@ public final class DoaHandler {
 						if (clazz.isInstance(o)) {
 							final T d = clazz.cast(o);
 							add(d);
+							if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+								LOGGER.finer(new StringBuilder(512).append(clazz.getName()).append(" is succesfully instantiated.\nWith parameters: ").append(parameters));
+							} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+								LOGGER.fine(new StringBuilder(128).append(clazz.getName()).append(" is succesfully instantiated."));
+							}
 							return d;
 						}
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
@@ -88,17 +97,11 @@ public final class DoaHandler {
 				}
 			}
 		}
-		StringBuilder sb = new StringBuilder("[");
-		String prefix = "";
-		for (Object o : constructorArgs) {
-			sb.append(prefix);
-			prefix = ", ";
-			sb.append(o.getClass().getSimpleName());
+		String errorMessage = new StringBuilder(512).append("Cannot find a suitable constructor for ").append(clazz.getName()).append(".\nWith parameters: ").append(parameters).toString();
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			LOGGER.severe(errorMessage);
 		}
-		sb.append("]");
-		LOGGER.severe("Cannot find a suitable constructor for " + clazz.getName());
-		LOGGER.severe("With parameters: " + sb.toString());
-		return null;
+		throw new DoaObjectInstantiationException(errorMessage);
 	}
 
 	static void tick() {
@@ -163,15 +166,30 @@ public final class DoaHandler {
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.computeIfAbsent(o.getzOrder(), k -> new CopyOnWriteArraySet<>());
 			UI_COMPONENTS.get(o.getzOrder()).add((DoaUIComponent) o);
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to DoaHandler at zOrder: ").append(o.getzOrder()).append("."));
+			} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to DoaHandler."));
+			}
 			if (o instanceof DoaUIContainer) {
 				((DoaUIContainer) o).getComponents().forEach(c -> {
 					UI_COMPONENTS.computeIfAbsent(c.getzOrder(), k -> new CopyOnWriteArraySet<>());
 					UI_COMPONENTS.get(c.getzOrder()).add(c);
+					if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully added to DoaHandler. Parent: ").append(o.getClass().getName()));
+					} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+						LOGGER.finer(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully added to DoaHandler."));
+					}
 				});
 			}
 		} else {
 			OBJECTS.computeIfAbsent(o.getzOrder(), k -> new CopyOnWriteArraySet<>());
 			OBJECTS.get(o.getzOrder()).add(o);
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to DoaHandler at zOrder: ").append(o.getzOrder()).append("."));
+			} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to DoaHandler."));
+			}
 		}
 	}
 
@@ -183,11 +201,28 @@ public final class DoaHandler {
 	public static void remove(DoaObject o) {
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.get(o.getzOrder()).remove(o);
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from DoaHandler. It was at zOrder: ").append(o.getzOrder()).append("."));
+			} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from DoaHandler."));
+			}
 			if (o instanceof DoaUIContainer) {
-				((DoaUIContainer) o).getComponents().forEach(c -> UI_COMPONENTS.get(c.getzOrder()).remove(c));
+				((DoaUIContainer) o).getComponents().forEach(c -> {
+					UI_COMPONENTS.get(c.getzOrder()).remove(c);
+					if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully removed from DoaHandler. Parent: ").append(o.getClass().getName()));
+					} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+						LOGGER.finer(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully removed from DoaHandler."));
+					}
+				});
 			}
 		} else {
 			OBJECTS.get(o.getzOrder()).remove(o);
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from DoaHandler. It was at zOrder: ").append(o.getzOrder()).append("."));
+			} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from DoaHandler."));
+			}
 		}
 	}
 
@@ -198,6 +233,9 @@ public final class DoaHandler {
 	public static void clear() {
 		OBJECTS.clear();
 		UI_COMPONENTS.clear();
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+			LOGGER.info(new StringBuilder(128).append("DoaHandler is now empty."));
+		}
 	}
 
 	private static void renderContainerAndAllChildren(DoaUIContainer container, DoaGraphicsContext g) {

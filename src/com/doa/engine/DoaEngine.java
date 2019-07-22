@@ -14,6 +14,7 @@ import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
 
 /**
  * Responsible for creating and supplying the graphics context used for drawing
@@ -30,7 +31,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.6";
+	public static final String VERSION = "2.6.1";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -40,9 +41,9 @@ public final class DoaEngine extends Canvas implements Runnable {
 	public static int TICK_RATE = 240;
 
 	/**
-	 * Enable/Disable verbose debugging to console.
+	 * Enable/Disable debug logging to console/file.
 	 */
-	public static boolean DEBUG_ENABLED = false;
+	public static LogLevel INTERNAL_LOG_LEVEL = LogLevel.OFF;
 
 	/**
 	 * Default background color of render canvas.
@@ -123,12 +124,25 @@ public final class DoaEngine extends Canvas implements Runnable {
 	public DoaEngine() {
 		if (DoaEngine.ENGINE == null) {
 			System.setProperty("sun.java2d.opengl", "True");
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0 ) {
+				if(System.getProperty("sun.java2d.opengl").equalsIgnoreCase("true")) {
+					LOGGER.info("DoaEngine is using fast OpenGL pipeline.");
+				} else {
+					LOGGER.info("DoaEngine is using slow java2d pipeline.");
+				}
+			}
 			addKeyListener(DoaKeyboard.INPUT);
 			addMouseListener(DoaMouse.INPUT);
 			addMouseMotionListener(DoaMouse.INPUT);
 			addMouseWheelListener(DoaMouse.INPUT);
 			DoaEngine.ENGINE = this;
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+				LOGGER.info("DoaEngine succesfully instantiated!");
+			}
 		} else {
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+				LOGGER.severe("Instantiation of multiple DoaEngies is disallowed!");
+			}
 			throw new DoaEngineInstanceException("Multiple DoaEngines are disallowed", "engine.Engine", "Engine != null");
 		}
 	}
@@ -155,8 +169,13 @@ public final class DoaEngine extends Canvas implements Runnable {
 			isRunning = true;
 			gameThread = new Thread(this);
 			gameThread.start();
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+				LOGGER.info("DoaEngine started!");
+			}
 		} else {
-			throw new DoaEngineStateException("DoaEngine is already running, cannot start again!");
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
+				LOGGER.warning("DoaEngine is already started, cannot start again!");
+			}
 		}
 	}
 
@@ -168,18 +187,23 @@ public final class DoaEngine extends Canvas implements Runnable {
 			isRunning = false;
 			try {
 				gameThread.join();
+				if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+					LOGGER.info("DoaEngine stopped!");
+				}
 			} catch (final InterruptedException ex) {
 				Thread.currentThread().interrupt();
 				ex.printStackTrace();
 			}
 		} else {
-			throw new DoaEngineStateException("DoaEngine is already stopped, cannot stop again!");
+			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
+				LOGGER.warning("DoaEngine is already stopped, cannot stop again!");
+			}
 		}
 	}
 
 	/**
 	 * This method is required to be public, but should never be called explicitly.
-	 * Render/Update Loop {@inheritDoc}
+	 * This is the Render/Update Loop {@inheritDoc}
 	 */
 	@Override
 	public void run() {
@@ -202,9 +226,9 @@ public final class DoaEngine extends Canvas implements Runnable {
 			}
 			render();
 			frames++;
-			if (DEBUG_ENABLED && System.currentTimeMillis() - timer > 1000) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0 && System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				LOGGER.finest("FPS: " + frames + " TICKS: " + ticks);
+				LOGGER.fine("FPS: " + frames + " TICKS: " + ticks);
 				ticks = 0;
 				frames = 0;
 			}
@@ -255,11 +279,17 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+		if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			LOGGER.severe("DoaEngine Serialization Disallowed");
+		}
 		throw new NotSerializableException("DoaEngine Serialization Disallowed");
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+		if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			LOGGER.severe("DoaEngine Serialization Disallowed");
+		}
 		throw new NotSerializableException("DoaEngine Serialization Disallowed");
 	}
 }

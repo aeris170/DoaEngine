@@ -3,6 +3,8 @@ package com.doa.engine;
 import java.io.Serializable;
 
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 
@@ -13,11 +15,13 @@ import com.doa.maths.DoaVectorF;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.4
+ * @version 2.6.1
  */
 public final class DoaCamera implements Serializable {
 
 	private static final long serialVersionUID = 1363138494050985299L;
+	
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	private static DoaObject objectToFollow;
 	private static DoaObject objectToZoomInto;
@@ -63,6 +67,9 @@ public final class DoaCamera implements Serializable {
 		DoaCamera.minY = minY;
 		DoaCamera.maxX = maxX;
 		DoaCamera.maxY = maxY;
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			LOGGER.finer(new StringBuilder(256).append("DoaMouse adjusted minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(maxX).append(", maxY: ").append(maxY).toString());
+		}
 	}
 
 	/**
@@ -80,6 +87,9 @@ public final class DoaCamera implements Serializable {
 		isMouseZoomingEnabled = true;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			LOGGER.finer(new StringBuilder(256).append("DoaMouse zoom enabled focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(minZ).append(", maxZ: ").append(maxZ).toString());
+		}
 	}
 
 	/**
@@ -97,13 +107,7 @@ public final class DoaCamera implements Serializable {
 		isMouseZoomingEnabled = false;
 	}
 
-	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except {@code DoaEngine}. If done otherwise,
-	 * {@code DoaEngine} provides no guarantees on the consistency of the internal
-	 * state of the Camera construct.
-	 */
-	public static void tick() {
+	static void tick() {
 		if (isObjectToFollowInitialized) {
 			final DoaVectorF pos = objectToFollow.getPosition();
 			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2.0) * tweenAmountX;
@@ -118,51 +122,87 @@ public final class DoaCamera implements Serializable {
 	}
 
 	public static void setX(final float newX) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#x ").append(x).append(" -> ").append(newX).toString());
+		}
 		x = newX;
 	}
 
 	public static void setY(final float newY) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#y ").append(y).append(" -> ").append(newY).toString());
+		}
 		y = newY;
 	}
 
 	public static void setZ(final float newZ) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#z ").append(z).append(" -> ").append(newZ).toString());
+		}
 		y = newZ;
 	}
 
 	public static void setMinX(final float newMinX) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#minX ").append(minX).append(" -> ").append(newMinX).toString());
+		}
 		minX = newMinX;
 	}
 
 	public static void setMinY(final float newMinY) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#minY ").append(minY).append(" -> ").append(newMinY).toString());
+		}
 		minY = newMinY;
 	}
 
 	public static void setMinZ(final float newMinZ) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#minZ ").append(minZ).append(" -> ").append(newMinZ).toString());
+		}
 		minZ = newMinZ;
 	}
 
 	public static void setMaxX(final float newMaxX) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#maxX ").append(maxX).append(" -> ").append(newMaxX).toString());
+		}
 		maxX = newMaxX;
 	}
 
 	public static void setMaxY(final float newMaxY) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#maxY ").append(maxY).append(" -> ").append(newMaxY).toString());
+		}
 		maxY = newMaxY;
 	}
 
 	public static void setMaxZ(final float newMaxZ) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#maxZ ").append(maxZ).append(" -> ").append(newMaxZ).toString());
+		}
 		maxY = newMaxZ;
 	}
 
-	public static void setTweenAmountX(final float tweenAmountX) {
-		DoaCamera.tweenAmountX = tweenAmountX;
+	public static void setTweenAmountX(final float newTweenAmountX) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#tweenAmountX ").append(tweenAmountX).append(" -> ").append(newTweenAmountX).toString());
+		}
+		tweenAmountX = newTweenAmountX;
 	}
 
-	public static void setTweenAmountY(final float tweenAmountY) {
-		DoaCamera.tweenAmountY = tweenAmountY;
+	public static void setTweenAmountY(final float newTweenAmountY) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#tweenAmountY ").append(tweenAmountY).append(" -> ").append(newTweenAmountY).toString());
+		}
+		tweenAmountY = newTweenAmountY;
 	}
 
-	public static void setTweenAmountZ(final float tweenAmountZ) {
-		DoaCamera.tweenAmountZ = tweenAmountZ;
+	public static void setTweenAmountZ(final float newTweenAmountZ) {
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(32).append("DoaCamera#tweenAmountZ ").append(tweenAmountZ).append(" -> ").append(newTweenAmountZ).toString());
+		}
+		tweenAmountZ = newTweenAmountZ;
 	}
 
 	public static DoaObject getObjectToFollow() {
