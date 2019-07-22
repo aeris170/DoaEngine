@@ -10,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.log.DoaLogger;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.DoaUIContainer;
 
@@ -24,12 +25,13 @@ import com.doa.ui.DoaUIContainer;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.5
+ * @version 2.6
  */
 public final class DoaHandler {
 
 	private static final ConcurrentNavigableMap<Integer, Set<DoaObject>> OBJECTS = new ConcurrentSkipListMap<>();
 	private static final ConcurrentNavigableMap<Integer, Set<DoaUIComponent>> UI_COMPONENTS = new ConcurrentSkipListMap<>();
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
 	 * Constructor.
@@ -94,8 +96,8 @@ public final class DoaHandler {
 			sb.append(o.getClass().getSimpleName());
 		}
 		sb.append("]");
-		System.err.println("Cannot find a suitable constructor for " + clazz.getName());
-		System.err.println("With parameters: " + sb.toString());
+		LOGGER.severe("Cannot find a suitable constructor for " + clazz.getName());
+		LOGGER.severe("With parameters: " + sb.toString());
 		return null;
 	}
 

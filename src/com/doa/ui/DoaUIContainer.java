@@ -115,7 +115,6 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	public void remove(DoaUIComponent component) {
 		if (components.contains(component)) {
 			components.remove(component);
-			components.sort(Comparator.comparing(DoaObject::getzOrder));
 			component.setParent(null);
 			component.isVisible = false;
 			component.isEnabled = false;

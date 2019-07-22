@@ -28,10 +28,13 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaEngine;
+import com.doa.engine.log.DoaLogger;
 
 public class Main {
 
 	private static final String TMP_DIR = System.getProperty("user.home") + File.separator + "DoaEngineTMP";
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
+
 	private static File tmpDirectory;
 	private static JWindow loading;
 	private static JPanel panel;
@@ -87,11 +90,11 @@ public class Main {
 		final JLabel v = new JLabel("v");
 		final JLabel version = new JLabel(DoaEngine.VERSION);
 		v.setFont(font.deriveFont(Font.ITALIC, 6f));
-		System.out.println(v.getFont().getSize());
+		LOGGER.info(v.getFont().getSize());
 		v.setForeground(new Color(255, 255, 255, 200));
 		v.setBackground(new Color(0, 0, 0, 0));
 		version.setFont(font.deriveFont(Font.ITALIC, 10f));
-		System.out.println(version.getFont().getSize());
+		LOGGER.info(version.getFont().getSize());
 		version.setForeground(new Color(255, 255, 255, 200));
 		version.setBackground(new Color(0, 0, 0, 0));
 		top.setBounds(0, -80, 640, 360);

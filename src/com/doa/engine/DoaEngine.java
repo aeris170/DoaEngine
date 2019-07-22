@@ -13,6 +13,7 @@ import java.util.Map;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.log.DoaLogger;
 
 /**
  * Responsible for creating and supplying the graphics context used for drawing
@@ -29,7 +30,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.5";
+	public static final String VERSION = "2.6";
 
 	/**
 	 * Number of updates per second. If {@code DoaEngine} is already running,
@@ -109,6 +110,8 @@ public final class DoaEngine extends Canvas implements Runnable {
 		SPEED_HINTS.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		SPEED_HINTS.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 	}
+
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	private boolean isRunning = false;
 	private transient Thread gameThread;
@@ -201,7 +204,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			frames++;
 			if (DEBUG_ENABLED && System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + ticks);
+				LOGGER.finest("FPS: " + frames + " TICKS: " + ticks);
 				ticks = 0;
 				frames = 0;
 			}
