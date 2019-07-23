@@ -3,7 +3,10 @@ package com.doa.ui.button;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.doa.engine.DoaEngine;
 import com.doa.engine.input.DoaMouse;
+import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.action.DoaUIAction;
@@ -15,11 +18,13 @@ import com.doa.ui.action.DoaUIAction;
  * 
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.5
+ * @version 2.6.1
  */
 public abstract class DoaButton extends DoaUIComponent {
 
 	private static final long serialVersionUID = 8880492250633733283L;
+	
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
 	 * Indicates if the mouse pointer is inside this buttons bounds. As described by
@@ -78,9 +83,17 @@ public abstract class DoaButton extends DoaUIComponent {
 				hover = true;
 				if (DoaMouse.MB1_HOLD) {
 					click = true;
+					if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+						LOGGER.finer(new StringBuilder(32).append(getClass().getName()).append(" click."));
+					}
 				}
 				if (DoaMouse.MB1_RELEASE) {
-					actionList.forEach(action -> action.execute());
+					actionList.forEach(action -> {
+						action.execute();
+						if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+							LOGGER.finer(new StringBuilder(32).append(action.getClass().getName()).append(" executed."));
+						}
+					});
 					DoaMouse.MB1 = false;
 					DoaMouse.MB1_HOLD = false;
 					DoaMouse.MB1_RELEASE = false;
