@@ -20,7 +20,7 @@ package com.doa.engine.log;
  * @see DoaLogger
  */
 public enum LogLevel {
-	
+
 	/**
 	 * Log level which indicates no logging
 	 */
@@ -66,7 +66,7 @@ public enum LogLevel {
 	/**
 	 * Constructor.
 	 * 
-	 * @param contentSequence the coloring sequence for content
+	 * @param colorSequence the coloring sequence for content
 	 */
 	private LogLevel(String colorSequence) {
 		this.colorSequence = colorSequence;
@@ -81,7 +81,7 @@ public enum LogLevel {
 	public String getColorSequence() {
 		return colorSequence;
 	}
-	
+
 	/* Foreground colors 30 Black 31 Red 32 Green 33 Yellow 34 Blue 35 Magenta 36
 	 * Cyan 37 White Background colors 40 Black 41 Red 42 Green 43 Yellow 44 Blue 45
 	 * Magenta 46 Cyan 47 White */

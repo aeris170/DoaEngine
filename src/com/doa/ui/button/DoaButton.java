@@ -23,7 +23,7 @@ import com.doa.ui.action.DoaUIAction;
 public abstract class DoaButton extends DoaUIComponent {
 
 	private static final long serialVersionUID = 8880492250633733283L;
-	
+
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
@@ -83,14 +83,14 @@ public abstract class DoaButton extends DoaUIComponent {
 				hover = true;
 				if (DoaMouse.MB1_HOLD) {
 					click = true;
-					if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
 						LOGGER.finer(new StringBuilder(32).append(getClass().getName()).append(" click."));
 					}
 				}
 				if (DoaMouse.MB1_RELEASE) {
 					actionList.forEach(action -> {
 						action.execute();
-						if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+						if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 							LOGGER.finer(new StringBuilder(32).append(action.getClass().getName()).append(" executed."));
 						}
 					});

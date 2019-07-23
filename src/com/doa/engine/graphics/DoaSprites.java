@@ -27,7 +27,7 @@ import com.doa.engine.log.LogLevel;
 public final class DoaSprites {
 
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
-	
+
 	/**
 	 * Collection that maps sprite names to sprites.
 	 */
@@ -54,9 +54,9 @@ public final class DoaSprites {
 	public static BufferedImage createSprite(final String spriteName, final String spriteFile) throws IOException {
 		BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile));
 		ORIGINAL_SPRITES.put(spriteName, sp);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(spriteName).append(" sprite instantiated."));
-		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaSprite instantiated.");
 		}
 		DoaLights.applyAmbientLight(spriteName, sp);
@@ -81,9 +81,9 @@ public final class DoaSprites {
 		final BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)).getSubimage(boundaries.x, boundaries.y, boundaries.width,
 		        boundaries.height);
 		ORIGINAL_SPRITES.put(spriteName, sp);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(spriteName).append(" sprite instantiated."));
-		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaSprite instantiated.");
 		}
 		DoaLights.applyAmbientLight(spriteName, sp);
@@ -127,19 +127,19 @@ public final class DoaSprites {
 	 */
 	public static BufferedImage scale(BufferedImage sprite, int width, int height) {
 		if (sprite == null) {
-			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 				LOGGER.severe("DoaSprites cannot resize a sprite that is null.");
 			}
 			throw new IllegalArgumentException("sprite == null");
 		}
 		if (width < 0) {
-			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 				LOGGER.severe("DoaSprites cannot shrink a sprite beyond 0 width.");
 			}
 			throw new IllegalArgumentException("width < 0");
 		}
 		if (height < 0) {
-			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 				LOGGER.severe("DoaSprites cannot shrink a sprite beyond 0 height.");
 			}
 			throw new IllegalArgumentException("height < 0");

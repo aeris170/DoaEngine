@@ -116,7 +116,7 @@ public final class DoaLogger implements Logger {
 	 */
 	@Override
 	public void log(LogLevel level, String message) {
-		if(level == LogLevel.OFF) {
+		if (level == LogLevel.OFF) {
 			return;
 		}
 		String time = " " + dt.format(Calendar.getInstance().getTime());

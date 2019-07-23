@@ -185,7 +185,8 @@ public abstract class DoaObject implements Serializable {
 
 	/**
 	 * Conveniency method to retrieve a {@code DoaObject}'s bounds, added to
-	 * {@code DoaObject} because of how useful it is for collision detection. By default, returns the smallest bounding box for this object.
+	 * {@code DoaObject} because of how useful it is for collision detection. By
+	 * default, returns the smallest bounding box for this object.
 	 *
 	 * @return the bounding shape of {@code DoaObject}
 	 */

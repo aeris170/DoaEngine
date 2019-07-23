@@ -124,8 +124,8 @@ public final class DoaEngine extends Canvas implements Runnable {
 	public DoaEngine() {
 		if (DoaEngine.ENGINE == null) {
 			System.setProperty("sun.java2d.opengl", "True");
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0 ) {
-				if(System.getProperty("sun.java2d.opengl").equalsIgnoreCase("true")) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+				if (System.getProperty("sun.java2d.opengl").equalsIgnoreCase("true")) {
 					LOGGER.info("DoaEngine is using fast OpenGL pipeline.");
 				} else {
 					LOGGER.info("DoaEngine is using slow java2d pipeline.");
@@ -136,11 +136,11 @@ public final class DoaEngine extends Canvas implements Runnable {
 			addMouseMotionListener(DoaMouse.INPUT);
 			addMouseWheelListener(DoaMouse.INPUT);
 			DoaEngine.ENGINE = this;
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 				LOGGER.info("DoaEngine succesfully instantiated!");
 			}
 		} else {
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 				LOGGER.severe("Instantiation of multiple DoaEngies is disallowed!");
 			}
 			throw new DoaEngineInstanceException("Multiple DoaEngines are disallowed", "engine.Engine", "Engine != null");
@@ -169,11 +169,11 @@ public final class DoaEngine extends Canvas implements Runnable {
 			isRunning = true;
 			gameThread = new Thread(this);
 			gameThread.start();
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 				LOGGER.info("DoaEngine started!");
 			}
 		} else {
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
 				LOGGER.warning("DoaEngine is already started, cannot start again!");
 			}
 		}
@@ -187,7 +187,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 			isRunning = false;
 			try {
 				gameThread.join();
-				if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+				if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 					LOGGER.info("DoaEngine stopped!");
 				}
 			} catch (final InterruptedException ex) {
@@ -195,7 +195,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 				ex.printStackTrace();
 			}
 		} else {
-			if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
+			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.WARNING) >= 0) {
 				LOGGER.warning("DoaEngine is already stopped, cannot stop again!");
 			}
 		}
@@ -279,7 +279,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
-		if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+		if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 			LOGGER.severe("DoaEngine Serialization Disallowed");
 		}
 		throw new NotSerializableException("DoaEngine Serialization Disallowed");
@@ -287,7 +287,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 
 	@SuppressWarnings({ "static-method", "unused" })
 	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
-		if(INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+		if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 			LOGGER.severe("DoaEngine Serialization Disallowed");
 		}
 		throw new NotSerializableException("DoaEngine Serialization Disallowed");

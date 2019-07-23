@@ -20,7 +20,7 @@ import com.doa.engine.log.LogLevel;
  * @version 2.6.1
  */
 public final class DoaLights {
-	
+
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	private static Color ambientLightColor = Color.WHITE;
@@ -48,8 +48,9 @@ public final class DoaLights {
 		for (final Entry<String, DoaAnimation> entry : DoaAnimations.ORIGINAL_ANIMATIONS.entrySet()) {
 			applyAmbientLight(entry.getKey(), entry.getValue());
 		}
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
-			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ").append(newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ")
+			        .append(newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
 		}
 	}
 

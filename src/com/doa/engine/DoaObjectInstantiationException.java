@@ -1,7 +1,8 @@
 package com.doa.engine;
 
 /**
- * Thrown when a {@code DoaObject} is tried to instantiated by the {@code DoaHandler}, but failed.
+ * Thrown when a {@code DoaObject} is tried to instantiated by the
+ * {@code DoaHandler}, but failed.
  *
  * @author Doga Oruc
  * @since DoaEngine 2.6.1

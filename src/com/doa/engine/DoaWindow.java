@@ -33,7 +33,7 @@ import com.doa.engine.log.LogLevel;
 public final class DoaWindow extends JFrame {
 
 	private static final long serialVersionUID = -2046962443183200678L;
-	
+
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	public static int WINDOW_WIDTH;
@@ -50,12 +50,12 @@ public final class DoaWindow extends JFrame {
 	public static DoaWindow createWindow() {
 		if (Window == null) {
 			Window = new DoaWindow();
-			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 				LOGGER.info("DoaWindow succesfully instantiated!");
 			}
 			return Window;
 		}
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
 			LOGGER.severe("Instantiation of multiple DoaWindows is disallowed!");
 		}
 		throw new DoaEngineInstanceException("Multiple DoaWindows are disallowed", "engine.DoaWindow", "Window != null");
@@ -71,7 +71,7 @@ public final class DoaWindow extends JFrame {
 	/**
 	 * @return the only instance of {@code DoaWindow}
 	 */
-	public static  DoaWindow getInstance() {
+	public static DoaWindow getInstance() {
 		return DoaWindow.Window;
 	}
 
@@ -84,7 +84,7 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized Component add(final Component c) {
 		final Component rv = super.add(c);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now added to DoaWindow."));
 		}
 		if (c instanceof DoaEngine) {
@@ -106,30 +106,31 @@ public final class DoaWindow extends JFrame {
 			((DoaEngine) c).stop();
 		}
 		super.remove(c);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now removed from DoaWindow."));
 		}
 		super.revalidate();
 	}
-	
+
 	/**
-	 * {@inheritDoc} <strong> Note: Calling this method will stop DoaEngine.</strong>
+	 * {@inheritDoc} <strong> Note: Calling this method will stop
+	 * DoaEngine.</strong>
 	 *
 	 * @see java.awt.Component
 	 */
 	@Override
 	public synchronized void removeAll() {
 		Optional<Component> o = Stream.of(getComponents()).filter(c -> c instanceof DoaEngine).findFirst();
-		if(o.isPresent()) {
+		if (o.isPresent()) {
 			((DoaEngine) o.get()).stop();
 		}
 		super.removeAll();
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 			LOGGER.info("DoaWindow is now empty.");
 		}
 		super.revalidate();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -138,11 +139,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setTitle(final String title) {
 		super.setTitle(title);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's title is now \"").append(title).append("\"."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -151,11 +152,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setResizable(final boolean resizable) {
 		super.setResizable(resizable);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(32).append("DoaWindow is now ").append(resizable ? "resizable." : "not resizable."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -164,11 +165,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setVisible(final boolean b) {
 		super.setVisible(b);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(32).append("DoaWindow is now ").append(b ? "visible." : "invisible."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -177,11 +178,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setOpacity(final float opacity) {
 		super.setOpacity(opacity);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(32).append("DoaWindow is now ").append(opacity * 100).append("% opaque."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -190,11 +191,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setShape(final Shape shape) {
 		super.setShape(shape);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(32).append("DoaWindow is now shaped as ").append(shape).append("."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -203,7 +204,7 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setUndecorated(final boolean undecorated) {
 		super.setUndecorated(undecorated);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(32).append("DoaWindow is now ").append(undecorated ? "undecorated." : "decorated."));
 		}
 	}
@@ -218,7 +219,7 @@ public final class DoaWindow extends JFrame {
 		super.setSize(d);
 		DoaWindow.WINDOW_WIDTH = (int) d.getWidth();
 		DoaWindow.WINDOW_HEIGHT = (int) d.getHeight();
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's size is now ").append((int) d.getWidth()).append("x").append((int) d.getHeight()).append("."));
 		}
 	}
@@ -233,11 +234,11 @@ public final class DoaWindow extends JFrame {
 		super.setSize(width, height);
 		DoaWindow.WINDOW_WIDTH = width;
 		DoaWindow.WINDOW_HEIGHT = height;
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's size is now ").append(width).append("x").append(height).append("."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -246,7 +247,7 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setLocation(final Point p) {
 		super.setLocation(p);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's top left is now at (").append(p.x).append(", ").append(p.y).append(")."));
 		}
 	}
@@ -259,11 +260,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setLocation(final int x, final int y) {
 		super.setLocation(x, y);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's top left is now at (").append(x).append(", ").append(y).append(")."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -272,11 +273,11 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setLocationRelativeTo(final Component c) {
 		super.setLocationRelativeTo(c);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's location is now relative to ").append(Objects.nonNull(c) ? c : "center of the screen"));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -285,7 +286,7 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setLocationByPlatform(final boolean locationByPlatform) {
 		super.setLocationByPlatform(locationByPlatform);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0 && locationByPlatform) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0 && locationByPlatform) {
 			LOGGER.config("DoaWindow's location is now set by platform.");
 		}
 	}
@@ -300,8 +301,9 @@ public final class DoaWindow extends JFrame {
 		super.setBounds(r);
 		DoaWindow.WINDOW_WIDTH = r.width;
 		DoaWindow.WINDOW_HEIGHT = r.height;
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
-			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(r.width).append("x").append(r.height).append(" at (").append(r.x).append(", ").append(r.y).append(")."));
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(r.width).append("x").append(r.height).append(" at (")
+			        .append(r.x).append(", ").append(r.y).append(")."));
 		}
 	}
 
@@ -315,93 +317,87 @@ public final class DoaWindow extends JFrame {
 		super.setBounds(x, y, width, height);
 		DoaWindow.WINDOW_WIDTH = width;
 		DoaWindow.WINDOW_HEIGHT = height;
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
-			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(width).append("x").append(height).append(" at (").append(x).append(", ").append(y).append(")."));
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(width).append("x").append(height).append(" at (")
+			        .append(x).append(", ").append(y).append(")."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setCursor(final Cursor cursor) {
 		super.setCursor(cursor);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config("DoaWindow custom cursor is set.");
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setIconImage(final Image image) {
 		super.setIconImage(image);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config("DoaWindow icon image is set.");
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setIconImages(final List<? extends Image> icons) {
 		super.setIconImages(icons);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config("DoaWindow icon images are set.");
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setLayout(final LayoutManager manager) {
 		super.setLayout(manager);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("DoaWindow's layout is now: ").append(manager.getClass().getName()).append("."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setMenuBar(MenuBar mb) {
 		super.setMenuBar(mb);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("DoaWindow MenuBar is now: ").append(mb.getClass().getName()).append("."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setJMenuBar(JMenuBar menubar) {
 		super.setJMenuBar(menubar);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("DoaWindow JMenuBar is now: ").append(menubar.getClass().getName()).append("."));
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
-	 *
 	 */
 	@Override
 	public synchronized void setDefaultCloseOperation(int operation) {
 		super.setDefaultCloseOperation(operation);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			String operationString;
-			switch(operation) {
+			switch (operation) {
 				case 3:
 					operationString = "EXIT_ON_CLOSE";
 					break;
