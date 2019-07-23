@@ -84,8 +84,8 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized Component add(final Component c) {
 		final Component rv = super.add(c);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
-			LOGGER.info(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now added to DoaWindow."));
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+			LOGGER.config(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now added to DoaWindow."));
 		}
 		if (c instanceof DoaEngine) {
 			((DoaEngine) c).start();
@@ -106,8 +106,8 @@ public final class DoaWindow extends JFrame {
 			((DoaEngine) c).stop();
 		}
 		super.remove(c);
-		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
-			LOGGER.info(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now removed from DoaWindow."));
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
+			LOGGER.config(new StringBuilder(128).append("Component ").append(c.getClass().getName()).append(" is now removed from DoaWindow."));
 		}
 		super.revalidate();
 	}

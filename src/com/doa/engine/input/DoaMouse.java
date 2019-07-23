@@ -4,8 +4,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.Arrays;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
+import com.doa.engine.DoaEngine;
+import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
 import com.doa.maths.DoaMath;
 
 /**
@@ -14,9 +18,11 @@ import com.doa.maths.DoaMath;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.3.2
+ * @version 2.6.1
  */
 public final class DoaMouse extends MouseInputAdapter {
+	
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
 	 * Constructor.
@@ -42,6 +48,17 @@ public final class DoaMouse extends MouseInputAdapter {
 			hold[e.getButton()] = true;
 			mouseX = e.getX();
 			mouseY = e.getY();
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				if(SwingUtilities.isLeftMouseButton(e)) {
+					LOGGER.finest("Left mouse button is pressed.");
+				} else if(SwingUtilities.isRightMouseButton(e)) {
+					LOGGER.finest("Right mouse button is pressed.");
+				} else if(SwingUtilities.isMiddleMouseButton(e)) {
+					LOGGER.finest("Middle mouse button is pressed.");
+				} else {
+					LOGGER.finest("A mouse button is pressed.");
+				}
+			}
 		}
 
 		@Override
@@ -51,6 +68,17 @@ public final class DoaMouse extends MouseInputAdapter {
 			release[e.getButton()] = true;
 			mouseX = e.getX();
 			mouseY = e.getY();
+			if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+				if(SwingUtilities.isLeftMouseButton(e)) {
+					LOGGER.finest("Left mouse button is released.");
+				} else if(SwingUtilities.isRightMouseButton(e)) {
+					LOGGER.finest("Right mouse button is released.");
+				} else if(SwingUtilities.isMiddleMouseButton(e)) {
+					LOGGER.finest("Middle mouse button is released.");
+				} else {
+					LOGGER.finest("A mouse button is released.");
+				}
+			}
 		}
 
 		@Override

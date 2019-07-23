@@ -7,15 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.doa.engine.DoaEngine;
+import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
+
 /**
  * Responsible for providing a tool to create and set scene lights for
  * DoaEngine. This class is static, therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.5
+ * @version 2.6.1
  */
 public final class DoaLights {
+	
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	private static Color ambientLightColor = Color.WHITE;
 
@@ -41,6 +47,9 @@ public final class DoaLights {
 		DoaAnimations.SHADED_ANIMATIONS.clear();
 		for (final Entry<String, DoaAnimation> entry : DoaAnimations.ORIGINAL_ANIMATIONS.entrySet()) {
 			applyAmbientLight(entry.getKey(), entry.getValue());
+		}
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ").append(newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
 		}
 	}
 

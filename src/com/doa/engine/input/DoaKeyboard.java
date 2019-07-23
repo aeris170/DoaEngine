@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.6.1
  */
 public final class DoaKeyboard {
 
@@ -24,8 +24,8 @@ public final class DoaKeyboard {
 	 * of this class' fields will return true if and only if that reference mask has
 	 * been produced according to a captured key event. Informally, if a key has
 	 * been pressed at any time, at that time the respective field will be set to
-	 * true, and when the same key has been released the same field will be set to
-	 * false.
+	 * true and will stay true as long as the key is held down, only when the same key
+	 * has been released it is then corresponding field will be set to false.
 	 *
 	 * @see java.awt.event.KeyAdapter
 	 */

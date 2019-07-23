@@ -2,6 +2,8 @@ package com.doa.engine.sound;
 
 import javax.sound.sampled.Clip;
 
+import com.doa.engine.log.DoaLogger;
+
 /**
  * Easy use version of {@code Clip}. Houses a {@code Clip} object and some
  * necessary methods and utilities to quickly play, pause and stop arbitrary
@@ -9,10 +11,12 @@ import javax.sound.sampled.Clip;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.3.1
+ * @version 2.6.1
  * @see Clip
  */
 public class DoaSoundClip {
+
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
 	 * The actual sound clip. This is the object that stores all the information

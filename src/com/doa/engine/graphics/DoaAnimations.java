@@ -11,15 +11,21 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import com.doa.engine.DoaEngine;
+import com.doa.engine.log.DoaLogger;
+import com.doa.engine.log.LogLevel;
+
 /**
  * Responsible for providing a Factory to create Animations for
  * {@code DoaEngine} to display. This class is static, therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 2.2
- * @version 2.5
+ * @version 2.6.1
  */
 public final class DoaAnimations {
+	
+	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
 	/**
 	 * Collection that maps animation names to animations.
@@ -56,6 +62,13 @@ public final class DoaAnimations {
 		}
 		DoaAnimation anim = new DoaAnimation(frames, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append(" ms frame time."));
+		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			LOGGER.finer(new StringBuilder(128).append(animationName).append(" animation instantiated."));
+		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			LOGGER.fine("DoaAnimation instantiated.");
+		}
 		DoaLights.applyAmbientLight(animationName, anim);
 		return anim;
 	}
@@ -72,9 +85,16 @@ public final class DoaAnimations {
 	 *         animationName
 	 * @throws IOException if sprite cannot be loaded by {@code DoaEngine}
 	 */
-	public static DoaAnimation createAnimation(final String animationName, List<BufferedImage> keyframes, final long delay) throws IOException {
+	public static DoaAnimation createAnimation(final String animationName, List<BufferedImage> keyframes, final long delay) {
 		DoaAnimation anim = new DoaAnimation(keyframes, delay);
-		ORIGINAL_ANIMATIONS.put(animationName, anim);
+		ORIGINAL_ANIMATIONS.put(animationName, anim); 
+		if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append(" ms frame time."));
+		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			LOGGER.finer(new StringBuilder(128).append(animationName).append(" animation instantiated."));
+		} else if(DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			LOGGER.fine("DoaAnimation instantiated.");
+		}
 		DoaLights.applyAmbientLight(animationName, anim);
 		return anim;
 	}
