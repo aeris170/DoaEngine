@@ -1,5 +1,8 @@
 package com.doa.engine.log;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
 /**
  * Possible logging levels that can be used to signify log message importance.
  * <ul>
@@ -22,7 +25,7 @@ package com.doa.engine.log;
 public enum LogLevel {
 
 	/**
-	 * Log level which indicates no logging
+	 * Log level indicating no logging
 	 */
 	OFF("\033[40;31;1m"),
 
@@ -62,6 +65,7 @@ public enum LogLevel {
 	FINEST("\033[40;37;1m");
 
 	private String colorSequence;
+	private String extraSpaceCharacters;
 
 	/**
 	 * Constructor.
@@ -80,6 +84,24 @@ public enum LogLevel {
 	 */
 	public String getColorSequence() {
 		return colorSequence;
+	}
+	
+	/**
+	 * This method returns the amount of space characters needed to align the ends
+	 * of strings returned by {@code LogLevel#toString()}.
+	 * 
+	 * @return the space character sequence
+	 */
+	public String getExtraSpaceCharacters() {
+		if(Objects.isNull(extraSpaceCharacters)) {
+			int longest = Stream.of(values()).map(LogLevel::toString).mapToInt(String::length).max().orElse(-1);
+			if(longest == -1) {
+				extraSpaceCharacters = null;
+				return "";
+			}
+			extraSpaceCharacters = " ".repeat(longest - toString().length());
+		}
+		return extraSpaceCharacters;
 	}
 
 	/* Foreground colors 30 Black 31 Red 32 Green 33 Yellow 34 Blue 35 Magenta 36

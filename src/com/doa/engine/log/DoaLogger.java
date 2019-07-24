@@ -119,16 +119,14 @@ public final class DoaLogger implements Logger {
 		if (level == LogLevel.OFF) {
 			return;
 		}
-		String time = " " + dt.format(Calendar.getInstance().getTime());
-		String prefix = "[" + level.toString() + "]";
-		console.print(level.getColorSequence());
-		console.print(prefix);
+		String time = dt.format(Calendar.getInstance().getTime());
+		String prefix = new StringBuilder(32).append(" [").append(level.toString()).append("]").append(level.getExtraSpaceCharacters()).toString();
 		console.print(DATE_SEQUENCE);
 		console.print(time);
 		console.print(level.getColorSequence());
-		console.print(" " + message);
+		console.print(prefix + " " + message);
 		if (Objects.nonNull(writer)) {
-			writer.print(prefix + time + " " + message);
+			writer.print(time + prefix + " " + message);
 		}
 		newLine();
 	}
