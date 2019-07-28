@@ -88,7 +88,7 @@ public final class DoaAnimations {
 		DoaAnimation anim = new DoaAnimation(keyframes, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
-			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append(" ms frame time."));
+			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append("ms frame time."));
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(animationName).append(" animation instantiated."));
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
