@@ -1,5 +1,5 @@
 # DoaEngine
-![social](https://repository-images.githubusercontent.com/169849910/8f88bc80-9ed0-11e9-8a63-92e88fb18fdc)
+![social](https://repository-images.githubusercontent.com/169849910/f0d32080-c54e-11e9-80a7-e64a5e78675a)
 
 DoaEngine is a project that is intended to assist writing games in 2D space using the Java programming language. It is built upon the Sun Microsystem's Graphics Context, which is then refactored to "AWT Graphics".
 
