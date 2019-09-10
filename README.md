@@ -1,8 +1,16 @@
 # DoaEngine
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/aeris170/doaengine)
+[![Build Status](https://travis-ci.org/aeris170/DoaEngine.svg?branch=master)](https://travis-ci.org/aeris170/DoaEngine)
 [![GitHub license](https://img.shields.io/github/license/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/issues)
-[![GitHub stars](https://img.shields.io/github/stars/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/stargazers) 
+[![GitHub stars](https://img.shields.io/github/stars/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/stargazers)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/aeris170/doaengine)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=alert_status)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine) 
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=ncloc)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=bugs)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
 
 ![social](https://repository-images.githubusercontent.com/169849910/f0d32080-c54e-11e9-80a7-e64a5e78675a)
 
