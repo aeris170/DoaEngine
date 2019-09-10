@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>DoaEngine</groupId>
 	<artifactId>DoaEngine</artifactId>
-	<version>2.7 SNAPSHOT</version>
+	<version>2.7</version>
 	<name>DoaEngine</name>
 	<description>A simple 2D game engine for Java Developers.</description>
 	<properties>
