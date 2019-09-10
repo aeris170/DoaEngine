@@ -3,14 +3,13 @@ package com.doa.engine.task;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Wrapper for {@code AtomicBoolean}. This class only exists to provide
- * consistent naming within all the {@code DoaEngine} classes. This class
- * behaves exactly as how it's super-class would behave in any and all
- * circumstances.
+ * Wrapper for {@code AtomicBoolean}. This class only exists to provide consistent naming within all
+ * the {@code DoaEngine} classes. This class behaves exactly as how it's super-class would behave in
+ * any and all circumstances.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.2
+ * @version 2.7
  */
 public class DoaTaskGuard extends AtomicBoolean {
 
@@ -25,7 +24,7 @@ public class DoaTaskGuard extends AtomicBoolean {
 
 	/**
 	 * Instantiates a DoaTaskGuard with the initial value.
-	 * 
+	 *
 	 * @param initialValue what this task guard is set to at time = 0
 	 */
 	public DoaTaskGuard(final boolean initialValue) {

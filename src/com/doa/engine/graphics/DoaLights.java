@@ -12,12 +12,12 @@ import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
 
 /**
- * Responsible for providing a tool to create and set scene lights for
- * DoaEngine. This class is static, therefore has no objects.
+ * Responsible for providing a tool to create and set scene lights for DoaEngine. This class is
+ * static, therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.6.1
+ * @version 2.7
  */
 public final class DoaLights {
 
@@ -28,13 +28,11 @@ public final class DoaLights {
 	private DoaLights() {}
 
 	/**
-	 * Replaces the current ambient light with a new ambient light with the passed
-	 * color. When a new ambient light is set, all DoaObjects DoaEngine renders will
-	 * be affected by the new ambient light except the DoaObjects that are fixed,
-	 * DoaUIComponents and the sprites that are created without DoaSprites class.
-	 * Note: If this method has not yet been invoked, the ambient light color will
-	 * be {@link Color#WHITE}, meaning rendering will not be affected by ambient
-	 * light at all.
+	 * Replaces the current ambient light with a new ambient light with the passed color. When a new
+	 * ambient light is set, all DoaObjects DoaEngine renders will be affected by the new ambient light
+	 * except the DoaObjects that are fixed, DoaUIComponents and the sprites that are created without
+	 * DoaSprites class. Note: If this method has not yet been invoked, the ambient light color will be
+	 * {@link Color#WHITE}, meaning rendering will not be affected by ambient light at all.
 	 *
 	 * @param newAmbientLightColor color of the new ambient lights
 	 */
@@ -49,14 +47,13 @@ public final class DoaLights {
 			applyAmbientLight(entry.getKey(), entry.getValue());
 		}
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
-			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ")
-			        .append(newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
+			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ").append(newAmbientLightColor.getGreen())
+			        .append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
 		}
 	}
 
 	/**
-	 * Returns the color of the current ambient light DoaEngine uses to shade
-	 * DoaObjects.
+	 * Returns the color of the current ambient light DoaEngine uses to shade DoaObjects.
 	 *
 	 * @return the current ambient light color
 	 */
@@ -86,8 +83,8 @@ public final class DoaLights {
 
 	// TODO FIX THE DYNAMIC LIGHTING CHANGE BUG
 	static void applyAmbientLight(final String spriteName, final DoaAnimation anim) {
-		List<BufferedImage> frames = new ArrayList<>();
-		for (BufferedImage sp : anim.getFrames()) {
+		final List<BufferedImage> frames = new ArrayList<>();
+		for (final BufferedImage sp : anim.getFrames()) {
 			final BufferedImage spclone = new BufferedImage(sp.getWidth(), sp.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			final Graphics2D g2d = spclone.createGraphics();
 			g2d.drawImage(sp, 0, 0, null);

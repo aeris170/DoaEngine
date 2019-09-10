@@ -5,17 +5,18 @@ import java.io.Serializable;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
+import com.doa.engine.scene.DoaObject;
 import com.doa.maths.DoaMath;
 import com.doa.maths.DoaVectorF;
 
 /**
- * Represents a camera construct that looks at a certain point in 2D space, this
- * point can be animate. This means {@code DoaCamera} is capable of following
- * {@code DoaObject}s too. This class is static, therefore has no objects.
+ * Represents a camera construct that looks at a certain point in 2D space, this point can be
+ * animate. This means {@code DoaCamera} is capable of following {@code DoaObject}s too. This class
+ * is static, therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6.1
+ * @version 2.7
  */
 public final class DoaCamera implements Serializable {
 
@@ -46,9 +47,8 @@ public final class DoaCamera implements Serializable {
 	private DoaCamera() {}
 
 	/**
-	 * Re-initialises the object to follow, maxX and maxY values of the camera
-	 * construct. If {@code objectToFollow == null}, DoaCamera will not follow any
-	 * object.
+	 * Re-initialises the object to follow, maxX and maxY values of the camera construct. If
+	 * {@code objectToFollow == null}, DoaCamera will not follow any object.
 	 *
 	 * @param objectToFollow object to follow
 	 * @param minX camera's min x coordinate bound
@@ -68,16 +68,15 @@ public final class DoaCamera implements Serializable {
 		DoaCamera.maxX = maxX;
 		DoaCamera.maxY = maxY;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
-			LOGGER.finer(new StringBuilder(256).append("DoaMouse adjusted minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(maxX)
-			        .append(", maxY: ").append(maxY).toString());
+			LOGGER.finer(new StringBuilder(256).append("DoaMouse adjusted minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(maxX).append(", maxY: ")
+			        .append(maxY).toString());
 		}
 	}
 
 	/**
-	 * Enables {@code DoaCamera}'s zoom capabilities. MouseWheel is used to control
-	 * the zoom level. If, however, mouseWheel isn't wanted, one can directly change
-	 * {@code DoaMouse.WHEEL}. If {@code objectToZoom == null}, DoaCamera will use
-	 * (0, 0) as center of zoom.
+	 * Enables {@code DoaCamera}'s zoom capabilities. MouseWheel is used to control the zoom level. If,
+	 * however, mouseWheel isn't wanted, one can directly change {@code DoaMouse.WHEEL}. If
+	 * {@code objectToZoom == null}, DoaCamera will use (0, 0) as center of zoom.
 	 *
 	 * @param objectToZoomInto object to zoom into
 	 * @param minZ camera's min z coordinate bound(min zoom)
@@ -89,14 +88,14 @@ public final class DoaCamera implements Serializable {
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
-			LOGGER.finer(new StringBuilder(256).append("DoaMouse zoom enabled focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(minZ)
-			        .append(", maxZ: ").append(maxZ).toString());
+			LOGGER.finer(new StringBuilder(256).append("DoaMouse zoom enabled focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(minZ).append(", maxZ: ")
+			        .append(maxZ).toString());
 		}
 	}
 
 	/**
-	 * Resets the current zoom level of {@code DoaCamera} back to 1. Zoom of level 1
-	 * means no zoom is applied.
+	 * Resets the current zoom level of {@code DoaCamera} back to 1. Zoom of level 1 means no zoom is
+	 * applied.
 	 */
 	public static void resetMouseZoom() {
 		z = 1;
@@ -109,17 +108,17 @@ public final class DoaCamera implements Serializable {
 		isMouseZoomingEnabled = false;
 	}
 
-	static void tick() {
+	static void tick(final int width, final int height) {
 		if (isObjectToFollowInitialized) {
 			final DoaVectorF pos = objectToFollow.getPosition();
-			x += (pos.x - x - DoaWindow.WINDOW_WIDTH / 2.0) * tweenAmountX;
-			y += (pos.y - y - DoaWindow.WINDOW_HEIGHT / 2.0) * tweenAmountY;
+			x += (pos.x - x - width / 2.0) * tweenAmountX;
+			y += (pos.y - y - height / 2.0) * tweenAmountY;
 		}
 		if (isMouseZoomingEnabled) {
 			z += (DoaMouse.WHEEL - z) * tweenAmountZ;
 		}
-		x = DoaMath.clamp(x, minX, maxX - DoaWindow.WINDOW_WIDTH);
-		y = DoaMath.clamp(y, minY, maxY - DoaWindow.WINDOW_HEIGHT);
+		x = DoaMath.clamp(x, minX, maxX - width);
+		y = DoaMath.clamp(y, minY, maxY - height);
 		z = DoaMath.clamp(z, minZ, maxZ);
 	}
 

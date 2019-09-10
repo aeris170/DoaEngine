@@ -2,33 +2,27 @@ package com.doa.engine.sound;
 
 import javax.sound.sampled.Clip;
 
-import com.doa.engine.log.DoaLogger;
-
 /**
- * Easy use version of {@code Clip}. Houses a {@code Clip} object and some
- * necessary methods and utilities to quickly play, pause and stop arbitrary
- * sound clips.
+ * Easy use version of {@code Clip}. Houses a {@code Clip} object and some necessary methods and
+ * utilities to quickly play, pause and stop arbitrary sound clips.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.1
- * @version 2.6.1
+ * @version 2.7
  * @see Clip
  */
 public class DoaSoundClip {
 
-	private static final DoaLogger LOGGER = DoaLogger.getInstance();
-
 	/**
-	 * The actual sound clip. This is the object that stores all the information
-	 * about what sound this object will play.
+	 * The actual sound clip. This is the object that stores all the information about what sound this
+	 * object will play.
 	 *
 	 * @see Clip
 	 */
 	private Clip clip;
 
 	/**
-	 * Position of the playhead in terms of microseconds. 1 second = 1,000,000
-	 * microseconds.
+	 * Position of the playhead in terms of microseconds. 1 second = 1,000,000 microseconds.
 	 */
 	private long microsecondPosition;
 
@@ -67,8 +61,7 @@ public class DoaSoundClip {
 	}
 
 	/**
-	 * Stops the sound clip. This method will set the microsecond position of the
-	 * clip to 0.
+	 * Stops the sound clip. This method will set the microsecond position of the clip to 0.
 	 */
 	public void stop() {
 		if (clip != null) {
@@ -83,8 +76,7 @@ public class DoaSoundClip {
 	}
 
 	/**
-	 * Pauses the sound clip. This method will not change the microsecond position
-	 * of the clip.
+	 * Pauses the sound clip. This method will not change the microsecond position of the clip.
 	 */
 	public void pause() {
 		if (clip != null) {

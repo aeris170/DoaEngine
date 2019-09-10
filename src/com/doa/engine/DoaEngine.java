@@ -2,6 +2,7 @@ package com.doa.engine;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
@@ -15,10 +16,11 @@ import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
+import com.doa.engine.scene.DoaSceneHandler;
 
 /**
- * Responsible for creating and supplying the graphics context used for drawing
- * all created {@code DoaObject}s, and updating all created {@code DoaObject}s.
+ * Responsible for creating and supplying the graphics context used for drawing all created
+ * {@code DoaObject}s, and updating all created {@code DoaObject}s.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
@@ -31,12 +33,12 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Current version of DoaEngine.
 	 */
-	public static final String VERSION = "2.6.1";
+	@Internal
+	public static final String VERSION = "2.7";
 
 	/**
-	 * Number of updates per second. If {@code DoaEngine} is already running,
-	 * {@link DoaEngine#stop()} must be called before setting this value. Otherwise
-	 * DoaEngine will ignore the change.
+	 * Number of updates per second. If {@code DoaEngine} is already running, {@link DoaEngine#stop()}
+	 * must be called before setting this value. Otherwise DoaEngine will ignore the change.
 	 */
 	public static int TICK_RATE = 240;
 
@@ -51,19 +53,17 @@ public final class DoaEngine extends Canvas implements Runnable {
 	public static Color CLEAR_COLOR = Color.BLACK;
 
 	/**
-	 * Rendering mode of {@code DoaEngine}. Default is
-	 * {@link DoaRenderingMode#BALANCED}.
+	 * Rendering mode of {@code DoaEngine}. Default is {@link DoaRenderingMode#BALANCED}.
 	 *
 	 * @see DoaRenderingMode
 	 */
 	public static DoaRenderingMode RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 	/**
-	 * User defined rendering hints. Initially, this map is empty. If none of the
-	 * default rendering protocols suffice, any user can set the
-	 * {@link DoaEngine#RENDERING_MODE} to {@link DoaRenderingMode#USER_DEFINED} and
-	 * add their own {@code RenderingHints} to this map. This way, the rendering
-	 * will take place with the user defined Hints.
+	 * User defined rendering hints. Initially, this map is empty. If none of the default rendering
+	 * protocols suffice, programmers can set the {@link DoaEngine#RENDERING_MODE} to
+	 * {@link DoaRenderingMode#USER_DEFINED} and add their own {@code RenderingHints} to this map. This
+	 * way, the rendering will take place with the user defined Hints.
 	 */
 	public static final Map<RenderingHints.Key, Object> USER_HINTS = new HashMap<>();
 
@@ -148,10 +148,10 @@ public final class DoaEngine extends Canvas implements Runnable {
 	}
 
 	/**
-	 * @return the running instance of {@code DoaEngine}
+	 * @return the one and only instance of {@code DoaEngine}
 	 */
 	public static DoaEngine getInstance() {
-		return DoaEngine.ENGINE;
+		return ENGINE;
 	}
 
 	/**
@@ -202,9 +202,10 @@ public final class DoaEngine extends Canvas implements Runnable {
 	}
 
 	/**
-	 * This method is required to be public, but should never be called explicitly.
-	 * This is the Render/Update Loop {@inheritDoc}
+	 * This method is required to be public, but should never be called explicitly. This is the
+	 * Render/Update Loop {@inheritDoc}
 	 */
+	@Internal
 	@Override
 	public void run() {
 		long timer = System.currentTimeMillis();
@@ -238,12 +239,13 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * {@code DoaEngine} tick method.
 	 */
-	@SuppressWarnings("static-method")
 	private void tick() {
 		DoaKeyboard.tick();
 		DoaMouse.tick();
-		DoaHandler.tick();
-		DoaCamera.tick();
+		DoaSceneHandler.getLoadedScene().tick();
+
+		final Component parent = getParent();
+		DoaCamera.tick(parent.getWidth(), parent.getHeight());
 	}
 
 	/**
@@ -267,29 +269,33 @@ public final class DoaEngine extends Canvas implements Runnable {
 			g.setRenderingHints(USER_HINTS);
 		}
 
-		g.clearRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
-		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
-		g.fillRect(0, 0, DoaWindow.WINDOW_WIDTH, DoaWindow.WINDOW_HEIGHT);
+		final Component parent = getParent();
+		final int width = parent.getWidth();
+		final int height = parent.getHeight();
 
-		DoaHandler.render(g);
+		g.clearRect(0, 0, width, height);
+		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
+		g.fillRect(0, 0, width, height);
+
+		DoaSceneHandler.getLoadedScene().render(g);
 
 		bs.show();
 		g.dispose();
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
-	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+	private void writeObject(final java.io.ObjectOutputStream stream) throws IOException {
 		if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
-			LOGGER.severe("DoaEngine Serialization Disallowed");
+			LOGGER.severe("Serialization of DoaEngine is Disallowed");
 		}
-		throw new NotSerializableException("DoaEngine Serialization Disallowed");
+		throw new NotSerializableException("Serialization of DoaEngine is Disallowed");
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
-	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+	private void readObject(final java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
-			LOGGER.severe("DoaEngine Serialization Disallowed");
+			LOGGER.severe("Serialization of DoaEngine is Disallowed");
 		}
-		throw new NotSerializableException("DoaEngine Serialization Disallowed");
+		throw new NotSerializableException("Serialization of DoaEngine is Disallowed");
 	}
 }

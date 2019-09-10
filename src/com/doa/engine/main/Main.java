@@ -28,8 +28,10 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import com.doa.engine.DoaEngine;
+import com.doa.engine.Internal;
 import com.doa.engine.log.DoaLogger;
 
+@Internal
 public class Main {
 
 	private static final String TMP_DIR = System.getProperty("user.home") + File.separator + "DoaEngineTMP";

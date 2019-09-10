@@ -89,8 +89,8 @@ one that takes only 2 Floats. The result should look like this.</p>
 <img src="addingobjects3.png"><p>
 Now let's go to our main function and instantiate an instance of the new object we just created. To do this copy and paste<br>
 the code below to your main function right after the line that instantiates DoaEngine and hit the run key.
-<pre><code class="java"><div class="gettingstartedcode">DoaHandler.instantiateDoaObject(TestObject.class, 200f, 200f);</div></code></pre>
-As you can see above, in order to instantiate object to use with DoaEngine, we use DoaHandler.instantiateDoaObject(Class, Object...) function.<br>
+<pre><code class="java"><div class="gettingstartedcode">new DoaObjectBuilder(TestObject.class).args(200f, 200f).instantiate();</div></code></pre>
+As you can see above, in order to instantiate object to use with DoaEngine, we use the DoaObjectBuilder class.<br>
 This function accepts a Class, the class of the object you want to instantiate, and any number of arguments. The arguments entered must match one<br>
 of the constructors of the Class we just passed. If DoaHandler finds a suitable constructor, it will instantiate the object using that constructor.<br>
 In our case we had only one constructor that accepted two floats, and we passed 2 floats to the function in main method. Hence, our object is instantiated.<br>

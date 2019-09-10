@@ -5,10 +5,10 @@ import com.doa.ui.DoaUIContainer;
 
 /**
  * A bare bones UI component container.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 2.3
- * @version 2.3.2
+ * @version 2.7
  */
 public abstract class DoaPanel extends DoaUIContainer {
 
@@ -16,24 +16,24 @@ public abstract class DoaPanel extends DoaUIContainer {
 
 	/**
 	 * Instantiates a panel with the specified bounds
-	 * 
+	 *
 	 * @param x x coordinate of the top left corner of the UI component
 	 * @param y y coordinate of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
 	 */
-	public DoaPanel(Float x, Float y, Integer width, Integer height) {
+	public DoaPanel(final float x, final float y, final int width, final int height) {
 		super(x, y, width, height);
 	}
 
 	/**
 	 * Instantiates a panel with the specified bounds
-	 * 
+	 *
 	 * @param position position of the top left corner of the UI component
 	 * @param width width of the UI component
 	 * @param height height of the UI component
 	 */
-	public DoaPanel(DoaVectorF position, Integer width, Integer height) {
+	public DoaPanel(final DoaVectorF position, final int width, final int height) {
 		super(position, width, height);
 	}
 }

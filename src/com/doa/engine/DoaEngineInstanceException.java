@@ -3,13 +3,12 @@ package com.doa.engine;
 import java.util.MissingResourceException;
 
 /**
- * Thrown when certain {@code DoaEngine} parts are tried to be instantiated more
- * than once. By definition, they are singleton. This exception enforces that
- * feature.
+ * Thrown when certain {@code DoaEngine} parts are tried to be instantiated more than once. By
+ * definition, they are singleton. This exception enforces that feature.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 1.1
+ * @version 2.7
  */
 public class DoaEngineInstanceException extends MissingResourceException {
 
@@ -22,7 +21,7 @@ public class DoaEngineInstanceException extends MissingResourceException {
 	 * @param className Name of the throwing class
 	 * @param key Key of the exception
 	 */
-	public DoaEngineInstanceException(final String s, final String className, final String key) {
+	DoaEngineInstanceException(final String s, final String className, final String key) {
 		super(s, className, key);
 	}
 }

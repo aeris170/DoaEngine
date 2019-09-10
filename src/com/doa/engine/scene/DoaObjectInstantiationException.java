@@ -1,12 +1,12 @@
-package com.doa.engine;
+package com.doa.engine.scene;
 
 /**
- * Thrown when a {@code DoaObject} is tried to instantiated by the
- * {@code DoaHandler}, but failed.
+ * Thrown when a {@code DoaObject} is tried to instantiated by the {@code DoaObjectBuilder}, but
+ * failed.
  *
  * @author Doga Oruc
  * @since DoaEngine 2.6.1
- * @version 2.6.1
+ * @version 2.7
  */
 public class DoaObjectInstantiationException extends IllegalArgumentException {
 
@@ -17,7 +17,7 @@ public class DoaObjectInstantiationException extends IllegalArgumentException {
 	 *
 	 * @param s message of the exception
 	 */
-	public DoaObjectInstantiationException(final String s) {
+	DoaObjectInstantiationException(final String s) {
 		super(s);
 	}
 }

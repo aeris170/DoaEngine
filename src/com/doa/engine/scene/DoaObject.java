@@ -1,22 +1,23 @@
-package com.doa.engine;
+package com.doa.engine.scene;
 
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+import com.doa.engine.Internal;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
 import com.doa.maths.DoaVectorI;
 
 /**
- * Blueprint of all objects that are going to be processed by {@code DoaEngine},
- * all objects that will get updated at every logical frame and will get drawn
- * on the screen must sub-class this class, then it is ensured by
- * {@code DoaEngine} that it will be updated and will be drawn on the screen.
+ * Blueprint of all objects that are going to be processed by {@code DoaEngine}, all objects that
+ * will get updated at every logical frame and will get drawn on the screen <strong>must</strong>
+ * sub-class this class, then it is ensured by {@code DoaEngine} that it will be updated and will be
+ * drawn on the screen.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6.1
+ * @version 2.7
  */
 public abstract class DoaObject implements Serializable {
 
@@ -43,19 +44,24 @@ public abstract class DoaObject implements Serializable {
 	protected DoaVectorF velocity = new DoaVectorF();
 
 	/**
+	 * A reference to the scene this {@code DoaObject} is in.
+	 */
+	protected DoaScene scene = null;
+
+	/**
 	 * zOrder of {@code DoaObject}, default is 0.
 	 */
 	private int zOrder = 0;
 
 	/**
-	 * True if camera's transformation will not be concatenated to this DoaObject's
-	 * transform. False if otherwise.
+	 * True if camera's transformation will not be concatenated to this DoaObject's transform. False if
+	 * otherwise.
 	 */
 	private boolean isFixed = false;
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates with a width and height of 0.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates with a width and
+	 * height of 0.
 	 *
 	 * @param x x coordinate of {@code DoaObject}
 	 * @param y y coordinate of {@code DoaObject}
@@ -65,8 +71,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates with a width and height of 0.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates with a width and
+	 * height of 0.
 	 *
 	 * @param position position of {@code DoaObject}
 	 */
@@ -75,8 +81,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates and with the given width and height values.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates and with the
+	 * given width and height values.
 	 *
 	 * @param x x coordinate of {@code DoaObject}
 	 * @param y y coordinate of {@code DoaObject}
@@ -91,8 +97,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates and with the given width and height values.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates and with the
+	 * given width and height values.
 	 *
 	 * @param position position of {@code DoaObject}
 	 * @param width width of {@code DoaObject}
@@ -105,8 +111,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates with a width and height of 0 and with the given zOrder.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates with a width and
+	 * height of 0 and with the given zOrder.
 	 *
 	 * @param x x coordinate of {@code DoaObject}
 	 * @param y y coordinate of {@code DoaObject}
@@ -117,8 +123,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates with a width and height of 0 and with the given zOrder.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates with a width and
+	 * height of 0 and with the given zOrder.
 	 *
 	 * @param position position of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
@@ -128,8 +134,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates and with the given width, height and zOrder values.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates and with the
+	 * given width, height and zOrder values.
 	 *
 	 * @param x x coordinate of {@code DoaObject}
 	 * @param y y coordinate of {@code DoaObject}
@@ -146,8 +152,8 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * Constructor. Constructs a {@code DoaObject} at the specified x and y
-	 * coordinates and with the given width, height and zOrder values.
+	 * Constructor. Constructs a {@code DoaObject} at the specified x and y coordinates and with the
+	 * given width, height and zOrder values.
 	 *
 	 * @param position position of {@code DoaObject}
 	 * @param width width of {@code DoaObject}
@@ -162,31 +168,28 @@ public abstract class DoaObject implements Serializable {
 	}
 
 	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except {@code DoaEngine}. If done otherwise,
-	 * {@code DoaEngine} provides no guarantees on the consistency of the internal
-	 * state of this {@code DoaObject}. All updates to a {@code DoaObject}'s
-	 * internal state must be executed inside this method. When done so,
-	 * {@code DoaEngine} guarantees the object's new internal state will reflect to
-	 * object's drawing on the screen
+	 * This method is required to be public, but should never be called explicitly by any class at any
+	 * time except {@code DoaEngine}. If done otherwise, {@code DoaEngine} provides no guarantees on the
+	 * consistency of the internal state of this {@code DoaObject}. All updates to a {@code DoaObject}'s
+	 * internal state must be executed inside this method. When done so, {@code DoaEngine} guarantees
+	 * the object's new internal state will reflect to object's drawing on the screen
 	 */
 	public abstract void tick();
 
 	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except {@code DoaEngine}. If done otherwise,
-	 * {@code DoaEngine} provides no guarantees on the quality and consistency of
-	 * rendering. All draw calls regarding a {@code DoaObject}'s internal state must
-	 * be executed inside this method. This method is always executed on time.
+	 * This method is required to be public, but should never be called explicitly by any class at any
+	 * time except {@code DoaEngine}. If done otherwise, {@code DoaEngine} provides no guarantees on the
+	 * quality and consistency of rendering. All draw calls regarding a {@code DoaObject}'s internal
+	 * state must be executed inside this method. This method is always executed on time.
 	 *
 	 * @param g the graphics context of {@code DoaEngine}
 	 */
 	public abstract void render(DoaGraphicsContext g);
 
 	/**
-	 * Conveniency method to retrieve a {@code DoaObject}'s bounds, added to
-	 * {@code DoaObject} because of how useful it is for collision detection. By
-	 * default, returns the smallest bounding box for this object.
+	 * Conveniency method to retrieve a {@code DoaObject}'s bounds, added to {@code DoaObject} because
+	 * of how useful it is for collision detection. By default, returns the smallest bounding box for
+	 * this object.
 	 *
 	 * @return the bounding shape of {@code DoaObject}
 	 */
@@ -208,6 +211,10 @@ public abstract class DoaObject implements Serializable {
 
 	public DoaVectorF getVelocity() {
 		return velocity;
+	}
+
+	public DoaScene getScene() {
+		return scene;
 	}
 
 	public int getzOrder() {
@@ -238,18 +245,35 @@ public abstract class DoaObject implements Serializable {
 		velocity = newVelocity;
 	}
 
-	public void setzOrder(final int zOrder) {
-		DoaHandler.remove(this);
-		this.zOrder = zOrder;
-		DoaHandler.add(this);
+	/**
+	 * Sets the scene of this {@code DoaObject}. This method is an internal component. Use
+	 * {@link DoaScene#add(DoaObject)} and {@link DoaScene#remove(DoaObject)} to set the scene of a
+	 * {@code DoaObject}.
+	 *
+	 * @see DoaScene#add(DoaObject)
+	 * @see DoaScene#remove(DoaObject)
+	 * @param scene scene
+	 */
+	@Internal
+	void setScene(final DoaScene scene) {
+		if (this.scene != null) {
+			this.scene.remove(this);
+		}
+		this.scene = scene;
 	}
 
-	public void setSize(DoaVectorI size) {
+	public void setzOrder(final int zOrder) {
+		scene.remove(this);
+		this.zOrder = zOrder;
+		scene.add(this);
+	}
+
+	public void setSize(final DoaVectorI size) {
 		width = size.x;
 		height = size.y;
 	}
 
-	public void setFixed(boolean isFixed) {
+	public void setFixed(final boolean isFixed) {
 		this.isFixed = isFixed;
 	}
 }

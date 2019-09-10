@@ -13,8 +13,8 @@ import java.util.Objects;
  * Implementation of {@link Logger}.
  *
  * @author Doga Oruc
- * @version 2.6.1
  * @since DoaEngine 2.6.1
+ * @version 2.7
  * @see Logger
  * @see LogLevel
  */
@@ -43,7 +43,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setTarget(String path) throws IOException {
+	public void setTarget(final String path) throws IOException {
 		writer = new PrintWriter(new FileWriter(path));
 	}
 
@@ -51,7 +51,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, boolean message) {
+	public void log(final LogLevel level, final boolean message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -59,7 +59,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, char message) {
+	public void log(final LogLevel level, final char message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -67,7 +67,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, char[] message) {
+	public void log(final LogLevel level, final char[] message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -75,7 +75,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, double message) {
+	public void log(final LogLevel level, final double message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -83,7 +83,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, float message) {
+	public void log(final LogLevel level, final float message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -91,7 +91,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, int message) {
+	public void log(final LogLevel level, final int message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -99,7 +99,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, long message) {
+	public void log(final LogLevel level, final long message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -107,7 +107,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, Object message) {
+	public void log(final LogLevel level, final Object message) {
 		log(level, String.valueOf(message));
 	}
 
@@ -115,12 +115,12 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void log(LogLevel level, String message) {
+	public void log(final LogLevel level, final String message) {
 		if (level == LogLevel.OFF) {
 			return;
 		}
-		String time = dt.format(Calendar.getInstance().getTime());
-		String prefix = new StringBuilder(32).append(" [").append(level.toString()).append("]").append(level.getExtraSpaceCharacters()).toString();
+		final String time = dt.format(Calendar.getInstance().getTime());
+		final String prefix = new StringBuilder(32).append(" [").append(level.toString()).append("]").append(level.getExtraSpaceCharacters()).toString();
 		console.print(DATE_SEQUENCE);
 		console.print(time);
 		console.print(level.getColorSequence());
@@ -135,7 +135,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(boolean message) {
+	public void finest(final boolean message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -143,7 +143,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(char message) {
+	public void finest(final char message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -151,7 +151,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(char[] message) {
+	public void finest(final char[] message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -159,7 +159,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(double message) {
+	public void finest(final double message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -167,7 +167,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(float message) {
+	public void finest(final float message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -175,7 +175,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(int message) {
+	public void finest(final int message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -183,7 +183,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(long message) {
+	public void finest(final long message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -191,7 +191,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(Object message) {
+	public void finest(final Object message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -199,7 +199,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finest(String message) {
+	public void finest(final String message) {
 		log(LogLevel.FINEST, String.valueOf(message));
 	}
 
@@ -207,7 +207,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(boolean message) {
+	public void finer(final boolean message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -215,7 +215,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(char message) {
+	public void finer(final char message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -223,7 +223,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(char[] message) {
+	public void finer(final char[] message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -231,7 +231,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(double message) {
+	public void finer(final double message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -239,7 +239,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(float message) {
+	public void finer(final float message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -247,7 +247,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(int message) {
+	public void finer(final int message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -255,7 +255,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(long message) {
+	public void finer(final long message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -263,7 +263,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(Object message) {
+	public void finer(final Object message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -271,7 +271,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void finer(String message) {
+	public void finer(final String message) {
 		log(LogLevel.FINER, String.valueOf(message));
 	}
 
@@ -279,7 +279,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(boolean message) {
+	public void fine(final boolean message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -287,7 +287,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(char message) {
+	public void fine(final char message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -295,7 +295,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(char[] message) {
+	public void fine(final char[] message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -303,7 +303,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(double message) {
+	public void fine(final double message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -311,7 +311,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(float message) {
+	public void fine(final float message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -319,7 +319,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(int message) {
+	public void fine(final int message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -327,7 +327,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(long message) {
+	public void fine(final long message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -335,7 +335,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(Object message) {
+	public void fine(final Object message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -343,7 +343,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fine(String message) {
+	public void fine(final String message) {
 		log(LogLevel.FINE, String.valueOf(message));
 	}
 
@@ -351,7 +351,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(boolean message) {
+	public void config(final boolean message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -359,7 +359,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(char message) {
+	public void config(final char message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -367,7 +367,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(char[] message) {
+	public void config(final char[] message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -375,7 +375,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(double message) {
+	public void config(final double message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -383,7 +383,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(float message) {
+	public void config(final float message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -391,7 +391,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(int message) {
+	public void config(final int message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -399,7 +399,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(long message) {
+	public void config(final long message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -407,7 +407,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(Object message) {
+	public void config(final Object message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -415,7 +415,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void config(String message) {
+	public void config(final String message) {
 		log(LogLevel.CONFIG, String.valueOf(message));
 	}
 
@@ -423,7 +423,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(boolean message) {
+	public void info(final boolean message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -431,7 +431,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(char message) {
+	public void info(final char message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -439,7 +439,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(char[] message) {
+	public void info(final char[] message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -447,7 +447,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(double message) {
+	public void info(final double message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -455,7 +455,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(float message) {
+	public void info(final float message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -463,7 +463,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(int message) {
+	public void info(final int message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -471,7 +471,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(long message) {
+	public void info(final long message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -479,7 +479,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(Object message) {
+	public void info(final Object message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -487,7 +487,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(String message) {
+	public void info(final String message) {
 		log(LogLevel.INFO, String.valueOf(message));
 	}
 
@@ -495,7 +495,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(boolean message) {
+	public void warning(final boolean message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -503,7 +503,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(char message) {
+	public void warning(final char message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -511,7 +511,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(char[] message) {
+	public void warning(final char[] message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -519,7 +519,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(double message) {
+	public void warning(final double message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -527,7 +527,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(float message) {
+	public void warning(final float message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -535,7 +535,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(int message) {
+	public void warning(final int message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -543,7 +543,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(long message) {
+	public void warning(final long message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -551,7 +551,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(Object message) {
+	public void warning(final Object message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -559,7 +559,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warning(String message) {
+	public void warning(final String message) {
 		log(LogLevel.WARNING, String.valueOf(message));
 	}
 
@@ -567,7 +567,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(boolean message) {
+	public void severe(final boolean message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -575,7 +575,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(char message) {
+	public void severe(final char message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -583,7 +583,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(char[] message) {
+	public void severe(final char[] message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -591,7 +591,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(double message) {
+	public void severe(final double message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -599,7 +599,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(float message) {
+	public void severe(final float message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -607,7 +607,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(int message) {
+	public void severe(final int message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -615,7 +615,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(long message) {
+	public void severe(final long message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -623,7 +623,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(Object message) {
+	public void severe(final Object message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 
@@ -631,7 +631,7 @@ public final class DoaLogger implements Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void severe(String message) {
+	public void severe(final String message) {
 		log(LogLevel.SEVERE, String.valueOf(message));
 	}
 

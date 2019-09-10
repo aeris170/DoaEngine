@@ -3,13 +3,15 @@ package com.doa.engine.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.doa.engine.Internal;
+
 /**
- * Responsible for catching all fired keyboard inputs at any logical frame. This
- * class is static, therefore has no objects.
+ * Responsible for catching all fired keyboard inputs at any logical frame. This class is static,
+ * therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6.1
+ * @version 2.7
  */
 public final class DoaKeyboard {
 
@@ -19,16 +21,16 @@ public final class DoaKeyboard {
 	private DoaKeyboard() {}
 
 	/**
-	 * This construct ensures all key events in any logical frame to be captured and
-	 * saved in this class' internal state. At any logical frame, a reference to any
-	 * of this class' fields will return true if and only if that reference mask has
-	 * been produced according to a captured key event. Informally, if a key has
-	 * been pressed at any time, at that time the respective field will be set to
-	 * true and will stay true as long as the key is held down, only when the same
-	 * key has been released it is then corresponding field will be set to false.
+	 * This construct ensures all key events in any logical frame to be captured and saved in this
+	 * class' internal state. At any logical frame, a reference to any of this class' fields will return
+	 * true if and only if that reference mask has been produced according to a captured key event.
+	 * Informally, if a key has been pressed at any time, at that time the respective field will be set
+	 * to true and will stay true as long as the key is held down, only when the same key has been
+	 * released it is then corresponding field will be set to false.
 	 *
 	 * @see java.awt.event.KeyAdapter
 	 */
+	@Internal
 	public static final KeyAdapter INPUT = new KeyAdapter() {
 
 		@Override
@@ -46,11 +48,11 @@ public final class DoaKeyboard {
 	static boolean[] press = new boolean[522];
 
 	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except {@code DoaEngine}. If done otherwise,
-	 * {@code DoaEngine} provides no guarantees on the consistency of the KeyEvent
-	 * catching mechanism.
+	 * This method is required to be public, but should never be called explicitly by any class at any
+	 * time except {@code DoaEngine}. If done otherwise, {@code DoaEngine} provides no guarantees on the
+	 * consistency of the KeyEvent catching mechanism.
 	 */
+	@Internal
 	public static synchronized void tick() {
 		ESCAPE = press[KeyEvent.VK_ESCAPE];
 		F1 = press[KeyEvent.VK_F1];
@@ -143,8 +145,8 @@ public final class DoaKeyboard {
 	/**
 	 * @see java.awt.event.KeyEvent
 	 */
-	public static boolean ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, PRINT_SCREEN, SCROLL_LOCK, PAUSE_BREAK, TILDE, ZERO, ONE, TWO, THREE, FOUR, FIVE,
-	        SIX, SEVEN, EIGHT, NINE, BACK_SPACE, INSERT, DELETE, HOME, END, PAGE_UP, PAGE_DOWN, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y,
-	        Z, TAB, CAPS_LOCK, SHIFT, CTRL, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9, NUM_0, DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP,
-	        KEY_DOWN, KEY_RIGHT, KEY_LEFT;
+	public static boolean ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, PRINT_SCREEN, SCROLL_LOCK, PAUSE_BREAK, TILDE, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN,
+	        EIGHT, NINE, BACK_SPACE, INSERT, DELETE, HOME, END, PAGE_UP, PAGE_DOWN, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, TAB, CAPS_LOCK,
+	        SHIFT, CTRL, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9, NUM_0, DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP, KEY_DOWN, KEY_RIGHT,
+	        KEY_LEFT;
 }

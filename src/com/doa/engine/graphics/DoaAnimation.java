@@ -4,13 +4,13 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- * Objects of this class are responsible for providing support for sprite based
- * animations. In order to facilitate this class' objects, one must use the
- * factory methods inside {@code DoaAnimations} class.
- * 
+ * Objects of this class are responsible for providing support for sprite based animations. In order
+ * to facilitate this class' objects, one must use the factory methods inside {@code DoaAnimations}
+ * class.
+ *
  * @author Doga Oruc
  * @since DoaEngine 2.2
- * @version 2.5
+ * @version 2.7
  * @see com.doa.engine.graphics.DoaAnimations
  */
 public class DoaAnimation {
@@ -19,7 +19,7 @@ public class DoaAnimation {
 	private long delay;
 	private int index = 0;
 
-	DoaAnimation(List<BufferedImage> frames, long delay) {
+	DoaAnimation(final List<BufferedImage> frames, final long delay) {
 		this.frames = frames;
 		this.delay = delay;
 	}
@@ -47,7 +47,7 @@ public class DoaAnimation {
 
 	/**
 	 * Retrieves the sprite at sprite pointer.
-	 * 
+	 *
 	 * @return current sprite to render
 	 */
 	public BufferedImage current() {
@@ -55,10 +55,9 @@ public class DoaAnimation {
 	}
 
 	/**
-	 * Advances the sprite pointer to the next index, retrieves the sprite at that
-	 * index; loops back to beginning if there are no more sprites on the buffer,
-	 * and returns the sprite.
-	 * 
+	 * Advances the sprite pointer to the next index, retrieves the sprite at that index; loops back to
+	 * beginning if there are no more sprites on the buffer, and returns the sprite.
+	 *
 	 * @return the next sprite to render
 	 */
 	public BufferedImage next() {
@@ -74,7 +73,7 @@ public class DoaAnimation {
 
 	/**
 	 * Returns the current index of the sprite to render.
-	 * 
+	 *
 	 * @return the sprite to renders index
 	 */
 	public int getIndex() {

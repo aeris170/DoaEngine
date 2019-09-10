@@ -6,16 +6,16 @@ import java.io.IOException;
  * A simple logger interface.
  *
  * @author Doga Oruc
- * @version 2.6.1
  * @since DoaEngine 2.6
+ * @version 2.7
  * @see DoaLogger
  * @see LogLevel
  */
 public interface Logger {
 
 	/**
-	 * Sets an external target file. The external target is guaranteed to receive
-	 * all logs after this method returns except for the few cases listed below.
+	 * Sets an external target file. The external target is guaranteed to receive all logs after this
+	 * method returns except for the few cases listed below.
 	 * <ul>
 	 * <li>The target exists but is a directory rather than a regular file</li>
 	 * <li>The target does not exist but cannot be created</li>
@@ -24,9 +24,8 @@ public interface Logger {
 	 * In the cases listed above, an {@link IOException} will be thrown.
 	 *
 	 * @param path the new target
-	 * @throws IOException if the named file exists but is a directory rather than a
-	 *         regular file, does not exist but cannot be created, or cannot be
-	 *         opened for any other reason
+	 * @throws IOException if the named file exists but is a directory rather than a regular file, does
+	 *         not exist but cannot be created, or cannot be opened for any other reason
 	 */
 	void setTarget(String path) throws IOException;
 
@@ -544,8 +543,8 @@ public interface Logger {
 	void severe(String message);
 
 	/**
-	 * Sends a new line character(\r\n | \r | \n) to the loggers output, and turns
-	 * off all coloring attributes.
+	 * Sends a new line character(\r\n | \r | \n) to the loggers output, and turns off all coloring
+	 * attributes.
 	 */
 	void newLine();
 }

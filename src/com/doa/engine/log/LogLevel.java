@@ -15,10 +15,10 @@ import java.util.stream.Stream;
  * <li>{@link #FINER} - Detailed Developer Info</li>
  * <li>{@link #FINEST} - Specialized Developer Info</li>
  * </ul>
- * 
+ *
  * @author Doga Oruc
- * @version 2.6.1
  * @since DoaEngine 2.6
+ * @version 2.7
  * @see Logger
  * @see DoaLogger
  */
@@ -69,33 +69,33 @@ public enum LogLevel {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param colorSequence the coloring sequence for content
 	 */
-	private LogLevel(String colorSequence) {
+	private LogLevel(final String colorSequence) {
 		this.colorSequence = colorSequence;
 	}
 
 	/**
-	 * For consoles that support ANSI escape sequences for coloring, returns the
-	 * sequence for info content.
-	 * 
+	 * For consoles that support ANSI escape sequences for coloring, returns the sequence for info
+	 * content.
+	 *
 	 * @return the coloring sequence for content
 	 */
 	public String getColorSequence() {
 		return colorSequence;
 	}
-	
+
 	/**
-	 * This method returns the amount of space characters needed to align the ends
-	 * of strings returned by {@code LogLevel#toString()}.
-	 * 
+	 * This method returns the amount of space characters needed to align the ends of strings returned
+	 * by {@code LogLevel#toString()}.
+	 *
 	 * @return the space character sequence
 	 */
 	public String getExtraSpaceCharacters() {
-		if(Objects.isNull(extraSpaceCharacters)) {
-			int longest = Stream.of(values()).map(LogLevel::toString).mapToInt(String::length).max().orElse(-1);
-			if(longest == -1) {
+		if (Objects.isNull(extraSpaceCharacters)) {
+			final int longest = Stream.of(values()).map(LogLevel::toString).mapToInt(String::length).max().orElse(-1);
+			if (longest == -1) {
 				extraSpaceCharacters = null;
 				return "";
 			}
@@ -104,7 +104,6 @@ public enum LogLevel {
 		return extraSpaceCharacters;
 	}
 
-	/* Foreground colors 30 Black 31 Red 32 Green 33 Yellow 34 Blue 35 Magenta 36
-	 * Cyan 37 White Background colors 40 Black 41 Red 42 Green 43 Yellow 44 Blue 45
-	 * Magenta 46 Cyan 47 White */
+	/* Foreground colors 30 Black 31 Red 32 Green 33 Yellow 34 Blue 35 Magenta 36 Cyan 37 White
+	 * Background colors 40 Black 41 Red 42 Green 43 Yellow 44 Blue 45 Magenta 46 Cyan 47 White */
 }

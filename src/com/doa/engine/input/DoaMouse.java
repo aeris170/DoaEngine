@@ -8,17 +8,18 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 import com.doa.engine.DoaEngine;
+import com.doa.engine.Internal;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
 import com.doa.maths.DoaMath;
 
 /**
- * Responsible for catching all fired mouse inputs at any logical frame. This
- * class is static, therefore has no objects.
+ * Responsible for catching all fired mouse inputs at any logical frame. This class is static,
+ * therefore has no objects.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6.1
+ * @version 2.7
  */
 public final class DoaMouse extends MouseInputAdapter {
 
@@ -30,16 +31,16 @@ public final class DoaMouse extends MouseInputAdapter {
 	private DoaMouse() {}
 
 	/**
-	 * This construct ensures all mouse events in any logical frame to be captured
-	 * and saved in this class' internal state. At any logical frame, a reference to
-	 * any of this class' fields will return true if and only if that reference mask
-	 * has been produced according to a captured mouse event. Informally, if a mouse
-	 * button has been pressed at any time, at that time the respective field will
-	 * be set to true, and when the same button has been released the same field
-	 * will be set to false.
+	 * This construct ensures all mouse events in any logical frame to be captured and saved in this
+	 * class' internal state. At any logical frame, a reference to any of this class' fields will return
+	 * true if and only if that reference mask has been produced according to a captured mouse event.
+	 * Informally, if a mouse button has been pressed at any time, at that time the respective field
+	 * will be set to true, and when the same button has been released the same field will be set to
+	 * false.
 	 *
 	 * @see javax.swing.event.MouseInputAdapter
 	 */
+	@Internal
 	public static final MouseInputAdapter INPUT = new MouseInputAdapter() {
 
 		@Override
@@ -108,11 +109,11 @@ public final class DoaMouse extends MouseInputAdapter {
 	static double maxZ = Double.MAX_VALUE;
 
 	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except {@code DoaEngine}. If done otherwise,
-	 * {@code DoaEngine} provides no guarantees on the consistency of the MouseEvent
-	 * catching mechanism.
+	 * This method is required to be public, but should never be called explicitly by any class at any
+	 * time except {@code DoaEngine}. If done otherwise, {@code DoaEngine} provides no guarantees on the
+	 * consistency of the MouseEvent catching mechanism.
 	 */
+	@Internal
 	public static synchronized void tick() {
 		MB1 = press[MouseEvent.BUTTON1];
 		MB2 = press[MouseEvent.BUTTON2];

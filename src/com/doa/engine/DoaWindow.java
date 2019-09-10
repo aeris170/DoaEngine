@@ -28,7 +28,7 @@ import com.doa.engine.log.LogLevel;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.6.1
+ * @version 2.7
  */
 public final class DoaWindow extends JFrame {
 
@@ -36,14 +36,10 @@ public final class DoaWindow extends JFrame {
 
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
-	public static int WINDOW_WIDTH;
-	public static int WINDOW_HEIGHT;
-
 	private static DoaWindow Window;
 
 	/**
-	 * Creates and returns a {@code DoaWindow}. This method should only be called
-	 * once.
+	 * Creates and returns a {@code DoaWindow}. This method should only be called once.
 	 *
 	 * @return an instance of {@code DoaWindow}
 	 */
@@ -76,8 +72,8 @@ public final class DoaWindow extends JFrame {
 	}
 
 	/**
-	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the
-	 * parameter will start DoaEngine.</strong>
+	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the parameter will start
+	 * DoaEngine.</strong>
 	 *
 	 * @see java.awt.Component
 	 */
@@ -95,8 +91,8 @@ public final class DoaWindow extends JFrame {
 	}
 
 	/**
-	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the
-	 * parameter will stop DoaEngine.</strong>
+	 * {@inheritDoc} <strong> Note: Calling this method with DoaEngine as the parameter will stop
+	 * DoaEngine.</strong>
 	 *
 	 * @see java.awt.Component
 	 */
@@ -113,14 +109,13 @@ public final class DoaWindow extends JFrame {
 	}
 
 	/**
-	 * {@inheritDoc} <strong> Note: Calling this method will stop
-	 * DoaEngine.</strong>
+	 * {@inheritDoc} <strong> Note: Calling this method will stop DoaEngine.</strong>
 	 *
 	 * @see java.awt.Component
 	 */
 	@Override
 	public synchronized void removeAll() {
-		Optional<Component> o = Stream.of(getComponents()).filter(c -> c instanceof DoaEngine).findFirst();
+		final Optional<Component> o = Stream.of(getComponents()).filter(c -> c instanceof DoaEngine).findFirst();
 		if (o.isPresent()) {
 			((DoaEngine) o.get()).stop();
 		}
@@ -217,8 +212,6 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setSize(final Dimension d) {
 		super.setSize(d);
-		DoaWindow.WINDOW_WIDTH = (int) d.getWidth();
-		DoaWindow.WINDOW_HEIGHT = (int) d.getHeight();
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's size is now ").append((int) d.getWidth()).append("x").append((int) d.getHeight()).append("."));
 		}
@@ -232,8 +225,6 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setSize(final int width, final int height) {
 		super.setSize(width, height);
-		DoaWindow.WINDOW_WIDTH = width;
-		DoaWindow.WINDOW_HEIGHT = height;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(64).append("DoaWindow's size is now ").append(width).append("x").append(height).append("."));
 		}
@@ -299,11 +290,9 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setBounds(final Rectangle r) {
 		super.setBounds(r);
-		DoaWindow.WINDOW_WIDTH = r.width;
-		DoaWindow.WINDOW_HEIGHT = r.height;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
-			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(r.width).append("x").append(r.height).append(" at (")
-			        .append(r.x).append(", ").append(r.y).append(")."));
+			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(r.width).append("x").append(r.height).append(" at (").append(r.x)
+			        .append(", ").append(r.y).append(")."));
 		}
 	}
 
@@ -315,11 +304,9 @@ public final class DoaWindow extends JFrame {
 	@Override
 	public synchronized void setBounds(final int x, final int y, final int width, final int height) {
 		super.setBounds(x, y, width, height);
-		DoaWindow.WINDOW_WIDTH = width;
-		DoaWindow.WINDOW_HEIGHT = height;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
-			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(width).append("x").append(height).append(" at (")
-			        .append(x).append(", ").append(y).append(")."));
+			LOGGER.config(new StringBuilder(64).append("DoaWindow's bounds is now a rectangle of size ").append(width).append("x").append(height).append(" at (").append(x)
+			        .append(", ").append(y).append(")."));
 		}
 	}
 
@@ -371,7 +358,7 @@ public final class DoaWindow extends JFrame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void setMenuBar(MenuBar mb) {
+	public synchronized void setMenuBar(final MenuBar mb) {
 		super.setMenuBar(mb);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("DoaWindow MenuBar is now: ").append(mb.getClass().getName()).append("."));
@@ -382,7 +369,7 @@ public final class DoaWindow extends JFrame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void setJMenuBar(JMenuBar menubar) {
+	public synchronized void setJMenuBar(final JMenuBar menubar) {
 		super.setJMenuBar(menubar);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			LOGGER.config(new StringBuilder(128).append("DoaWindow JMenuBar is now: ").append(menubar.getClass().getName()).append("."));
@@ -393,7 +380,7 @@ public final class DoaWindow extends JFrame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void setDefaultCloseOperation(int operation) {
+	public synchronized void setDefaultCloseOperation(final int operation) {
 		super.setDefaultCloseOperation(operation);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.CONFIG) >= 0) {
 			String operationString;
@@ -417,12 +404,12 @@ public final class DoaWindow extends JFrame {
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
-	private void writeObject(java.io.ObjectOutputStream stream) throws IOException {
+	private void writeObject(final java.io.ObjectOutputStream stream) throws IOException {
 		throw new NotSerializableException("DoaWindow");
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })
-	private void readObject(java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
+	private void readObject(final java.io.ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		throw new NotSerializableException("DoaWindow");
 	}
 }

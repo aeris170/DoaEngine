@@ -5,7 +5,7 @@ package com.doa.maths;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1.4
+ * @version 2.7
  */
 public final class DoaMath {
 
@@ -17,8 +17,7 @@ public final class DoaMath {
 	 * @param value the variable to clamp
 	 * @param min lower bound
 	 * @param max upper bound
-	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value
-	 *         &gt; max
+	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value &gt; max
 	 */
 	public static int clamp(final int value, final int min, final int max) {
 		return Math.max(min, Math.min(max, value));
@@ -30,8 +29,7 @@ public final class DoaMath {
 	 * @param value the variable to clamp
 	 * @param min lower bound
 	 * @param max upper bound
-	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value
-	 *         &gt; max
+	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value &gt; max
 	 */
 	public static float clamp(final float value, final float min, final float max) {
 		return Math.max(min, Math.min(max, value));
@@ -43,19 +41,18 @@ public final class DoaMath {
 	 * @param value the variable to clamp
 	 * @param min lower bound
 	 * @param max upper bound
-	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value
-	 *         &gt; max
+	 * @return value if min &lt; value &lt; max, min if value &lt; min, max if value &gt; max
 	 */
 	public static double clamp(final double value, final double min, final double max) {
 		return Math.max(min, Math.min(max, value));
 	}
 
 	/**
-	 * Linearly interpolates between first and second by amt. The parameter amt
-	 * should be in the range [0, 1]. When t = 0, returns first. When t = 1, returns
-	 * second. When t = 0.5, returns the midpoint of first and second.
-	 * {@code DoaEngine} guarantees the result to be true if and only if the
-	 * parameter amt is in the range [0, 1].
+	 * Linearly interpolates between first and second by amt. The parameter amt should be in the range
+	 * [0, 1]. When t = 0, returns first. When t = 1, returns second. When t = 0.5, returns the midpoint
+	 * of first and second. {@code DoaEngine} guarantees the result to be true if and only if the
+	 * parameter amt is in the range [0, 1]. Parameter amt not being in the range [0, 1] is an
+	 * undocumented behaviour. Use at your own risk!
 	 *
 	 * @param first start value
 	 * @param second end value
@@ -67,11 +64,11 @@ public final class DoaMath {
 	}
 
 	/**
-	 * Linearly interpolates between first and second by amt. The parameter amt
-	 * should be in the range [0, 1]. When t = 0, returns first. When t = 1, returns
-	 * second. When t = 0.5, returns the midpoint of first and second.
-	 * {@code DoaEngine} guarantees the result to be true if and only if the
-	 * parameter amt is in the range [0, 1].
+	 * Linearly interpolates between first and second by amt. The parameter amt should be in the range
+	 * [0, 1]. When t = 0, returns first. When t = 1, returns second. When t = 0.5, returns the midpoint
+	 * of first and second. {@code DoaEngine} guarantees the result to be true if and only if the
+	 * parameter amt is in the range [0, 1]. Parameter amt not being in the range [0, 1] is an
+	 * undocumented behaviour. Use at your own risk!
 	 *
 	 * @param first start value
 	 * @param second end value
@@ -83,11 +80,11 @@ public final class DoaMath {
 	}
 
 	/**
-	 * Linearly interpolates between first and second by amt. The parameter amt
-	 * should be in the range [0, 1]. When t = 0, returns first. When t = 1, returns
-	 * second. When t = 0.5, returns the midpoint of first and second.
-	 * {@code DoaEngine} guarantees the result to be true if and only if the
-	 * parameter amt is in the range [0, 1].
+	 * Linearly interpolates between first and second by amt. The parameter amt should be in the range
+	 * [0, 1]. When t = 0, returns first. When t = 1, returns second. When t = 0.5, returns the midpoint
+	 * of first and second. {@code DoaEngine} guarantees the result to be true if and only if the
+	 * parameter amt is in the range [0, 1]. Parameter amt not being in the range [0, 1] is an
+	 * undocumented behaviour. Use at your own risk!
 	 *
 	 * @param first start value
 	 * @param second end value
@@ -99,9 +96,8 @@ public final class DoaMath {
 	}
 
 	/**
-	 * Re-maps a number from one range to another. Value not being in the range
-	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
-	 * own risk!
+	 * Re-maps a number from one range to another. Value not being in the range [sourceRangeMin,
+	 * sourceRangeMax] is an undocumented behaviour. Use at your own risk!
 	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
@@ -115,9 +111,8 @@ public final class DoaMath {
 	}
 
 	/**
-	 * Re-maps a number from one range to another. Value not being in the range
-	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
-	 * own risk!
+	 * Re-maps a number from one range to another. Value not being in the range [sourceRangeMin,
+	 * sourceRangeMax] is an undocumented behaviour. Use at your own risk!
 	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
@@ -131,9 +126,8 @@ public final class DoaMath {
 	}
 
 	/**
-	 * Re-maps a number from one range to another. Value not being in the range
-	 * [sourceRangeMin - sourceRangeMax] is an undocumented behaviour. Use at your
-	 * own risk!
+	 * Re-maps a number from one range to another. Value not being in the range [sourceRangeMin,
+	 * sourceRangeMax] is an undocumented behaviour. Use at your own risk!
 	 *
 	 * @param value the incoming value to be converted
 	 * @param sourceRangeMin lower bound of the value's current range
@@ -142,9 +136,7 @@ public final class DoaMath {
 	 * @param destinationRangeMax upper bound of the value's target range
 	 * @return Re-mapped number in double
 	 */
-	public static double map(final double value, final double sourceRangeMin, final double sourceRangeMax, final double destinationRangeMin,
-	        final double destinationRangeMax)
-	{
+	public static double map(final double value, final double sourceRangeMin, final double sourceRangeMax, final double destinationRangeMin, final double destinationRangeMax) {
 		return (value - sourceRangeMax) / (sourceRangeMin - sourceRangeMax) * (destinationRangeMax - destinationRangeMin) + destinationRangeMin;
 	}
 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
- * @version 2.1
+ * @version 2.7
  */
 public class DoaVectorI implements Cloneable, Serializable {
 
@@ -31,8 +31,7 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Constructor. Creates a {@code DoaVectorI} with displacement in x and y with
-	 * the given parameters.
+	 * Constructor. Creates a {@code DoaVectorI} with displacement in x and y with the given parameters.
 	 *
 	 * @param x the displacement in x
 	 * @param y the displacement in y
@@ -43,8 +42,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Adds the parameter to this instance of {@code DoaVectorI}, and returns the
-	 * resulting {@code DoaVectorI}.
+	 * Adds the parameter to this instance of {@code DoaVectorI}, and returns the resulting
+	 * {@code DoaVectorI}.
 	 *
 	 * @param other the {@code DoaVectorI} to add to this {@code DoaVectorI}
 	 * @return the result of addition
@@ -56,8 +55,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Subtracts the parameter from this instance of {@code DoaVectorI}, and returns
-	 * the resulting {@code DoaVectorI}.
+	 * Subtracts the parameter from this instance of {@code DoaVectorI}, and returns the resulting
+	 * {@code DoaVectorI}.
 	 *
 	 * @param other the {@code DoaVectorI} to subtract from this {@code DoaVectorI}
 	 * @return the result of subtraction
@@ -69,8 +68,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Multiplies the parameter with this instance of {@code DoaVectorI}, and
-	 * returns the resulting {@code DoaVectorI}.
+	 * Multiplies the parameter with this instance of {@code DoaVectorI}, and returns the resulting
+	 * {@code DoaVectorI}.
 	 *
 	 * @param n the int to multiply with this {@code DoaVectorI}
 	 * @return the result of multiplication
@@ -82,8 +81,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Translates this {@code DoaVectorI} with the parameters dx and dy, and returns
-	 * the resulting {@code DoaVectorI}.
+	 * Translates this {@code DoaVectorI} with the parameters dx and dy, and returns the resulting
+	 * {@code DoaVectorI}.
 	 *
 	 * @param dx translation in x axis
 	 * @param dy translation in y axis
@@ -96,8 +95,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Rotates this {@code DoaVectorI} around the origin of the coordinate
-	 * system(default (0,0)), and returns the resulting {@code DoaVectorI}.
+	 * Rotates this {@code DoaVectorI} around the origin of the coordinate system(default (0,0)), and
+	 * returns the resulting {@code DoaVectorI}.
 	 *
 	 * @param angleDeg rotation angle in degrees
 	 * @return the result of translation
@@ -107,8 +106,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Rotates this {@code DoaVectorI} around the origin of the coordinate
-	 * system(default (0,0)), and returns the resulting {@code DoaVectorI}.
+	 * Rotates this {@code DoaVectorI} around the origin of the coordinate system(default (0,0)), and
+	 * returns the resulting {@code DoaVectorI}.
 	 *
 	 * @param angleRad rotation angle in radians
 	 * @return the result of translation
@@ -122,8 +121,8 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Multiplies the parameter {@code DoaVectorI} with this instance of
-	 * {@code DoaVectorI}, and returns the resulting {@code DoaVectorI}.
+	 * Multiplies the parameter {@code DoaVectorI} with this instance of {@code DoaVectorI}, and returns
+	 * the resulting {@code DoaVectorI}.
 	 *
 	 * @param other the {@code DoaVectorI} to multiply with this {@code DoaVectorI}
 	 * @return the result of multiplication
@@ -133,8 +132,7 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Negates(inverses) this {@code DoaVectorI} and returns the resulting
-	 * {@code DoaVectorI}.
+	 * Negates(inverses) this {@code DoaVectorI} and returns the resulting {@code DoaVectorI}.
 	 *
 	 * @return the result of negation
 	 */
@@ -145,8 +143,7 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Normalises this {@code DoaVectorI} and returns the resulting
-	 * {@code DoaVectorI}.
+	 * Normalises this {@code DoaVectorI} and returns the resulting {@code DoaVectorI}.
 	 *
 	 * @return the result of normalisation
 	 */
@@ -176,7 +173,11 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Deep copies this {@code DoaVectorI}.
+	 * Deep copies this {@code DoaVectorI}. The returned copy will satisfy the conditions below:
+	 * <ul>
+	 * <li>originalDoaVectorI == originalDoaVectorI.clone() will return false</li>
+	 * <li>originalDoaVectorI.equals(originalDoaVectorI.clone()) will return true</li>
+	 * </ul>
 	 *
 	 * @return the deep copy of this {@code DoaVectorI} {@inheritDoc}
 	 */
@@ -186,13 +187,13 @@ public class DoaVectorI implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Compares this {@code DoaVectorI} to the specified object. The result is true
-	 * if and only if the argument is not null and is a {@code DoaVectorI} object
-	 * that represents the same amount of displacement as this {@code DoaVectorI}.
+	 * Compares this {@code DoaVectorI} to the specified object. The result is true if and only if the
+	 * argument is not null and is a {@code DoaVectorI} object that represents the same amount of
+	 * displacement as this {@code DoaVectorI}.
 	 *
 	 * @param obj the object to compare this {@code DoaVectorI} against
-	 * @return true if the given object represents a {@code DoaVectorI} equivalent
-	 *         to this {@code DoaVectorI}, false otherwise {@inheritDoc}
+	 * @return true if the given object represents a {@code DoaVectorI} equivalent to this
+	 *         {@code DoaVectorI}, false otherwise {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(final Object obj) {
@@ -230,6 +231,6 @@ public class DoaVectorI implements Cloneable, Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "DoaVectorI [x = " + x + ", y = " + y + "]";
+		return new StringBuilder(128).append("DoaVectorI [\n\t{\n\t\tx:").append(x).append(",\n\t\ty:").append(y).append("\n\t}\n]").toString();
 	}
 }
