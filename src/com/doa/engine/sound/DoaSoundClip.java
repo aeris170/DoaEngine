@@ -1,6 +1,7 @@
 package com.doa.engine.sound;
 
 import javax.sound.sampled.Clip;
+import javax.validation.constraints.NotNull;
 
 /**
  * Easy use version of {@code Clip}. Houses a {@code Clip} object and some necessary methods and
@@ -113,7 +114,7 @@ public class DoaSoundClip {
 		return microsecondPosition;
 	}
 
-	public void setClip(final Clip clip) {
+	public void setClip(@NotNull final Clip clip) {
 		this.clip = clip;
 	}
 

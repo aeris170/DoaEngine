@@ -4,7 +4,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.validation.constraints.NotNull;
+
+import com.doa.engine.Internal;
 import com.doa.engine.scene.DoaObject;
+import com.doa.engine.scene.DoaScene;
 import com.doa.maths.DoaVectorF;
 
 /**
@@ -44,7 +48,7 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	 * @param width width of the UI component
 	 * @param height height of the UI component
 	 */
-	public DoaUIContainer(final DoaVectorF position, final int width, final int height) {
+	public DoaUIContainer(@NotNull final DoaVectorF position, final int width, final int height) {
 		super(position, width, height);
 		show();
 		enable();
@@ -87,6 +91,16 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Internal
+	public void setScene(final DoaScene scene) {
+		super.setScene(scene);
+		components.forEach(scene::add);
+	}
+
+	/**
 	 * Adds the specified component the this container.
 	 *
 	 * @param component component to add to this container
@@ -101,7 +115,9 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 			component.setParent(this);
 			component.isVisible = isVisible;
 			component.isEnabled = isEnabled;
-			scene.add(component);
+			if (scene != null) {
+				scene.add(component);
+			}
 		}
 	}
 
@@ -116,7 +132,9 @@ public abstract class DoaUIContainer extends DoaUIComponent {
 			component.setParent(null);
 			component.isVisible = false;
 			component.isEnabled = false;
-			scene.remove(component);
+			if (scene != null) {
+				scene.remove(component);
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.validation.constraints.NotNull;
 
 import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
@@ -44,13 +45,13 @@ public final class DoaAnimations {
 	 * Creates an animation from specifically .gif files, adds the created animation
 	 * to{@code DoaAnimations.ORIGINAL_ANIMATIONS}, and returns the newly created animation.
 	 *
-	 * @param animationName name of the animation that will be created
+	 * @param animationName unique name of the animation that will be created
 	 * @param animationFile path to the animation(.gif) on the disk
 	 * @param delay delay between each frame of animation in milliseconds
 	 * @return the animation in {@code DoaSprites.ORIGINAL_ANIMATIONS} whose name is animationName
 	 * @throws IOException if sprite cannot be loaded by {@code DoaEngine}
 	 */
-	public static DoaAnimation createAnimation(final String animationName, final String animationFile, final long delay) throws IOException {
+	public static DoaAnimation createAnimation(@NotNull final String animationName, @NotNull final String animationFile, final long delay) throws IOException {
 		final ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
 		final ImageInputStream in = ImageIO.createImageInputStream(DoaSprites.class.getResourceAsStream(animationFile));
 		reader.setInput(in);
@@ -75,7 +76,7 @@ public final class DoaAnimations {
 	 * Creates an animation from a collection of DoaSprites, adds the created animation
 	 * to{@code DoaAnimations.ORIGINAL_ANIMATIONS}, and returns the newly created animation.
 	 *
-	 * @param animationName name of the animation that will be created
+	 * @param animationName unique name of the animation that will be created
 	 * @param keyframes list that contains the frames of the animation
 	 * @param delay delay between each frame of animation in milliseconds
 	 * @return the animation in {@code DoaSprites.ORIGINAL_ANIMATIONS} whose name is animationName

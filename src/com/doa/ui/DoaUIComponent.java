@@ -4,6 +4,8 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.NotSerializableException;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.scene.DoaObject;
 import com.doa.maths.DoaVectorF;
 
@@ -54,7 +56,7 @@ public abstract class DoaUIComponent extends DoaObject {
 	 * @param width width of the UI component
 	 * @param height height of the UI component
 	 */
-	public DoaUIComponent(final DoaVectorF position, final int width, final int height) {
+	public DoaUIComponent(@NotNull final DoaVectorF position, final int width, final int height) {
 		super(position, width, height);
 		recalibrateBounds();
 	}
@@ -67,7 +69,7 @@ public abstract class DoaUIComponent extends DoaObject {
 		return bounds;
 	}
 
-	void setParent(final DoaUIContainer parent) {
+	void setParent(@NotNull final DoaUIContainer parent) {
 		this.parent = parent;
 	}
 

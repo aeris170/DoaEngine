@@ -2,6 +2,8 @@ package com.doa.maths;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 2D float vector.
  *
@@ -48,7 +50,7 @@ public class DoaVectorF implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorF} to add to this {@code DoaVectorF}
 	 * @return the result of addition
 	 */
-	public DoaVectorF add(final DoaVectorF other) {
+	public DoaVectorF add(@NotNull final DoaVectorF other) {
 		x += other.x;
 		y += other.y;
 		return clone();
@@ -61,7 +63,7 @@ public class DoaVectorF implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorF} to subtract from this {@code DoaVectorF}
 	 * @return the result of subtraction
 	 */
-	public DoaVectorF sub(final DoaVectorF other) {
+	public DoaVectorF sub(@NotNull final DoaVectorF other) {
 		x -= other.x;
 		y -= other.y;
 		return clone();
@@ -127,7 +129,7 @@ public class DoaVectorF implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorF} to multiply with this {@code DoaVectorF}
 	 * @return the result of multiplication
 	 */
-	public float mul(final DoaVectorF other) {
+	public float mul(@NotNull final DoaVectorF other) {
 		return x * other.y + y * other.x;
 	}
 

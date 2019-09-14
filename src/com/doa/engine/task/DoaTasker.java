@@ -3,6 +3,8 @@ package com.doa.engine.task;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.utils.DoaUtils;
 
 /**
@@ -30,7 +32,7 @@ public final class DoaTasker {
 	 * @param waitTime the amount of delay in milliseconds for the guard to stop guarding
 	 * @see java.lang.Thread
 	 */
-	public static void guard(final DoaTaskGuard guard, final long waitTime) {
+	public static void guard(@NotNull final DoaTaskGuard guard, final long waitTime) {
 		guard.set(false);
 		EXECUTOR.execute(() -> {
 			DoaUtils.sleepFor(waitTime);
@@ -49,7 +51,7 @@ public final class DoaTasker {
 	 * @param waitTime the amount of delay in milliseconds for the guard to stop guarding
 	 * @see java.lang.Thread
 	 */
-	public static void guardExecution(final Runnable task, final DoaTaskGuard guard, final long waitTime) {
+	public static void guardExecution(@NotNull final Runnable task, @NotNull final DoaTaskGuard guard, final long waitTime) {
 		if (guard.get()) {
 			guard.set(false);
 			EXECUTOR.execute(() -> {

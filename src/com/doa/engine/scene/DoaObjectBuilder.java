@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
@@ -48,7 +50,7 @@ public class DoaObjectBuilder<T extends DoaObject> {
 	 *
 	 * @param clazz type of the object to instantiate
 	 */
-	public DoaObjectBuilder(final Class<T> clazz) {
+	public DoaObjectBuilder(@NotNull final Class<T> clazz) {
 		this.clazz = clazz;
 	}
 

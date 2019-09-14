@@ -2,6 +2,8 @@ package com.doa.maths;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 2D double vector.
  *
@@ -48,7 +50,7 @@ public class DoaVectorD implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorD} to add to this {@code DoaVectorD}
 	 * @return the result of addition
 	 */
-	public DoaVectorD add(final DoaVectorD other) {
+	public DoaVectorD add(@NotNull final DoaVectorD other) {
 		x += other.x;
 		y += other.y;
 		return clone();
@@ -61,7 +63,7 @@ public class DoaVectorD implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorD} to subtract from this {@code DoaVectorD}
 	 * @return the result of subtraction
 	 */
-	public DoaVectorD sub(final DoaVectorD other) {
+	public DoaVectorD sub(@NotNull final DoaVectorD other) {
 		x -= other.x;
 		y -= other.y;
 		return clone();
@@ -127,7 +129,7 @@ public class DoaVectorD implements Cloneable, Serializable {
 	 * @param other the {@code DoaVectorD} to multiply with this {@code DoaVectorD}
 	 * @return the result of multiplication
 	 */
-	public double mul(final DoaVectorD other) {
+	public double mul(@NotNull final DoaVectorD other) {
 		return x * other.y + y * other.x;
 	}
 

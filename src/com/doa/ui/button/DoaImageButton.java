@@ -2,6 +2,8 @@ package com.doa.ui.button;
 
 import java.awt.image.BufferedImage;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
 
@@ -18,11 +20,6 @@ public class DoaImageButton extends DoaButton {
 
 	private static final long serialVersionUID = 4793919120591968813L;
 
-	private static final String IDLE_IMAGE_NULL = "idleImage == null";
-	private static final String HOVER_IMAGE_NULL = "hoverImage == null";
-	private static final String CLICK_IMAGE_NULL = "clickImage == null";
-	private static final String INACTIVE_IMAGE_NULL = "inactiveImage == null";
-
 	private transient BufferedImage idleImage;
 	private transient BufferedImage hoverImage;
 	private transient BufferedImage clickImage;
@@ -38,11 +35,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param idleImage sprite that will be rendered onto this button when the button is idle, cannot be
 	 *        null
 	 */
-	public DoaImageButton(final float x, final float y, final int width, final int height, final BufferedImage idleImage) {
+	public DoaImageButton(final float x, final float y, final int width, final int height, @NotNull final BufferedImage idleImage) {
 		super(x, y, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		hoverImage = idleImage;
 		clickImage = idleImage;
@@ -58,11 +52,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param idleImage sprite that will be rendered onto this button when the button is idle, cannot be
 	 *        null
 	 */
-	public DoaImageButton(final DoaVectorF position, final int width, final int height, final BufferedImage idleImage) {
+	public DoaImageButton(final DoaVectorF position, final int width, final int height, @NotNull final BufferedImage idleImage) {
 		super(position, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		hoverImage = idleImage;
 		clickImage = idleImage;
@@ -81,14 +72,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param hoverImage sprite that will be rendered onto this button when the mouse pointer hovers
 	 *        over the button, cannot be null
 	 */
-	public DoaImageButton(final float x, final float y, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage) {
+	public DoaImageButton(final float x, final float y, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage) {
 		super(x, y, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		clickImage = hoverImage;
@@ -106,14 +91,8 @@ public class DoaImageButton extends DoaButton {
 	 * @param hoverImage sprite that will be rendered onto this button when the mouse pointer hovers
 	 *        over the button, cannot be null
 	 */
-	public DoaImageButton(final DoaVectorF position, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage) {
+	public DoaImageButton(final DoaVectorF position, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage) {
 		super(position, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		clickImage = hoverImage;
@@ -134,18 +113,9 @@ public class DoaImageButton extends DoaButton {
 	 * @param clickImage sprite that will be rendered onto this button when the mouse clicks the button,
 	 *        cannot be null
 	 */
-	public DoaImageButton(final float x, final float y, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage,
-	        final BufferedImage clickImage) {
+	public DoaImageButton(final float x, final float y, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage,
+	        @NotNull final BufferedImage clickImage) {
 		super(x, y, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
-		if (clickImage == null) {
-			throw new IllegalArgumentException(CLICK_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		this.clickImage = clickImage;
@@ -165,18 +135,9 @@ public class DoaImageButton extends DoaButton {
 	 * @param clickImage sprite that will be rendered onto this button when the mouse clicks the button,
 	 *        cannot be null
 	 */
-	public DoaImageButton(final DoaVectorF position, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage,
-	        final BufferedImage clickImage) {
+	public DoaImageButton(final DoaVectorF position, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage,
+	        @NotNull final BufferedImage clickImage) {
 		super(position, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
-		if (clickImage == null) {
-			throw new IllegalArgumentException(CLICK_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		this.clickImage = clickImage;
@@ -198,21 +159,9 @@ public class DoaImageButton extends DoaButton {
 	 *        cannot be null
 	 * @param inactiveImage sprite that will be rendered onto this button when the button is disabled
 	 */
-	public DoaImageButton(final float x, final float y, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage,
-	        final BufferedImage clickImage, final BufferedImage inactiveImage) {
+	public DoaImageButton(final float x, final float y, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage,
+	        @NotNull final BufferedImage clickImage, @NotNull final BufferedImage inactiveImage) {
 		super(x, y, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
-		if (clickImage == null) {
-			throw new IllegalArgumentException(CLICK_IMAGE_NULL);
-		}
-		if (inactiveImage == null) {
-			throw new IllegalArgumentException(INACTIVE_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		this.clickImage = clickImage;
@@ -233,21 +182,9 @@ public class DoaImageButton extends DoaButton {
 	 *        cannot be null
 	 * @param inactiveImage sprite that will be rendered onto this button when the button is disabled
 	 */
-	public DoaImageButton(final DoaVectorF position, final int width, final int height, final BufferedImage idleImage, final BufferedImage hoverImage,
-	        final BufferedImage clickImage, final BufferedImage inactiveImage) {
+	public DoaImageButton(final DoaVectorF position, final int width, final int height, @NotNull final BufferedImage idleImage, @NotNull final BufferedImage hoverImage,
+	        @NotNull final BufferedImage clickImage, @NotNull final BufferedImage inactiveImage) {
 		super(position, width, height);
-		if (idleImage == null) {
-			throw new IllegalArgumentException(IDLE_IMAGE_NULL);
-		}
-		if (hoverImage == null) {
-			throw new IllegalArgumentException(HOVER_IMAGE_NULL);
-		}
-		if (clickImage == null) {
-			throw new IllegalArgumentException(CLICK_IMAGE_NULL);
-		}
-		if (inactiveImage == null) {
-			throw new IllegalArgumentException(INACTIVE_IMAGE_NULL);
-		}
 		this.idleImage = idleImage;
 		this.hoverImage = hoverImage;
 		this.clickImage = clickImage;

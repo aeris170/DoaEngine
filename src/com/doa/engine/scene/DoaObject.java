@@ -4,6 +4,8 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.Internal;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.maths.DoaVectorF;
@@ -76,7 +78,7 @@ public abstract class DoaObject implements Serializable {
 	 *
 	 * @param position position of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position) {
+	public DoaObject(@NotNull final DoaVectorF position) {
 		this(position, 0, 0);
 	}
 
@@ -104,7 +106,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param width width of {@code DoaObject}
 	 * @param height height of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final int width, final int height) {
+	public DoaObject(@NotNull final DoaVectorF position, final int width, final int height) {
 		this.position = position;
 		this.width = width;
 		this.height = height;
@@ -129,7 +131,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param position position of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final int zOrder) {
+	public DoaObject(@NotNull final DoaVectorF position, final int zOrder) {
 		this(position, 0, 0, zOrder);
 	}
 
@@ -160,7 +162,7 @@ public abstract class DoaObject implements Serializable {
 	 * @param height height of {@code DoaObject}
 	 * @param zOrder zOrder of {@code DoaObject}
 	 */
-	public DoaObject(final DoaVectorF position, final int width, final int height, final int zOrder) {
+	public DoaObject(@NotNull final DoaVectorF position, final int width, final int height, final int zOrder) {
 		this.position = position;
 		this.width = width;
 		this.height = height;
@@ -229,7 +231,7 @@ public abstract class DoaObject implements Serializable {
 		return isFixed;
 	}
 
-	public void setPosition(final DoaVectorF newPosition) {
+	public void setPosition(@NotNull final DoaVectorF newPosition) {
 		position = newPosition;
 	}
 
@@ -241,34 +243,32 @@ public abstract class DoaObject implements Serializable {
 		this.height = height;
 	}
 
-	public void setVelocity(final DoaVectorF newVelocity) {
+	public void setVelocity(@NotNull final DoaVectorF newVelocity) {
 		velocity = newVelocity;
 	}
 
 	/**
-	 * Sets the scene of this {@code DoaObject}. This method is an internal component. Use
-	 * {@link DoaScene#add(DoaObject)} and {@link DoaScene#remove(DoaObject)} to set the scene of a
-	 * {@code DoaObject}.
+	 * Sets the scene of this {@code DoaObject}. This method is an internal component, therefore it
+	 * should <strong>never be called!</strong>. Use {@link DoaScene#add(DoaObject)} and
+	 * {@link DoaScene#remove(DoaObject)} to set the scene of a {@code DoaObject}.
 	 *
 	 * @see DoaScene#add(DoaObject)
 	 * @see DoaScene#remove(DoaObject)
 	 * @param scene scene
 	 */
 	@Internal
-	void setScene(final DoaScene scene) {
-		if (this.scene != null) {
-			this.scene.remove(this);
-		}
+	public void setScene(final DoaScene scene) {
 		this.scene = scene;
 	}
 
 	public void setzOrder(final int zOrder) {
-		scene.remove(this);
+		if (scene != null) {
+			scene.updatezOrder(this, zOrder);
+		}
 		this.zOrder = zOrder;
-		scene.add(this);
 	}
 
-	public void setSize(final DoaVectorI size) {
+	public void setSize(@NotNull final DoaVectorI size) {
 		width = size.x;
 		height = size.y;
 	}

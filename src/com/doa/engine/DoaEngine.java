@@ -11,6 +11,8 @@ import java.io.NotSerializableException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
@@ -45,6 +47,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	/**
 	 * Enable/Disable debug logging to console/file.
 	 */
+	@NotNull
 	public static LogLevel INTERNAL_LOG_LEVEL = LogLevel.OFF;
 
 	/**
@@ -57,6 +60,7 @@ public final class DoaEngine extends Canvas implements Runnable {
 	 *
 	 * @see DoaRenderingMode
 	 */
+	@NotNull
 	public static DoaRenderingMode RENDERING_MODE = DoaRenderingMode.BALANCED;
 
 	/**

@@ -57,12 +57,8 @@ public final class DoaCamera implements Serializable {
 	 * @param maxY camera's max y coordinate bound
 	 */
 	public static void adjustCamera(final DoaObject objectToFollow, final int minX, final int minY, final int maxX, final int maxY) {
-		if (objectToFollow != null) {
-			isObjectToFollowInitialized = true;
-			DoaCamera.objectToFollow = objectToFollow;
-		} else {
-			isObjectToFollowInitialized = false;
-		}
+		DoaCamera.objectToFollow = objectToFollow;
+		isObjectToFollowInitialized = objectToFollow != null;
 		DoaCamera.minX = minX;
 		DoaCamera.minY = minY;
 		DoaCamera.maxX = maxX;
@@ -84,7 +80,7 @@ public final class DoaCamera implements Serializable {
 	 */
 	public static void enableMouseZoom(final DoaObject objectToZoomInto, final float minZ, final float maxZ) {
 		DoaCamera.objectToZoomInto = objectToZoomInto;
-		isMouseZoomingEnabled = true;
+		isMouseZoomingEnabled = objectToZoomInto != null;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {

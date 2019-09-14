@@ -2,11 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>DoaEngine</groupId>
+	<groupId>com.doa</groupId>
 	<artifactId>DoaEngine</artifactId>
+	<packaging>jar</packaging>
 	<version>2.7</version>
 	<name>DoaEngine</name>
 	<description>A simple 2D game engine for Java Developers.</description>
+	<url>aeris170.github.io</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -15,9 +17,6 @@
 		<resources>
 			<resource>
 				<directory>res</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
 			</resource>
 		</resources>
 		<plugins>
@@ -25,10 +24,58 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
+					<excludes>
+						<exclude>com/doa/main/**</exclude>
+					</excludes>
 					<source>1.8</source>
 					<target>1.8</target>
+					<verbose>true</verbose>
+					<fork>true</fork>
 					<encoding>UTF-8</encoding>
+					<executable>C:\Program Files\Java\jdk-12.0.1\bin\javac</executable>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<configuration>
+					<excludes>
+						<exclude>com/doa/main/**</exclude>
+						<exclude>TOFFEE.otf</exclude>
+						<exclude>1.gif</exclude>
+						<exclude>2.gif</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<version>3.1.1</version>
+				<configuration>
+					<source>8</source>
+					<windowtitle>${project.name} ${project.version} API Documentation</windowtitle>
+					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
+					<overview>${basedir}/overview.html</overview>
+					<stylesheetfile>${basedir}/stylesheet.css</stylesheetfile>
+					<show>public</show>
+					<excludePackageNames>com.doa.main</excludePackageNames>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -41,6 +88,12 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.1-jre</version>
 		</dependency>
 	</dependencies>
 </project>

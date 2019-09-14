@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
@@ -36,7 +38,7 @@ public final class DoaLights {
 	 *
 	 * @param newAmbientLightColor color of the new ambient lights
 	 */
-	public static void ambientLight(final Color newAmbientLightColor) {
+	public static void ambientLight(@NotNull final Color newAmbientLightColor) {
 		ambientLightColor = newAmbientLightColor;
 		DoaSprites.SHADED_SPRITES.clear();
 		for (final Entry<String, BufferedImage> entry : DoaSprites.ORIGINAL_SPRITES.entrySet()) {

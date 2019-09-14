@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.DoaCamera;
 import com.doa.engine.DoaEngine;
 import com.doa.engine.Internal;
@@ -58,7 +60,7 @@ public class DoaScene implements Serializable {
 				if (component.isVisible()) {
 					component.recalibrateBounds();
 					component.tick();
-					if (component.isEnabled() && component.getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
+					if (!(component instanceof DoaUIContainer) && component.isEnabled() && component.getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
 						if (DoaMouse.MB1) {
 							DoaMouse.MB1 = false;
 							DoaMouse.MB1_HOLD = false;
@@ -111,7 +113,11 @@ public class DoaScene implements Serializable {
 	 *
 	 * @param o object to add to this scene
 	 */
-	public void add(final DoaObject o) {
+	public void add(@NotNull final DoaObject o) {
+		final DoaScene possibleOldScene = o.getScene();
+		if (possibleOldScene != null) {
+			possibleOldScene.remove(o);
+		}
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.computeIfAbsent(o.getzOrder(), k -> new CopyOnWriteArraySet<>());
 			UI_COMPONENTS.get(o.getzOrder()).add((DoaUIComponent) o);
@@ -151,7 +157,7 @@ public class DoaScene implements Serializable {
 	 *
 	 * @param o object to remove from this scene
 	 */
-	public void remove(final DoaObject o) {
+	public void remove(@NotNull final DoaObject o) {
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.get(o.getzOrder()).remove(o);
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
@@ -180,14 +186,15 @@ public class DoaScene implements Serializable {
 				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
 			}
 		}
-		o.setScene(this);
+		o.setScene(null);
 	}
 
 	/**
-	 * Removes the specified {@code DoaObject} from this scene.
+	 * Checks if the specified {@code DoaObject} from this scene. More formally, returns true if and
+	 * only if this scene contains an element e such that Objects.equals(o, e).
 	 *
 	 * @param o object to remove from this scene
-	 * @return a
+	 * @return true if this scene contains an element e such that Objects.equals(o, e)
 	 */
 	public boolean contains(final DoaObject o) {
 		for (final Map.Entry<Integer, Set<DoaObject>> entry : OBJECTS.entrySet()) {
@@ -241,6 +248,25 @@ public class DoaScene implements Serializable {
 	}
 
 	public int size() {
-		return OBJECTS.size() + UI_COMPONENTS.size();
+		int size = 0;
+		for (final Map.Entry<Integer, Set<DoaObject>> entry : OBJECTS.entrySet()) {
+			size += entry.getValue().size();
+		}
+		for (final Map.Entry<Integer, Set<DoaUIComponent>> entry : UI_COMPONENTS.entrySet()) {
+			size += entry.getValue().size();
+		}
+		return size;
+	}
+
+	void updatezOrder(final DoaObject o, final int newzOrder) {
+		if (o instanceof DoaUIComponent) {
+			UI_COMPONENTS.get(o.getzOrder()).remove(o);
+			UI_COMPONENTS.computeIfAbsent(newzOrder, k -> new CopyOnWriteArraySet<>());
+			UI_COMPONENTS.get(newzOrder).add((DoaUIComponent) o);
+		} else {
+			OBJECTS.get(o.getzOrder()).remove(o);
+			OBJECTS.computeIfAbsent(newzOrder, k -> new CopyOnWriteArraySet<>());
+			OBJECTS.get(newzOrder).add(o);
+		}
 	}
 }

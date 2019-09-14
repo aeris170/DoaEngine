@@ -3,6 +3,8 @@ package com.doa.ui.button;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.DoaEngine;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
@@ -68,7 +70,7 @@ public abstract class DoaButton extends DoaUIComponent {
 	 * @param width width of the UI component
 	 * @param height height of the UI component
 	 */
-	public DoaButton(final DoaVectorF position, final int width, final int height) {
+	public DoaButton(@NotNull final DoaVectorF position, final int width, final int height) {
 		super(position, width, height);
 	}
 
@@ -107,7 +109,7 @@ public abstract class DoaButton extends DoaUIComponent {
 	 * @param action action to add to this button's action list
 	 * @return true (as specified by Collection.add(E))
 	 */
-	public boolean addAction(final DoaUIAction action) {
+	public boolean addAction(@NotNull final DoaUIAction action) {
 		return actionList.add(action);
 	}
 
@@ -117,7 +119,7 @@ public abstract class DoaButton extends DoaUIComponent {
 	 * @param action action to be removed from this button's action list, if present
 	 * @return true if this button's action list contained the specified action
 	 */
-	public boolean removeAction(final DoaUIAction action) {
+	public boolean removeAction(@NotNull final DoaUIAction action) {
 		return actionList.remove(action);
 	}
 }

@@ -11,6 +11,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.validation.constraints.NotNull;
 
 import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
@@ -67,7 +68,7 @@ public final class DoaSounds {
 	 * Creates a new {@code DoaSoundClip}, adds the created clip to{@code DoaSounds.SOUND_CLIPS}, and
 	 * returns the newly created clip.
 	 *
-	 * @param soundName name of the sprite that will be created
+	 * @param soundName unique name of the sprite that will be created
 	 * @param soundFile path to the sprite on the disk
 	 * @return the {@code DoaSoundClip} in {@code DoaSounds.SOUND_CLIPS} which has a name of soundFile
 	 * @throws IOException if file cannot be loaded by {@code DoaEngine}
@@ -77,7 +78,9 @@ public final class DoaSounds {
 	 *         situation arises most commonly when a requested line is already in use by another
 	 *         application.
 	 */
-	public static DoaSoundClip createSoundClip(final String soundName, final String soundFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+	public static DoaSoundClip createSoundClip(@NotNull final String soundName, @NotNull final String soundFile)
+	        throws IOException, UnsupportedAudioFileException, LineUnavailableException
+	{
 		final DoaSoundClip sound = new DoaSoundClip();
 		try (final AudioInputStream stream = AudioSystem.getAudioInputStream(DoaSounds.class.getResource(soundFile))) {
 			final Clip clip = AudioSystem.getClip();

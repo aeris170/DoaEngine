@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.doa.engine.DoaEngine;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.log.DoaLogger;
@@ -39,10 +42,10 @@ public final class DoaSceneHandler {
 	/**
 	 * Creates and returns an empty {@code DoaScene}.
 	 *
-	 * @param sceneName name of the scene
+	 * @param sceneName unique name of the scene
 	 * @return newly created empty {@code DoaScene}
 	 */
-	public static DoaScene createScene(final String sceneName) {
+	public static DoaScene createScene(@NotNull final String sceneName) {
 		final DoaScene rv = new DoaScene(sceneName);
 		SCENES.put(sceneName, rv);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
@@ -54,11 +57,11 @@ public final class DoaSceneHandler {
 	/**
 	 * Creates and returns a {@code DoaScene} that contains the objects inside the parameter list.
 	 *
-	 * @param sceneName name of the scene
+	 * @param sceneName unique name of the scene
 	 * @param objects DoaObjects that will be put to the scene
 	 * @return newly created {@code DoaScene}
 	 */
-	public static DoaScene createScene(final String sceneName, final DoaObject... objects) {
+	public static DoaScene createScene(@NotNull final String sceneName, @NotEmpty final DoaObject... objects) {
 		final DoaScene rv = createScene(sceneName);
 		Stream.of(objects).forEach(rv::add);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
@@ -72,11 +75,11 @@ public final class DoaSceneHandler {
 	/**
 	 * Creates and returns a {@code DoaScene} that contains the objects inside the list.
 	 *
-	 * @param sceneName name of the scene
+	 * @param sceneName unique name of the scene
 	 * @param objects DoaObjects that will be put to the scene
 	 * @return newly created {@code DoaScene}
 	 */
-	public static DoaScene createScene(final String sceneName, final List<DoaObject> objects) {
+	public static DoaScene createScene(@NotNull final String sceneName, @NotEmpty final List<DoaObject> objects) {
 		final DoaScene rv = createScene(sceneName);
 		objects.forEach(rv::add);
 		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
@@ -90,9 +93,9 @@ public final class DoaSceneHandler {
 	/**
 	 * Loads a scene. If there is already a scene loaded, the loaded scene will be unloaded first.
 	 *
-	 * @param sceneName name of the scene to load
+	 * @param sceneName unique name of the scene to load
 	 */
-	public static void loadScene(final String sceneName) {
+	public static void loadScene(@NotNull final String sceneName) {
 		if (loadedScene != null) {
 			loadedScene.isLoaded = false;
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
@@ -115,7 +118,7 @@ public final class DoaSceneHandler {
 	 *
 	 * @param scene scene to load
 	 */
-	public static void loadScene(final DoaScene scene) {
+	public static void loadScene(@NotNull final DoaScene scene) {
 		if (loadedScene != null) {
 			loadedScene.isLoaded = false;
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
