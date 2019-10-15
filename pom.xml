@@ -10,15 +10,11 @@
 	<description>A simple 2D game engine for Java Developers.</description>
 	<url>aeris170.github.io</url>
 	<properties>
+		<maven.compile.target>12</maven.compile.target>
+		<maven.compile.source>12</maven.compile.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>res</directory>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -27,17 +23,16 @@
 					<excludes>
 						<exclude>com/doa/main/**</exclude>
 					</excludes>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>12</release>
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>UTF-8</encoding>
-					<executable>C:\Program Files\Java\jdk-12.0.1\bin\javac</executable>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
+				<version>3.1.0</version>
 				<configuration>
 					<excludes>
 						<exclude>com/doa/main/**</exclude>
@@ -67,12 +62,26 @@
 					<stylesheetfile>${basedir}/stylesheet.css</stylesheetfile>
 					<show>public</show>
 					<excludePackageNames>com.doa.main</excludePackageNames>
+					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -94,6 +103,20 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>28.1-jre</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.5.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

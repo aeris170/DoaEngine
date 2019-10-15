@@ -9,6 +9,8 @@ import java.awt.MenuBar;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.util.List;
@@ -46,6 +48,12 @@ public final class DoaWindow extends JFrame {
 	public static DoaWindow createWindow() {
 		if (Window == null) {
 			Window = new DoaWindow();
+			Window.addComponentListener(new ComponentAdapter() {
+				@Override
+				public void componentResized(final ComponentEvent componentEvent) {
+					Window.setSize(componentEvent.getComponent().getSize());
+				}
+			});
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
 				LOGGER.info("DoaWindow succesfully instantiated!");
 			}

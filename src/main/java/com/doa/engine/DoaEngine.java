@@ -18,6 +18,7 @@ import com.doa.engine.input.DoaKeyboard;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
+import com.doa.engine.scene.DoaScene;
 import com.doa.engine.scene.DoaSceneHandler;
 
 /**
@@ -122,6 +123,8 @@ public final class DoaEngine extends Canvas implements Runnable {
 	private transient Thread gameThread;
 	private static DoaEngine ENGINE = null;
 
+	private int frames = 0;
+
 	/**
 	 * Constructor. Creates a new instance of {@code DoaEngine}.
 	 */
@@ -214,7 +217,6 @@ public final class DoaEngine extends Canvas implements Runnable {
 	public void run() {
 		long timer = System.currentTimeMillis();
 		int ticks = 0;
-		int frames = 0;
 		this.requestFocus();
 		long lastTime = System.nanoTime();
 		long thisTime;
@@ -230,7 +232,6 @@ public final class DoaEngine extends Canvas implements Runnable {
 				ticks++;
 			}
 			render();
-			frames++;
 			if (INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0 && System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				LOGGER.fine("FPS: " + frames + " TICKS: " + ticks);
@@ -246,7 +247,10 @@ public final class DoaEngine extends Canvas implements Runnable {
 	private void tick() {
 		DoaKeyboard.tick();
 		DoaMouse.tick();
-		DoaSceneHandler.getLoadedScene().tick();
+		final DoaScene loadedScene = DoaSceneHandler.getLoadedScene();
+		if (loadedScene != null) {
+			loadedScene.tick();
+		}
 
 		final Component parent = getParent();
 		DoaCamera.tick(parent.getWidth(), parent.getHeight());
@@ -260,31 +264,34 @@ public final class DoaEngine extends Canvas implements Runnable {
 			super.createBufferStrategy(3);
 		}
 		final BufferStrategy bs = getBufferStrategy();
-
-		final DoaGraphicsContext g = new DoaGraphicsContext((Graphics2D) bs.getDrawGraphics());
+		final DoaGraphicsContext g2d = new DoaGraphicsContext((Graphics2D) bs.getDrawGraphics());
 
 		if (RENDERING_MODE == DoaRenderingMode.QUALITY) {
-			g.setRenderingHints(QUALITY_HINTS);
+			g2d.setRenderingHints(QUALITY_HINTS);
 		} else if (RENDERING_MODE == DoaRenderingMode.BALANCED) {
-			g.setRenderingHints(BALANCED_HINTS);
+			g2d.setRenderingHints(BALANCED_HINTS);
 		} else if (RENDERING_MODE == DoaRenderingMode.SPEED) {
-			g.setRenderingHints(SPEED_HINTS);
+			g2d.setRenderingHints(SPEED_HINTS);
 		} else if (RENDERING_MODE == DoaRenderingMode.USER_DEFINED) {
-			g.setRenderingHints(USER_HINTS);
+			g2d.setRenderingHints(USER_HINTS);
 		}
 
 		final Component parent = getParent();
 		final int width = parent.getWidth();
 		final int height = parent.getHeight();
 
-		g.clearRect(0, 0, width, height);
-		g.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
-		g.fillRect(0, 0, width, height);
+		g2d.clearRect(0, 0, width, height);
+		g2d.setColor(CLEAR_COLOR != null ? CLEAR_COLOR : Color.BLACK);
+		g2d.fillRect(0, 0, width, height);
 
-		DoaSceneHandler.getLoadedScene().render(g);
+		final DoaScene loadedScene = DoaSceneHandler.getLoadedScene();
+		if (loadedScene != null) {
+			loadedScene.render(g2d);
+		}
+		frames++;
 
 		bs.show();
-		g.dispose();
+		g2d.dispose();
 	}
 
 	@SuppressWarnings({ "static-method", "unused" })

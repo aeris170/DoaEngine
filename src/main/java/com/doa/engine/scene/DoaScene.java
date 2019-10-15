@@ -1,11 +1,10 @@
 package com.doa.engine.scene;
 
 import java.io.Serializable;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +17,9 @@ import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.DoaUIContainer;
+import com.google.common.collect.MultimapBuilder;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.SetMultimap;
 
 /**
  * Responsible for keeping {@code DoaObject}s. A scene is composed of zero or more
@@ -43,11 +45,14 @@ public class DoaScene implements Serializable {
 
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
-	private final ConcurrentNavigableMap<Integer, Set<DoaObject>> OBJECTS = new ConcurrentSkipListMap<>();
-	private final ConcurrentNavigableMap<Integer, Set<DoaUIComponent>> UI_COMPONENTS = new ConcurrentSkipListMap<>();
+	private final SetMultimap<Integer, DoaObject> OBJECTS = Multimaps.synchronizedSetMultimap(MultimapBuilder.treeKeys().hashSetValues().build());
+	private final SetMultimap<Integer, DoaUIComponent> UI_COMPONENTS = Multimaps.synchronizedSetMultimap(MultimapBuilder.treeKeys().hashSetValues().build());
 
 	String name;
 	boolean isLoaded = false;
+
+	private transient List<Entry<Integer, DoaObject>> cachedObjects = new ArrayList<>();
+	private transient List<Entry<Integer, DoaUIComponent>> cachedComponents = new ArrayList<>();
 
 	DoaScene(final String sceneName) {
 		name = sceneName;
@@ -55,39 +60,42 @@ public class DoaScene implements Serializable {
 
 	@Internal
 	public void tick() {
-		for (final Map.Entry<Integer, Set<DoaUIComponent>> e : UI_COMPONENTS.descendingMap().entrySet()) {
-			e.getValue().forEach(component -> {
-				if (component.isVisible()) {
-					component.recalibrateBounds();
-					component.tick();
-					if (!(component instanceof DoaUIContainer) && component.isEnabled() && component.getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
-						if (DoaMouse.MB1) {
-							DoaMouse.MB1 = false;
-							DoaMouse.MB1_HOLD = false;
-							DoaMouse.MB1_RELEASE = false;
-						}
-						if (DoaMouse.MB2) {
-							DoaMouse.MB2 = false;
-							DoaMouse.MB2_HOLD = false;
-							DoaMouse.MB2_RELEASE = false;
-						}
-						if (DoaMouse.MB3) {
-							DoaMouse.MB3 = false;
-							DoaMouse.MB3_HOLD = false;
-							DoaMouse.MB3_RELEASE = false;
-						}
+		cachedObjects = new ArrayList<>(OBJECTS.entries());
+		cachedComponents = new ArrayList<>(UI_COMPONENTS.entries());
+
+		for (int i = cachedComponents.size() - 1; i >= 0; i--) {
+			DoaUIComponent component = cachedComponents.get(i).getValue();
+			if (component.isVisible()) {
+				component.recalibrateBounds();
+				component.tick();
+				if (!(component instanceof DoaUIContainer) && component.isEnabled() && component.getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
+					if (DoaMouse.MB1) {
+						DoaMouse.MB1 = false;
+						DoaMouse.MB1_HOLD = false;
+						DoaMouse.MB1_RELEASE = false;
+					}
+					if (DoaMouse.MB2) {
+						DoaMouse.MB2 = false;
+						DoaMouse.MB2_HOLD = false;
+						DoaMouse.MB2_RELEASE = false;
+					}
+					if (DoaMouse.MB3) {
+						DoaMouse.MB3 = false;
+						DoaMouse.MB3_HOLD = false;
+						DoaMouse.MB3_RELEASE = false;
 					}
 				}
-			});
+			}
 		}
-		for (final Map.Entry<Integer, Set<DoaObject>> e : OBJECTS.descendingMap().entrySet()) {
-			e.getValue().forEach(DoaObject::tick);
+		for (int i = cachedObjects.size() - 1; i >= 0; i--) {
+			cachedObjects.get(i).getValue().tick();
 		}
 	}
 
 	@Internal
 	public void render(final DoaGraphicsContext g) {
-		OBJECTS.forEach((zOrder, objects) -> objects.forEach(object -> {
+		for (int i = 0; i < cachedObjects.size(); i++) {
+			DoaObject object = cachedObjects.get(i).getValue();
 			if (object.isFixed()) {
 				object.render(g);
 			} else {
@@ -96,8 +104,9 @@ public class DoaScene implements Serializable {
 				object.render(g);
 				g.popTransform();
 			}
-		}));
-		UI_COMPONENTS.forEach((zOrder, uiComponents) -> uiComponents.forEach(component -> {
+		}
+		for (int i = 0; i < cachedComponents.size(); i++) {
+			DoaUIComponent component = cachedComponents.get(i).getValue();
 			if (component.isVisible() && component.getParent() == null) {
 				if (component instanceof DoaUIContainer) {
 					renderContainerAndAllChildren((DoaUIContainer) component, g);
@@ -105,7 +114,7 @@ public class DoaScene implements Serializable {
 					component.render(g);
 				}
 			}
-		}));
+		}
 	}
 
 	/**
@@ -119,8 +128,7 @@ public class DoaScene implements Serializable {
 			possibleOldScene.remove(o);
 		}
 		if (o instanceof DoaUIComponent) {
-			UI_COMPONENTS.computeIfAbsent(o.getzOrder(), k -> new CopyOnWriteArraySet<>());
-			UI_COMPONENTS.get(o.getzOrder()).add((DoaUIComponent) o);
+			UI_COMPONENTS.put(o.getzOrder(), (DoaUIComponent) o);
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append(". at zOrder: ").append(o.getzOrder())
 				        .append("."));
@@ -129,8 +137,7 @@ public class DoaScene implements Serializable {
 			}
 			if (o instanceof DoaUIContainer) {
 				((DoaUIContainer) o).getComponents().forEach(c -> {
-					UI_COMPONENTS.computeIfAbsent(c.getzOrder(), k -> new CopyOnWriteArraySet<>());
-					UI_COMPONENTS.get(c.getzOrder()).add(c);
+					UI_COMPONENTS.put(c.getzOrder(), c);
 					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully added to ").append(name).append(". Parent: ")
 						        .append(o.getClass().getName()));
@@ -140,8 +147,7 @@ public class DoaScene implements Serializable {
 				});
 			}
 		} else {
-			OBJECTS.computeIfAbsent(o.getzOrder(), k -> new CopyOnWriteArraySet<>());
-			OBJECTS.get(o.getzOrder()).add(o);
+			OBJECTS.put(o.getzOrder(), o);
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append(". at zOrder: ").append(o.getzOrder())
 				        .append("."));
@@ -159,7 +165,7 @@ public class DoaScene implements Serializable {
 	 */
 	public void remove(@NotNull final DoaObject o) {
 		if (o instanceof DoaUIComponent) {
-			UI_COMPONENTS.get(o.getzOrder()).remove(o);
+			UI_COMPONENTS.entries().removeIf(x -> x.getValue().equals(o));
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(". It was at zOrder: ")
 				        .append(o.getzOrder()).append("."));
@@ -168,7 +174,7 @@ public class DoaScene implements Serializable {
 			}
 			if (o instanceof DoaUIContainer) {
 				((DoaUIContainer) o).getComponents().forEach(c -> {
-					UI_COMPONENTS.get(c.getzOrder()).remove(c);
+					UI_COMPONENTS.entries().removeIf(x -> x.getValue().equals(o));
 					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully removed from ").append(name).append(". Parent: ")
 						        .append(o.getClass().getName()));
@@ -178,7 +184,7 @@ public class DoaScene implements Serializable {
 				});
 			}
 		} else {
-			OBJECTS.get(o.getzOrder()).remove(o);
+			OBJECTS.entries().removeIf(x -> x.getValue().equals(o));
 			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(". It was at zOrder: ")
 				        .append(o.getzOrder()).append("."));
@@ -197,17 +203,7 @@ public class DoaScene implements Serializable {
 	 * @return true if this scene contains an element e such that Objects.equals(o, e)
 	 */
 	public boolean contains(final DoaObject o) {
-		for (final Map.Entry<Integer, Set<DoaObject>> entry : OBJECTS.entrySet()) {
-			if (entry.getValue().contains(o)) {
-				return true;
-			}
-		}
-		for (final Map.Entry<Integer, Set<DoaUIComponent>> entry : UI_COMPONENTS.entrySet()) {
-			if (entry.getValue().contains(o)) {
-				return true;
-			}
-		}
-		return false;
+		return OBJECTS.containsValue(o) || UI_COMPONENTS.containsValue(o);
 	}
 
 	/**
@@ -248,25 +244,24 @@ public class DoaScene implements Serializable {
 	}
 
 	public int size() {
-		int size = 0;
-		for (final Map.Entry<Integer, Set<DoaObject>> entry : OBJECTS.entrySet()) {
-			size += entry.getValue().size();
-		}
-		for (final Map.Entry<Integer, Set<DoaUIComponent>> entry : UI_COMPONENTS.entrySet()) {
-			size += entry.getValue().size();
-		}
-		return size;
+		return OBJECTS.size() + UI_COMPONENTS.size();
+	}
+
+	public List<DoaObject> objectsInScene() {
+		return OBJECTS.entries().stream().map(Entry::getValue).collect(Collectors.toList());
+	}
+
+	public List<DoaUIComponent> uiComponentsInScene() {
+		return UI_COMPONENTS.entries().stream().map(Entry::getValue).collect(Collectors.toList());
 	}
 
 	void updatezOrder(final DoaObject o, final int newzOrder) {
 		if (o instanceof DoaUIComponent) {
-			UI_COMPONENTS.get(o.getzOrder()).remove(o);
-			UI_COMPONENTS.computeIfAbsent(newzOrder, k -> new CopyOnWriteArraySet<>());
-			UI_COMPONENTS.get(newzOrder).add((DoaUIComponent) o);
+			UI_COMPONENTS.remove(o.getzOrder(), o);
+			UI_COMPONENTS.put(newzOrder, (DoaUIComponent) o);
 		} else {
-			OBJECTS.get(o.getzOrder()).remove(o);
-			OBJECTS.computeIfAbsent(newzOrder, k -> new CopyOnWriteArraySet<>());
-			OBJECTS.get(newzOrder).add(o);
+			OBJECTS.remove(o.getzOrder(), o);
+			OBJECTS.put(newzOrder, o);
 		}
 	}
 }

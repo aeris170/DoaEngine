@@ -25,7 +25,7 @@ public class DoaAnimation {
 	}
 
 	/**
-	 * @return the frames of this animation
+	 * @return a list containing the frames of this animation
 	 */
 	public List<BufferedImage> getFrames() {
 		return frames;
