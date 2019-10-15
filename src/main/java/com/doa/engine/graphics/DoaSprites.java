@@ -59,7 +59,7 @@ public final class DoaSprites {
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaSprite instantiated.");
 		}
-		DoaLights.applyAmbientLight(spriteName, sp);
+		SHADED_SPRITES.put(spriteName, DoaLights.applyAmbientLight(sp));
 		return toCompat(sp);
 	}
 
@@ -85,7 +85,7 @@ public final class DoaSprites {
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaSprite instantiated.");
 		}
-		DoaLights.applyAmbientLight(spriteName, sp);
+		SHADED_SPRITES.put(spriteName, DoaLights.applyAmbientLight(sp));
 		return toCompat(sp);
 	}
 

@@ -97,7 +97,9 @@ public class DoaScene implements Serializable {
 		for (int i = 0; i < cachedObjects.size(); i++) {
 			DoaObject object = cachedObjects.get(i).getValue();
 			if (object.isFixed()) {
+				g.turnOffLightContribution();
 				object.render(g);
+				g.turnOnLightContribution();
 			} else {
 				g.pushTransform();
 				g.translate(-DoaCamera.getX(), -DoaCamera.getY());
@@ -105,6 +107,7 @@ public class DoaScene implements Serializable {
 				g.popTransform();
 			}
 		}
+		g.turnOffLightContribution();
 		for (int i = 0; i < cachedComponents.size(); i++) {
 			DoaUIComponent component = cachedComponents.get(i).getValue();
 			if (component.isVisible() && component.getParent() == null) {
@@ -115,6 +118,7 @@ public class DoaScene implements Serializable {
 				}
 			}
 		}
+		g.turnOnLightContribution();
 	}
 
 	/**

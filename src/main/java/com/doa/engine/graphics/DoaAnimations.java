@@ -68,7 +68,7 @@ public final class DoaAnimations {
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaAnimation instantiated.");
 		}
-		DoaLights.applyAmbientLight(animationName, anim);
+		SHADED_ANIMATIONS.put(animationName, DoaLights.applyAmbientLight(anim));
 		return anim;
 	}
 
@@ -91,7 +91,7 @@ public final class DoaAnimations {
 		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine("DoaAnimation instantiated.");
 		}
-		DoaLights.applyAmbientLight(animationName, anim);
+		SHADED_ANIMATIONS.put(animationName, DoaLights.applyAmbientLight(anim));
 		return anim;
 	}
 
