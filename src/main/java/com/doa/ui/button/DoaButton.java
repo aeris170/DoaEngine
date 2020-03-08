@@ -5,17 +5,15 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.input.DoaMouse;
 import com.doa.engine.log.DoaLogger;
-import com.doa.engine.log.LogLevel;
 import com.doa.maths.DoaVectorF;
 import com.doa.ui.DoaUIComponent;
 import com.doa.ui.action.DoaUIAction;
 
 /**
  * A basic button. When hovered over, sets itself to be in "hover" state. When clicked, sets itself
- * to be in "click" state. Else, idle state. States are denoted by 2 boolean fields.
+ * to be in "click" state. Else, idle state. States are denoted by 3 boolean fields.
  *
  * @author Doga Oruc
  * @since DoaEngine 2.3
@@ -37,7 +35,17 @@ public abstract class DoaButton extends DoaUIComponent {
 	protected boolean hover;
 
 	/**
-	 * Indicates if the mouse pointer is inside this buttons bounds and if mouse button 1 is pressed and
+	 * Indicates if the mouse pointer is inside this buttons bounds and if mouse button 1 is down. As
+	 * described by the
+	 * <a href= "https://docs.oracle.com/javase/10/docs/api/java/awt/Shape.html#def_insideness">
+	 * definition of insideness</a>.
+	 *
+	 * @see java.awt.Shape
+	 */
+	protected boolean ready;
+
+	/**
+	 * Indicates if the mouse pointer is inside this buttons bounds, ready and if mouse button 1 is
 	 * released. As described by the
 	 * <a href= "https://docs.oracle.com/javase/10/docs/api/java/awt/Shape.html#def_insideness">
 	 * definition of insideness</a>.
@@ -81,23 +89,25 @@ public abstract class DoaButton extends DoaUIComponent {
 			click = false;
 			if (getBounds().contains(DoaMouse.X, DoaMouse.Y)) {
 				hover = true;
-				if (DoaMouse.MB1_HOLD) {
-					click = true;
-					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
-						LOGGER.finer(new StringBuilder(32).append(getClass().getName()).append(" click."));
-					}
+				if (DoaMouse.MB1) {
+					ready = true;
 				}
-				if (DoaMouse.MB1_RELEASE) {
+				if (ready && DoaMouse.MB1_RELEASE) {
+					LOGGER.finer(new StringBuilder(32).append(getClass().getName()).append(" click."));
 					actionList.forEach(action -> {
 						action.execute();
-						if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
-							LOGGER.finer(new StringBuilder(32).append(action.getClass().getName()).append(" executed."));
-						}
+						LOGGER.finer(new StringBuilder(32).append(action.getClass().getName()).append(" executed."));
 					});
+					click = true;
+					ready = false;
 					DoaMouse.MB1 = false;
 					DoaMouse.MB1_HOLD = false;
 					DoaMouse.MB1_RELEASE = false;
 				}
+			} else {
+				hover = false;
+				click = false;
+				ready = false;
 			}
 		}
 	}
