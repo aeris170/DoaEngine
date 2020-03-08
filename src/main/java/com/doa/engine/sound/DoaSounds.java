@@ -13,7 +13,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.validation.constraints.NotNull;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
 
@@ -49,9 +48,7 @@ public final class DoaSounds {
 	 */
 	public static void setGlobalVolume(final float newVolume) {
 		if (newVolume > 1.0 || newVolume < 0.0) {
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
-				LOGGER.severe("Volume level must be in range [0, 1].");
-			}
+			LOGGER.severe("Volume level must be in range [0, 1].");
 			throw new IllegalArgumentException("newVolume is not in range [0, 1]");
 		}
 		final float dB = (float) (Math.log(newVolume) / Math.log(10) * 20) + 6;
@@ -59,9 +56,7 @@ public final class DoaSounds {
 			final FloatControl gainControl = (FloatControl) entry.getValue().getClip().getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(dB);
 		}
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
-			LOGGER.fine(new StringBuilder(32).append("Volume level is now ").append(newVolume * 100).append("%."));
-		}
+		LOGGER.fine(new StringBuilder(32).append("Volume level is now ").append(newVolume * 100).append("%."));
 	}
 
 	/**
@@ -87,9 +82,9 @@ public final class DoaSounds {
 			clip.open(stream);
 			sound.setClip(clip);
 			SOUND_CLIPS.put(soundName, sound);
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(64).append(soundName).append(" sound clip instantiated."));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 				LOGGER.fine("DoaSoundClip instantiated.");
 			}
 		}

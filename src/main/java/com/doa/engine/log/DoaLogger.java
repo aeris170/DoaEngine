@@ -29,6 +29,8 @@ public final class DoaLogger implements Logger {
 
 	private final DateFormat dt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+	private LogLevel level;
+
 	private PrintStream console = System.out;
 	private PrintWriter writer;
 
@@ -39,6 +41,15 @@ public final class DoaLogger implements Logger {
 
 	public static DoaLogger getInstance() {
 		return _this == null ? _this = new DoaLogger() : _this;
+	}
+
+	public LogLevel getLevel() {
+		return level;
+	}
+
+	@Override
+	public void setLevel(@NotNull final LogLevel level) {
+		this.level = level;
 	}
 
 	/**
@@ -122,7 +133,7 @@ public final class DoaLogger implements Logger {
 	 */
 	@Override
 	public void log(@NotNull final LogLevel level, @NotNull final String message) {
-		if (level == LogLevel.OFF) {
+		if (this.level.compareTo(level) < 0) {
 			return;
 		}
 		final String time = dt.format(Calendar.getInstance().getTime());

@@ -14,6 +14,21 @@ import java.io.IOException;
 public interface Logger {
 
 	/**
+	 * Sets the log level to log at for the logger. If a log operation is invoked at a finer resolution
+	 * then the set level, it is ignored. For example
+	 * <p>
+	 * <br>
+	 * setLevel(LogLevel.FINE); <br>
+	 * finer("I will not get logged"); <br>
+	 * fine("I will get logged"); <br>
+	 * severe("I will get logged");
+	 *
+	 * @param level the new log level to log at
+	 * @see LogLevel
+	 */
+	void setLevel(LogLevel level);
+
+	/**
 	 * Sets an external target file. The external target is guaranteed to receive all logs after this
 	 * method returns except for the few cases listed below.
 	 * <ul>

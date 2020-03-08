@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 
 import com.doa.engine.DoaCamera;
-import com.doa.engine.DoaEngine;
 import com.doa.engine.Internal;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.input.DoaMouse;
@@ -133,29 +132,29 @@ public class DoaScene implements Serializable {
 		}
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.put(o.getzOrder(), (DoaUIComponent) o);
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append(". at zOrder: ").append(o.getzOrder())
 				        .append("."));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append("."));
 			}
 			if (o instanceof DoaUIContainer) {
 				((DoaUIContainer) o).getComponents().forEach(c -> {
 					UI_COMPONENTS.put(c.getzOrder(), c);
-					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+					if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully added to ").append(name).append(". Parent: ")
 						        .append(o.getClass().getName()));
-					} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+					} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 						LOGGER.finer(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully added to ").append(name).append("."));
 					}
 				});
 			}
 		} else {
 			OBJECTS.put(o.getzOrder(), o);
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append(". at zOrder: ").append(o.getzOrder())
 				        .append("."));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append("."));
 			}
 		}
@@ -170,29 +169,29 @@ public class DoaScene implements Serializable {
 	public void remove(@NotNull final DoaObject o) {
 		if (o instanceof DoaUIComponent) {
 			UI_COMPONENTS.entries().removeIf(x -> x.getValue().equals(o));
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(". It was at zOrder: ")
 				        .append(o.getzOrder()).append("."));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
 			}
 			if (o instanceof DoaUIContainer) {
 				((DoaUIContainer) o).getComponents().forEach(c -> {
 					UI_COMPONENTS.entries().removeIf(x -> x.getValue().equals(o));
-					if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+					if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 						LOGGER.finest(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully removed from ").append(name).append(". Parent: ")
 						        .append(o.getClass().getName()));
-					} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+					} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 						LOGGER.finer(new StringBuilder(128).append("\t").append(c.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
 					}
 				});
 			}
 		} else {
 			OBJECTS.entries().removeIf(x -> x.getValue().equals(o));
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINEST) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
 				LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(". It was at zOrder: ")
 				        .append(o.getzOrder()).append("."));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
 			}
 		}
@@ -217,9 +216,7 @@ public class DoaScene implements Serializable {
 	public void clear() {
 		OBJECTS.clear();
 		UI_COMPONENTS.clear();
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.INFO) >= 0) {
-			LOGGER.info(new StringBuilder(128).append(name).append(" is now empty."));
-		}
+		LOGGER.info(new StringBuilder(128).append(name).append(" is now empty."));
 	}
 
 	private static void renderContainerAndAllChildren(final DoaUIContainer container, final DoaGraphicsContext g) {

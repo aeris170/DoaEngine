@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import javax.validation.constraints.NotNull;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
 
@@ -129,9 +128,9 @@ public class DoaObjectBuilder<T extends DoaObject> {
 							} else if (DoaSceneHandler.getLoadedScene() != null) {
 								DoaSceneHandler.getLoadedScene().add(d);
 							}
-							if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+							if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 								LOGGER.finer(new StringBuilder(512).append(clazz.getName()).append(" is succesfully instantiated.\nWith parameters: ").append(parameters));
-							} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+							} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 								LOGGER.fine(new StringBuilder(128).append(clazz.getName()).append(" is succesfully instantiated."));
 							}
 							return d;
@@ -145,9 +144,7 @@ public class DoaObjectBuilder<T extends DoaObject> {
 		}
 		final String errorMessage = new StringBuilder(512).append("Cannot find a suitable constructor for ").append(clazz.getName()).append(".\nWith parameters: ")
 		        .append(parameters).toString();
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.SEVERE) >= 0) {
-			LOGGER.severe(errorMessage);
-		}
+		LOGGER.severe(errorMessage);
 		throw new DoaObjectInstantiationException(errorMessage);
 	}
 }

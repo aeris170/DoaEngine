@@ -18,9 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.javatuples.Pair;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.log.DoaLogger;
-import com.doa.engine.log.LogLevel;
 
 /**
  * Responsible for providing a tool to create and set scene lights for DoaEngine. This class is
@@ -74,17 +72,9 @@ public final class DoaLights {
 				while (!executor.isTerminated()) {}
 				DoaSprites.SHADED_SPRITES.clear();
 				DoaSprites.SHADED_SPRITES.putAll(shadedSprites);
-				if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
-					LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ")
-					        .append(newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
-				}
+				LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ").append(newAmbientLightColor.getGreen())
+				        .append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
 			}).start();
-
-			/* DoaSprites.SHADED_SPRITES.clear(); for (final Entry<String, BufferedImage> entry :
-			 * DoaSprites.ORIGINAL_SPRITES.entrySet()) { applyAmbientLight(entry.getKey(), entry.getValue()); }
-			 * DoaAnimations.SHADED_ANIMATIONS.clear(); for (final Entry<String, DoaAnimation> entry :
-			 * DoaAnimations.ORIGINAL_ANIMATIONS.entrySet()) { applyAmbientLight(entry.getKey(),
-			 * entry.getValue()); } */
 		}
 	}
 

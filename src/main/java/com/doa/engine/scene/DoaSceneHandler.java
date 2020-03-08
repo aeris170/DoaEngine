@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.doa.engine.DoaEngine;
 import com.doa.engine.graphics.DoaGraphicsContext;
 import com.doa.engine.log.DoaLogger;
 import com.doa.engine.log.LogLevel;
@@ -48,9 +47,7 @@ public final class DoaSceneHandler {
 	public static DoaScene createScene(@NotNull final String sceneName) {
 		final DoaScene rv = new DoaScene(sceneName);
 		SCENES.put(sceneName, rv);
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
-			LOGGER.fine(new StringBuilder(128).append(sceneName).append(" is succesfully instantiated."));
-		}
+		LOGGER.fine(new StringBuilder(128).append(sceneName).append(" is succesfully instantiated."));
 		return rv;
 	}
 
@@ -64,9 +61,9 @@ public final class DoaSceneHandler {
 	public static DoaScene createScene(@NotNull final String sceneName, @NotEmpty final DoaObject... objects) {
 		final DoaScene rv = createScene(sceneName);
 		Stream.of(objects).forEach(rv::add);
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(512).append(sceneName).append(" is succesfully instantiated.\n object count: ").append(objects.length));
-		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine(new StringBuilder(128).append(sceneName).append(" is succesfully instantiated."));
 		}
 		return rv;
@@ -82,9 +79,9 @@ public final class DoaSceneHandler {
 	public static DoaScene createScene(@NotNull final String sceneName, @NotEmpty final List<DoaObject> objects) {
 		final DoaScene rv = createScene(sceneName);
 		objects.forEach(rv::add);
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(512).append(sceneName).append(" is succesfully instantiated.\n object count: ").append(objects.size()));
-		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine(new StringBuilder(128).append(sceneName).append(" is succesfully instantiated."));
 		}
 		return rv;
@@ -98,17 +95,17 @@ public final class DoaSceneHandler {
 	public static void loadScene(@NotNull final String sceneName) {
 		if (loadedScene != null) {
 			loadedScene.isLoaded = false;
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(512).append("Unloaded ").append(loadedScene.name).append("\n object count: ").append(loadedScene.size()));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 				LOGGER.fine(new StringBuilder(128).append("Unloaded ").append(loadedScene.name));
 			}
 		}
 		loadedScene = SCENES.get(sceneName);
 		loadedScene.isLoaded = true;
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(512).append("Loaded ").append(sceneName).append("\n object count: ").append(SCENES.get(sceneName).size()));
-		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine(new StringBuilder(128).append("Loaded ").append(sceneName));
 		}
 	}
@@ -121,17 +118,17 @@ public final class DoaSceneHandler {
 	public static void loadScene(@NotNull final DoaScene scene) {
 		if (loadedScene != null) {
 			loadedScene.isLoaded = false;
-			if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+			if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 				LOGGER.finer(new StringBuilder(512).append("Unloaded ").append(loadedScene.name).append("\n object count: ").append(loadedScene.size()));
-			} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+			} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 				LOGGER.fine(new StringBuilder(128).append("Unloaded ").append(loadedScene.name));
 			}
 		}
 		loadedScene = scene;
 		loadedScene.isLoaded = true;
-		if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINER) >= 0) {
+		if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(512).append("Loaded ").append(scene.name).append("\n object count: ").append(scene.size()));
-		} else if (DoaEngine.INTERNAL_LOG_LEVEL.compareTo(LogLevel.FINE) >= 0) {
+		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
 			LOGGER.fine(new StringBuilder(128).append("Loaded ").append(scene.name));
 		}
 	}
