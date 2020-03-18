@@ -44,8 +44,8 @@ public final class DoaKeyboard {
 		}
 	};
 
-	/* VK_PLUS IS 521, the array is upper bounded by VK_PLUS */
-	static boolean[] press = new boolean[522];
+	/* VK_WINDOWS IS 524, the array is upper bounded by VK_WINDOWS */
+	static boolean[] press = new boolean[524];
 
 	/**
 	 * This method is required to be public, but should never be called explicitly by any class at any
@@ -140,6 +140,7 @@ public final class DoaKeyboard {
 		KEY_DOWN = press[KeyEvent.VK_DOWN];
 		KEY_LEFT = press[KeyEvent.VK_LEFT];
 		KEY_RIGHT = press[KeyEvent.VK_RIGHT];
+		WINDOWS = press[KeyEvent.VK_WINDOWS];
 	}
 
 	/**
@@ -147,6 +148,6 @@ public final class DoaKeyboard {
 	 */
 	public static boolean ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, PRINT_SCREEN, SCROLL_LOCK, PAUSE_BREAK, TILDE, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN,
 	        EIGHT, NINE, BACK_SPACE, INSERT, DELETE, HOME, END, PAGE_UP, PAGE_DOWN, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, TAB, CAPS_LOCK,
-	        SHIFT, CTRL, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9, NUM_0, DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP, KEY_DOWN, KEY_RIGHT,
-	        KEY_LEFT;
+	        SHIFT, CTRL, WINDOWS, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9, NUM_0, DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP, KEY_DOWN,
+	        KEY_RIGHT, KEY_LEFT;
 }
