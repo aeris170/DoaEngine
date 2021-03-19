@@ -20,7 +20,7 @@ DoaEngine is a project that is intended to assist writing games in 2D space usin
 DoaEngine provides an easy and convenient way to build either sprite-based or "custom painting" games.
 
 ## Useful Links
-* [DoaEngine documentation]()
+* [DoaEngine documentation]() (link is offline)
 
 ## Projects Using DoaEngine:
 * [MP-Risk][1]

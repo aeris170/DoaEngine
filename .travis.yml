@@ -3,11 +3,10 @@ addons:
   sonarcloud:
     organization: "aeris170"
     token:
-      secure: "iOCP7Jd/KXQAtBlEvjoiyz56fJb8ZWKYe7v6jakXbLaIovb5NQZeeLlXylCTVq7e5CGT9KQ/Y6gxKiNSUfRgfhuuc259MCcRbJvtkcGWAdGLsaed0GbTdyeb+61XLMkbz42il5Zvrqj8u0cQdhJWnSb8j2RZuAo85NAF3RQaNHxHMS1GI6nMVKQMa7TCGPvF/9wPrSwye9+TEFP39zifK6//0JdWhg/8SIHO6ift2JvRbXdI2/kjFOZd7zoaI+jzsb5GDTMjF4U4s5IEmI7+R1I2pLncMQPqW7XQRsy3TwYcfWF19eS/m7J197K5i/UlRix2QPt9cnKNxiHB/Cnb5+vaIFThXZb/4vTWofizQFnOaDsKF0Rt4yZ1hIYZr6pD6XEpzR41yYjeFQP7mJ5Ch+aAEgBSAPxVaaDtFK+fk3icSzbEJKv8nogwLK8Vv6L6ursnCRGFM2kt/Z68BF9yW/AJPcyN165k9H+NtCFfNqiXglsDVzTiWC41q1BMhvJDAWTqpofWOqkVu94UcDsgKqgCgcAdZBgjwj6JdjYMS03HXFJF0E6fgcQnG+mgTAfDqxv8hgOCOtnlX1Siq/wqXA1MltBzLKsEHPZAt4E+6NbBId248Kn+ZVcjU+lXj8zSdsQ79XtM4VvlZwiPgHKbUvPhg0op2tr3O6vy0qaCs8o="
+      secure: "JiudeF2xC5qqDEpbRenyfDa9b6j3EoBByQtnUE6f8dWattAO/nWWVUYubvrucMsCEVNe7XbbS2N3o0X72mX3ZSd4Mlxds827NlfK12i66R5Zlhx+v+bxy5hqPMeaBsQGrovMh9xUBP7uda5MlIg28eXuFi9lQLPLZAxot12D7C69qJlFJbXN8l6SikBsfWogFAnuwn9DCGaQoR1L9Nf/6gUXAIFN8Wc0vMshwHDdq27VsI7vTvxzaHRXV2HAQGkPLNGSjpnqwda161soz1sZBCE33ZBnErL7yab7y0qItW+gGVocWOkknlPt9JfUvDoiDDK8wNDAS6rouHMwic6IbatG3fhEMgx0+SRrmkM1fTU2j5x6OB44s7YEufkmqHogRXmC4P8UqEGn7gZL8681IrOo7UrWknun/GvaDEsOnCs5GnhyAm68Yndv+L9TvdQ6EmBTjZC+rGqn1a/feMKPN0797zLfiFsZ/BOBEh5NJRHhg+LSIO4mu8E7Gu2avIHJFc9DiNieG/scJYkMK0wS8EC9szUSlzqMnSZzKd/af4GeM9gyrx3jEDvp8G9tPR7W6gfsb6qLWrWGRrwhlsdyA74+NaaazLG5pw5Aj5vPY+mkeLJJS6KjHHHW/0j7UyitMrIWVE+t9b+aQU+SA2Kgo8SFrANVAIDorAc87Y9oqbc="
 
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=aeris170_DoaEngine
 
 jdk:
   - openjdk15
