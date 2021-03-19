@@ -7,12 +7,12 @@
 [![GitHub stars](https://img.shields.io/github/stars/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/stargazers)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/aeris170/doaengine)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=alert_status)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine) 
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=ncloc)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=bugs)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DoaEngine%3ADoaEngine&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=DoaEngine%3ADoaEngine)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=alert_status)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=ncloc)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=bugs)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=aeris170_DoaEngine&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=aeris170_DoaEngine)
 
 ![social](https://repository-images.githubusercontent.com/169849910/f0d32080-c54e-11e9-80a7-e64a5e78675a)
 

@@ -63,10 +63,9 @@ public final class DoaLights {
 
 		List<Pair<BufferedImage, String>> pairs = new ArrayList<>();
 		DoaSprites.ORIGINAL_SPRITES.forEach((k, v) -> pairs.add(new Pair<>(v, k)));
-		Deque<Pair<BufferedImage, String>> pairsSortedByArea = pairs.stream()
-			.sorted(Comparator.comparingDouble(pair -> 1d / (pair.getValue0().getWidth() * pair.getValue0()
-				.getHeight())))
-			.collect(Collectors.toCollection(ConcurrentLinkedDeque::new));
+		Deque<Pair<BufferedImage, String>> pairsSortedByArea = pairs.stream().sorted(
+		        Comparator.comparingDouble(pair -> 1d / (pair.getValue0().getWidth() * pair.getValue0().getHeight()))).collect(
+		                Collectors.toCollection(ConcurrentLinkedDeque::new));
 		new Thread(() -> {
 			Map<String, BufferedImage> shadedSprites = new HashMap<>();
 			for (int i = 0; i < pairsSortedByArea.size(); i++) {
@@ -91,13 +90,8 @@ public final class DoaLights {
 			}
 			DoaSprites.SHADED_SPRITES.clear();
 			DoaSprites.SHADED_SPRITES.putAll(shadedSprites);
-			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ")
-				.append(newAmbientLightColor.getRed())
-				.append(", G: ")
-				.append(newAmbientLightColor.getGreen())
-				.append(", B: ")
-				.append(newAmbientLightColor.getBlue())
-				.append("."));
+			LOGGER.fine(new StringBuilder(32).append("Ambient light set to R: ").append(newAmbientLightColor.getRed()).append(", G: ").append(
+			        newAmbientLightColor.getGreen()).append(", B: ").append(newAmbientLightColor.getBlue()).append("."));
 		}).start();
 	}
 
@@ -131,21 +125,7 @@ public final class DoaLights {
 	static DoaAnimation applyAmbientLight(final DoaAnimation anim) {
 		final List<BufferedImage> frames = new ArrayList<>();
 		for (final BufferedImage sp : anim.getFrames()) {
-			final BufferedImage spclone = new BufferedImage(sp.getWidth(), sp.getHeight(), BufferedImage.TYPE_INT_ARGB);
-			final Graphics2D g2d = spclone.createGraphics();
-			g2d.drawImage(sp, 0, 0, null);
-			g2d.dispose();
-
-			for (int xx = 0; xx < spclone.getWidth(); xx++) {
-				for (int yy = 0; yy < spclone.getHeight(); yy++) {
-					final Color objColor = new Color(spclone.getRGB(xx, yy), true);
-					final int r = objColor.getRed() * ambientLightColor.getRed() / 255;
-					final int g = objColor.getGreen() * ambientLightColor.getGreen() / 255;
-					final int b = objColor.getBlue() * ambientLightColor.getBlue() / 255;
-					final int a = objColor.getAlpha();
-					spclone.setRGB(xx, yy, new Color(r, g, b, a).getRGB());
-				}
-			}
+			final BufferedImage spclone = applyAmbientLight(sp);
 			frames.add(spclone);
 		}
 		return new DoaAnimation(frames, anim.getDelay());
