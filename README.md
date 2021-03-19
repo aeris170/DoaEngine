@@ -1,5 +1,5 @@
 # DoaEngine
-![Version Number](https://img.shields.io/badge/version-2.7-purple)
+![Version Number](https://img.shields.io/badge/version-3.0-purple)
 [![Build Status](https://travis-ci.org/aeris170/DoaEngine.svg?branch=master)](https://travis-ci.org/aeris170/DoaEngine)
 [![GitHub license](https://img.shields.io/github/license/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/issues)
@@ -16,7 +16,11 @@
 
 ![social](https://repository-images.githubusercontent.com/169849910/f0d32080-c54e-11e9-80a7-e64a5e78675a)
 
-DoaEngine is a project that is intended to assist writing games in 2D space using the Java programming language. It is built upon the Sun Microsystem's Graphics Context, which is then refactored to "AWT Graphics".
+DoaEngine is a project that is intended to assist writing games in 2D space using the Java programming language. Built upon the Sun Microsystem's Graphics Context, 
+DoaEngine provides an easy and convenient way to build either sprite-based or "custom painting" games.
+
+## Useful Links
+* [DoaEngine documentation]()
 
 ## Projects Using DoaEngine:
 * [MP-Risk][1]

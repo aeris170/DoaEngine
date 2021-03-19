@@ -2,40 +2,58 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.doa</groupId>
+	<groupId>doa</groupId>
 	<artifactId>DoaEngine</artifactId>
 	<packaging>jar</packaging>
-	<version>2.7</version>
+	<version>3.0</version>
 	<name>DoaEngine</name>
-	<description>A simple 2D game engine for Java Developers.</description>
-	<url>aeris170.github.io</url>
+	<description>A simple 2D game development framework for Java Developers.</description>
+	<issueManagement>
+		<url>https://github.com/aeris170/DoaEngine/issues</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<id>aeris170</id>
+			<name>Doğa Oruç</name>
+			<email>aeris170@gmail.com</email>
+			<url>https://aeris170.github.io</url>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>GNU AGPLv3</name>
+			<url>https://choosealicense.com/licenses/agpl-3.0/</url>
+		</license>
+	</licenses>
 	<properties>
-		<maven.compile.target>12</maven.compile.target>
-		<maven.compile.source>12</maven.compile.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
+				<version>3.8.1</version>
 				<configuration>
-					<excludes>
-						<exclude>com/doa/main/**</exclude>
-					</excludes>
-					<release>12</release>
-					<verbose>true</verbose>
-					<fork>true</fork>
+					<compilerArgs>
+						--enable-preview
+					</compilerArgs>
+					<source>15</source>
+					<target>15</target>
+					<release>15</release>
 					<encoding>UTF-8</encoding>
+					<excludes>
+						<exclude>doa/main/**</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-source-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-				<version>3.1.0</version>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
 				<configuration>
 					<excludes>
-						<exclude>com/doa/main/**</exclude>
+						<exclude>doa/main/**</exclude>
 						<exclude>TOFFEE.otf</exclude>
 						<exclude>1.gif</exclude>
 						<exclude>2.gif</exclude>
@@ -53,15 +71,16 @@
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-				<version>3.1.1</version>
+				<version>3.2.0</version>
 				<configuration>
-					<source>8</source>
+					<source>14</source>
+					<additionalOptions>--enable-preview</additionalOptions>
 					<windowtitle>${project.name} ${project.version} API Documentation</windowtitle>
 					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
 					<overview>${basedir}/overview.html</overview>
 					<stylesheetfile>${basedir}/stylesheet.css</stylesheetfile>
-					<show>public</show>
-					<excludePackageNames>com.doa.main</excludePackageNames>
+					<show>protected</show>
+					<excludePackageNames>doa.main</excludePackageNames>
 					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
@@ -76,7 +95,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.4</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -91,6 +110,16 @@
 	<organization>
 		<url>aeris170.github.io</url>
 	</organization>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+		<repository>
+			<id>jcenter</id>
+			<url>https://jcenter.bintray.com/</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
@@ -102,7 +131,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.1-jre</version>
+			<version>28.2-jre</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.javatuples/javatuples -->
 		<dependency>
@@ -110,19 +139,48 @@
 			<artifactId>javatuples</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.5.2</version>
-			<scope>test</scope>
+			<groupId>org.jbox2d</groupId>
+			<artifactId>jbox2d</artifactId>
+			<version>2.2.1.1</version>
+			<type>pom</type>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d-library -->
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.5.2</version>
-			<scope>test</scope>
+			<groupId>org.jbox2d</groupId>
+			<artifactId>jbox2d-library</artifactId>
+			<version>2.2.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.code-disaster.steamworks4j/steamworks4j -->
+		<dependency>
+			<groupId>com.code-disaster.steamworks4j</groupId>
+			<artifactId>steamworks4j</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<!-- https://github.com/geo-gs/WaifUPnP/ -->
+		<dependency>
+			<groupId>com.github.geo-gs</groupId>
+			<artifactId>WaifUPnP</artifactId>
+			<version>master</version>
+		</dependency>
+		<!-- https://github.com/JnCrMx/discord-game-sdk4j -->
+		<dependency>
+			<groupId>com.github.JnCrMx</groupId>
+			<artifactId>discord-game-sdk4j</artifactId>
+			<version>0.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.tagtraum/ffsampledsp-complete -->
+		<dependency>
+			<groupId>com.tagtraum</groupId>
+			<artifactId>ffsampledsp-complete</artifactId>
+			<version>0.9.32</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.tagtraum</groupId>
+					<artifactId>ffmpeg</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

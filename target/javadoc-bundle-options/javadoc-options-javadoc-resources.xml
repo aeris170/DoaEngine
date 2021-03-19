@@ -7,7 +7,7 @@
     <tagletArtifact />
   </tagletArtifacts>
   <excludePackageNames>
-    <excludePackageName>com.doa.main</excludePackageName>
+    <excludePackageName>doa.main</excludePackageName>
   </excludePackageNames>
   <javadocResourcesDirectory>src/main/javadoc</javadocResourcesDirectory>
 </javadocOptions>
