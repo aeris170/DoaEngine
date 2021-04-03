@@ -25,7 +25,7 @@ public class DoaSpriteRenderer extends DoaRenderer {
 	/**
 	 * The sprite this renderer will render.
 	 */
-	protected BufferedImage sprite = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+	protected transient BufferedImage sprite = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
 
 	/**
 	 * Offset of the rendered sprite. Offset is calculated from top left of the

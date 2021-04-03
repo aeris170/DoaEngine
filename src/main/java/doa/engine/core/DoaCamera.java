@@ -42,7 +42,6 @@ public final class DoaCamera implements Serializable {
 
 	private static Dimension refResolution;
 	private static Dimension actResolution;
-	private static DoaVector scaleFactor;
 
 	/**
 	 * Constructor.
@@ -55,7 +54,6 @@ public final class DoaCamera implements Serializable {
 	static void init(final Dimension refResolution, final Dimension actResolution) {
 		DoaCamera.refResolution = refResolution;
 		DoaCamera.actResolution = actResolution;
-		scaleFactor = new DoaVector((float) actResolution.width / refResolution.width, (float) actResolution.height / refResolution.height);
 	}
 
 	/**

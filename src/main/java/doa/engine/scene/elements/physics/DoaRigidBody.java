@@ -1,7 +1,6 @@
 package doa.engine.scene.elements.physics;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -74,7 +73,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Shape of the body.
 	 */
 	@NotNull
-	public final List<DoaCollider> colliders = new ArrayList<>();
+	public final ArrayList<DoaCollider> colliders = new ArrayList<>();
 
 	/**
 	 * When true, the body will not rotate.
@@ -97,7 +96,7 @@ public class DoaRigidBody extends DoaComponent {
 	/**
 	 * Handle to Box2D Body.
 	 */
-	private Body box2DBody;
+	private transient Body box2DBody;
 
 	/**
 	 * Set the linear velocity of the center of mass.
@@ -232,7 +231,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * @hidden
 	 */
 	@Internal
-	public void setNativeBody(@NotNull final Body nativeBody) { box2DBody = nativeBody; }
+	public void setNativeBody(final Body nativeBody) { box2DBody = nativeBody; }
 
 	/**
 	 * Normally, programmers shouldn't need to call this method. This method is on

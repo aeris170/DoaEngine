@@ -504,8 +504,9 @@ public final class DoaGraphicsFunctions {
 	 * @param nPoints a the total number of points.
 	 * @see java.awt.Graphics#drawPolygon(int[], int[], int)
 	 */
-	// TODO
-	public static void fillPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) { g.fillPolygon(warpX(xPoints), warpY(yPoints), nPoints); }
+	public static void fillPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) {
+		g.fillPolygon(warpX(xPoints), warpY(yPoints), nPoints);
+	}
 
 	/**
 	 * Fills the specified rectangle. The left and right edges of the rectangle are

@@ -44,7 +44,7 @@ public class DoaScene implements Serializable {
 
 	// TODO make serializable!!!!
 	private final Multimap<Integer, DoaObject> OBJECTS = MultimapBuilder.treeKeys().arrayListValues().build();
-	final DoaPhysics physics = new DoaPhysics();
+	final transient DoaPhysics physics = new DoaPhysics();
 
 	String name;
 	boolean isLoaded = false;

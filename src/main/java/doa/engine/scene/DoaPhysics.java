@@ -136,7 +136,7 @@ public final class DoaPhysics {
 
 				body.createFixture(fixtureDef);
 			}
-			if (rigidBody.colliders.size() == 0) {
+			if (rigidBody.colliders.isEmpty()) {
 				DoaLogger.LOGGER.warning(new StringBuilder(128).append("Rigidbody of ").append(rigidBody.getOwner().name).append(
 				        " has no colliders. Please set a collider before adding the rigidbody to the DoaObject!"));
 			}
