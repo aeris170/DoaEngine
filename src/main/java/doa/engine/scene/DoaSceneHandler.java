@@ -13,10 +13,8 @@ import javax.validation.constraints.NotNull;
 import doa.engine.log.LogLevel;
 
 /**
- * Class is for loading-unloading scenes to DoaEngine. If a DoaScene is loaded
- * using {@link DoaSceneHandler#loadScene(DoaScene)}, the scene will have it's
- * {@link DoaScene#tick()} and {@link DoaScene#render()} methods called. Only
- * one scene can be loaded at a time.
+ * Class is for loading-unloading scenes to DoaEngine. Only one scene can be
+ * loaded at a time.
  *
  * @author Doga Oruc
  * @since DoaEngine 2.7

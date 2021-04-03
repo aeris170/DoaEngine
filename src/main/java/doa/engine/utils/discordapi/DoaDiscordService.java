@@ -8,6 +8,8 @@ import de.jcm.discordgamesdk.activity.Activity;
 import doa.engine.utils.DoaUtils;
 
 /**
+ * Please see Discord API documentation for more info.
+ * 
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0

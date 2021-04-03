@@ -5,7 +5,10 @@ import static doa.engine.input.DoaKeyboard.D;
 import static doa.engine.input.DoaKeyboard.S;
 import static doa.engine.input.DoaKeyboard.W;
 
+import org.jbox2d.common.Vec2;
+
 import doa.engine.maths.DoaVector;
+import doa.engine.scene.DoaPhysics;
 
 /**
  * A simple WASD keys controller. WASD keys translate the transform of which
@@ -47,9 +50,18 @@ public class DoaWASDControl extends DoaScript {
 			direction.y = 0;
 		if (A && D)
 			direction.x = 0;
+
 		if (direction.magnitude() > 0) {
 			var normalised = DoaVector.normalise(direction);
-			DoaVector.translate(getOwner().transform.position, normalised.x * speed, normalised.y * speed, getOwner().transform.position);
+			if (getOwner().rigidBody != null) {
+				getOwner().rigidBody.getNativeBody().setLinearVelocity(new Vec2(normalised.x * speed * DoaPhysics.PPM, normalised.y * speed * DoaPhysics.PPM));
+			} else {
+				DoaVector.translate(getOwner().transform.position, normalised.x * speed, normalised.y * speed, getOwner().transform.position);
+			}
+		} else {
+			if (getOwner().rigidBody != null) {
+				getOwner().rigidBody.getNativeBody().setLinearVelocity(new Vec2(0, 0));
+			}
 		}
 	}
 

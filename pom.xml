@@ -26,31 +26,49 @@
 		</license>
 	</licenses>
 	<properties>
+		<java.version>16</java.version>
+		<compiler-plugin.version>3.8.1</compiler-plugin.version>
+		<source-plugin.version>3.2.1</source-plugin.version>
+		<javadoc-plugin.version>3.2.0</javadoc-plugin.version>
+		<shade-plugin.version>3.2.4</shade-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<validation.version>2.0.1.Final</validation.version>
+		<guava.version>30.1.1-jre</guava.version>
+		<javatuples.version>1.2</javatuples.version>
+		<jbox2d.version>2.2.1.1</jbox2d.version>
+		<steamworks4j.version>1.8.0</steamworks4j.version>
+		<steamworks4j-server.version>1.8.0</steamworks4j-server.version>
+		<waifupnp.version>master</waifupnp.version>
+		<discord.version>0.3</discord.version>
+		<ffsampledsp.version>0.9.32</ffsampledsp.version>
+
+		<lwjgl.version>3.2.3</lwjgl.version>
+		<joml.version>1.10.1</joml.version>
+		<lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>${compiler-plugin.version}</version>
 				<configuration>
 					<compilerArgs>
 						--enable-preview
 					</compilerArgs>
-					<source>15</source>
-					<target>15</target>
-					<release>15</release>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<release>${java.version}</release>
 					<encoding>UTF-8</encoding>
 					<excludes>
-						<exclude>doa/main/**</exclude>
+						<exclude>doa/main/test/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>${source-plugin.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>doa/main/**</exclude>
@@ -69,18 +87,24 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
-				<version>3.2.0</version>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${javadoc-plugin.version}</version>
 				<configuration>
-					<source>14</source>
+					<release>${java.version}</release>
+					<doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
+					<docletArtifact>
+						<groupId>nl.talsmasoftware</groupId>
+						<artifactId>umldoclet</artifactId>
+						<version>2.0.12</version>
+					</docletArtifact>
 					<additionalOptions>--enable-preview</additionalOptions>
 					<windowtitle>${project.name} ${project.version} API Documentation</windowtitle>
 					<doctitle>${project.name} ${project.version} API Documentation</doctitle>
 					<overview>${basedir}/overview.html</overview>
 					<stylesheetfile>${basedir}/stylesheet.css</stylesheetfile>
 					<show>protected</show>
-					<excludePackageNames>doa.main</excludePackageNames>
+					<excludePackageNames>doa.main.test</excludePackageNames>
 					<failOnError>false</failOnError>
 				</configuration>
 				<executions>
@@ -95,7 +119,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.2.4</version>
+				<version>${shade-plugin.version}</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -120,67 +144,245 @@
 			<url>https://jcenter.bintray.com/</url>
 		</repository>
 	</repositories>
+	<profiles>
+		<profile>
+			<id>lwjgl-natives-linux-amd64</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-linux</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-linux-aarch64</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>aarch64</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-linux-arm64</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-linux-arm</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>arm</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-linux-arm32</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-linux-arm32</id>
+			<activation>
+				<os>
+					<family>unix</family>
+					<arch>arm32</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-linux-arm32</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-macos-amd64</id>
+			<activation>
+				<os>
+					<family>mac</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-macos</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-windows-amd64</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-windows</lwjgl.natives>
+			</properties>
+		</profile>
+		<profile>
+			<id>lwjgl-natives-windows-x86</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<lwjgl.natives>natives-windows-x86</lwjgl.natives>
+			</properties>
+		</profile>
+	</profiles>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.lwjgl</groupId>
+				<artifactId>lwjgl-bom</artifactId>
+				<version>${lwjgl.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<version>${validation.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>28.2-jre</version>
+			<version>${guava.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.javatuples/javatuples -->
 		<dependency>
 			<groupId>org.javatuples</groupId>
 			<artifactId>javatuples</artifactId>
-			<version>1.2</version>
+			<version>${javatuples.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d -->
 		<dependency>
 			<groupId>org.jbox2d</groupId>
 			<artifactId>jbox2d</artifactId>
-			<version>2.2.1.1</version>
+			<version>${jbox2d.version}</version>
 			<type>pom</type>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jbox2d/jbox2d-library -->
 		<dependency>
 			<groupId>org.jbox2d</groupId>
 			<artifactId>jbox2d-library</artifactId>
-			<version>2.2.1.1</version>
+			<version>${jbox2d.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.code-disaster.steamworks4j/steamworks4j -->
 		<dependency>
 			<groupId>com.code-disaster.steamworks4j</groupId>
 			<artifactId>steamworks4j</artifactId>
-			<version>1.8.0</version>
+			<version>${steamworks4j.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.code-disaster.steamworks4j/steamworks4j -->
+		<dependency>
+			<groupId>com.code-disaster.steamworks4j</groupId>
+			<artifactId>steamworks4j-server</artifactId>
+			<version>${steamworks4j-server.version}</version>
 		</dependency>
 		<!-- https://github.com/geo-gs/WaifUPnP/ -->
 		<dependency>
 			<groupId>com.github.geo-gs</groupId>
 			<artifactId>WaifUPnP</artifactId>
-			<version>master</version>
+			<version>${waifupnp.version}</version>
 		</dependency>
 		<!-- https://github.com/JnCrMx/discord-game-sdk4j -->
 		<dependency>
 			<groupId>com.github.JnCrMx</groupId>
 			<artifactId>discord-game-sdk4j</artifactId>
-			<version>0.3</version>
+			<version>${discord.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.tagtraum/ffsampledsp-complete -->
 		<dependency>
 			<groupId>com.tagtraum</groupId>
 			<artifactId>ffsampledsp-complete</artifactId>
-			<version>0.9.32</version>
+			<version>${ffsampledsp.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.tagtraum</groupId>
 					<artifactId>ffmpeg</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<!-- LWJGL 3 -->
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-glfw</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-nanovg</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-nuklear</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-openal</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-opengl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-stb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-glfw</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-nanovg</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-nuklear</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-openal</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-opengl</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-stb</artifactId>
+			<classifier>${lwjgl.natives}</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.joml</groupId>
+			<artifactId>joml</artifactId>
+			<version>${joml.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjglx</groupId>
+			<artifactId>lwjgl3-awt</artifactId>
+			<version>${lwjgl3-awt.version}</version>
 		</dependency>
 	</dependencies>
 </project>

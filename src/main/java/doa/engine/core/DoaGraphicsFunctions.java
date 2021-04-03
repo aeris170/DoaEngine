@@ -57,7 +57,7 @@ public final class DoaGraphicsFunctions {
 	private static Graphics2D g = null;
 	private static Dimension referenceResolution;
 	private static Dimension actualResolution;
-	private static boolean ligtsShouldContribute = true;
+	private static boolean lightsShouldContribute = true;
 
 	/**
 	 * Used to store transforms passed to {@link #pushTransform()}
@@ -504,10 +504,8 @@ public final class DoaGraphicsFunctions {
 	 * @param nPoints a the total number of points.
 	 * @see java.awt.Graphics#drawPolygon(int[], int[], int)
 	 */
-		// TODO
-	public static void fillPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) {
-		g.fillPolygon(warpX(xPoints), warpY(yPoints), nPoints);
-	}
+	// TODO
+	public static void fillPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) { g.fillPolygon(warpX(xPoints), warpY(yPoints), nPoints); }
 
 	/**
 	 * Fills the specified rectangle. The left and right edges of the rectangle are
@@ -657,7 +655,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#getColor
 	 */
 	public static void setColor(final Color c) {
-		if (ligtsShouldContribute) {
+		if (lightsShouldContribute) {
 			final Color ambientLightColor = DoaLights.getAmbientLightColor();
 			final int red = c.getRed() * ambientLightColor.getRed() / 255;
 			final int green = c.getGreen() * ambientLightColor.getGreen() / 255;
@@ -1248,12 +1246,27 @@ public final class DoaGraphicsFunctions {
 		g.draw3DRect(w[0], w[1], w[2], w[3], raised);
 	}
 
+	/**
+	 * @hidden
+	 */
 	@Internal
-	public static void turnOnLightContribution() { ligtsShouldContribute = true; }
+	public static void turnOnLightContribution() { lightsShouldContribute = true; }
 
+	/**
+	 * @hidden
+	 */
 	@Internal
-	public static void turnOffLightContribution() { ligtsShouldContribute = false; }
+	public static void turnOffLightContribution() { lightsShouldContribute = false; }
 
+	/**
+	 * @hidden
+	 */
+	@Internal
+	public static boolean areLightsContributing() { return lightsShouldContribute; }
+
+	/**
+	 * @hidden
+	 */
 	@Internal
 	public static void zoomToLookAt() {
 		if (DoaCamera.isMouseZoomingEnabled()) {

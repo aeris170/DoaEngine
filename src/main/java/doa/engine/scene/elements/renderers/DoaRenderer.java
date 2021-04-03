@@ -17,8 +17,8 @@ public abstract class DoaRenderer extends DoaComponent {
 	private static final long serialVersionUID = -4604905089488731022L;
 
 	/**
-	 * <strong>Do not call this method.</strong> This method is called by DoaEngine
-	 * when:
+	 * <strong>Do not call this method, merely override it.</strong> This method is
+	 * called by DoaEngine when:
 	 * <ol>
 	 * <li>This renderer is added to a DoaObject,</li>
 	 * <li>The DoaObject this renderer is added to, is added to a DoaScene,</li>
@@ -29,4 +29,11 @@ public abstract class DoaRenderer extends DoaComponent {
 	 */
 	@ForOverride
 	public abstract void render();
+
+	/**
+	 * <strong>Do not call this method, merely override it.</strong> Called when
+	 * {@link DoaComponent#debugRender} is set to true.
+	 */
+	@ForOverride
+	public void debugRender() {}
 }

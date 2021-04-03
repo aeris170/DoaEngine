@@ -59,7 +59,7 @@ public final class DoaLights {
 
 		int threadCount = Math.max((int) Math.sqrt(spriteCount), 1);
 		ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-		CountDownLatch latch = new CountDownLatch(threadCount);
+		CountDownLatch latch = new CountDownLatch(spriteCount);
 
 		List<Pair<BufferedImage, String>> pairs = new ArrayList<>();
 		DoaSprites.ORIGINAL_SPRITES.forEach((k, v) -> pairs.add(new Pair<>(v, k)));
@@ -68,7 +68,8 @@ public final class DoaLights {
 		                Collectors.toCollection(ConcurrentLinkedDeque::new));
 		new Thread(() -> {
 			Map<String, BufferedImage> shadedSprites = new HashMap<>();
-			for (int i = 0; i < pairsSortedByArea.size(); i++) {
+			int size = pairsSortedByArea.size(); // executor may pop while for loops is running, must cache!
+			for (int i = 0; i < size; i++) {
 				executor.submit(() -> {
 					Pair<BufferedImage, String> pair = pairsSortedByArea.pop();
 					try {

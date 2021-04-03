@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="127px" preserveAspectRatio="none" style="width:247px;height:127px;" version="1.1" viewBox="0 0 247 127" width="247px" zoomAndPan="magnify"><defs><filter height="300%" id="f1wjjoitoqwd76" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[4dc21492d7aff8315b50c376f63a2fdf]
+class doa.engine.utils.discordapi.DoaDiscordService--><a href="DoaDiscordService.html" target="_top" title="DoaDiscordService.html" xlink:actuate="onRequest" xlink:href="DoaDiscordService.html" xlink:show="new" xlink:title="DoaDiscordService.html" xlink:type="simple"><rect codeLine="5" fill="#FEFECE" filter="url(#f1wjjoitoqwd76)" height="89.6953" id="doa.engine.utils.discordapi.DoaDiscordService" style="stroke: #A80036; stroke-width: 1.5;" width="221" x="7" y="7"/><ellipse cx="49.45" cy="27.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M52.2156,22.9688 Q52.3719,22.75 52.5594,22.6406 Q52.7469,22.5313 52.9656,22.5313 Q53.3406,22.5313 53.575,22.7969 Q53.8094,23.0469 53.8094,23.6563 L53.8094,25.1094 Q53.8094,25.7188 53.575,25.9844 Q53.3406,26.25 52.9656,26.25 Q52.6219,26.25 52.4188,26.0469 Q52.2156,25.8594 52.1063,25.3438 Q52.0594,24.9844 51.8719,24.7969 Q51.5438,24.4219 50.9344,24.2031 Q50.325,23.9844 49.7,23.9844 Q48.9344,23.9844 48.2938,24.3125 Q47.6688,24.6406 47.1688,25.3906 Q46.6844,26.1406 46.6844,27.1719 L46.6844,28.2656 Q46.6844,29.5 47.575,30.3281 Q48.4656,31.1406 50.0594,31.1406 Q50.9969,31.1406 51.6531,30.8906 Q52.0438,30.7344 52.4656,30.2969 Q52.7313,30.0313 52.8719,29.9531 Q53.0281,29.875 53.2313,29.875 Q53.5594,29.875 53.8094,30.1406 Q54.075,30.3906 54.075,30.7344 Q54.075,31.0781 53.7313,31.4844 Q53.2313,32.0625 52.4344,32.3906 Q51.3563,32.8438 50.0594,32.8438 Q48.5438,32.8438 47.3406,32.2188 Q46.3563,31.7188 45.6688,30.6563 Q44.9813,29.5781 44.9813,28.2969 L44.9813,27.1406 Q44.9813,25.8125 45.5906,24.6719 Q46.2156,23.5156 47.3094,22.9063 Q48.4031,22.2813 49.6375,22.2813 Q50.3719,22.2813 51.0125,22.4531 Q51.6688,22.6094 52.2156,22.9688 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="121" x="73.05" y="26.5332">DoaDiscordService</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="128" x="69.55" y="39.9902">doa.engine.utils.discordapi</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="8" x2="227" y1="47.1875" y2="47.1875"/><ellipse cx="18" cy="58.1875" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="67" x="27" y="62.6064">init(long): void</text><ellipse cx="18" cy="72.0234" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="195" x="27" y="76.4424">switchActivity(DoaDiscordActivity): void</text><ellipse cx="18" cy="85.8594" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="193" x="27" y="90.2783">getCurrentActivity(): DoaDiscordActivity</text></a><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="190" x="22.5" y="114.0762">UMLDoclet 2.0.12, PlantUML 1.2020.16</text><!--MD5=[242297c2ce09ec938e8474e0e07fbd10]
+@startuml
+    set namespaceSeparator none
+    hide empty fields
+    hide empty methods
+
+    class "<size:14>DoaDiscordService\n<size:10>doa.engine.utils.discordapi" as doa.engine.utils.discordapi.DoaDiscordService [[DoaDiscordService.html]] {
+        {static} +init(long): void
+        {static} +switchActivity(DoaDiscordActivity): void
+        {static} +getCurrentActivity(): DoaDiscordActivity
+    }
+
+    center footer UMLDoclet 2.0.12, PlantUML 1.2020.16
+@enduml
+
+PlantUML version 1.2020.16(Sun Aug 23 23:20:43 TRT 2020)
+(APACHE source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: GB
+--></g></svg>

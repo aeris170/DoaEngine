@@ -3,8 +3,6 @@ package doa.engine.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import com.google.errorprone.annotations.DoNotCall;
-
 import doa.engine.Internal;
 
 /**
@@ -30,7 +28,8 @@ public final class DoaKeyboard {
 	 * been pressed at any time, at that time the respective field will be set to
 	 * true and will stay true as long as the key is held down, only when the same
 	 * key has been released it is then corresponding field will be set to false.
-	 *
+	 * 
+	 * @hidden
 	 * @see java.awt.event.KeyAdapter
 	 */
 	@Internal
@@ -47,12 +46,9 @@ public final class DoaKeyboard {
 	static boolean[] press = new boolean[525];
 
 	/**
-	 * This method is required to be public, but should never be called explicitly
-	 * by any class at any time except DoaEngine. If done otherwise, DoaEngine
-	 * provides no guarantees on the consistency of the KeyEvent catching mechanism.
+	 * @hidden
 	 */
 	@Internal
-	@DoNotCall
 	public static synchronized void tick() {
 		ESCAPE = press[KeyEvent.VK_ESCAPE];
 		F1 = press[KeyEvent.VK_F1];
@@ -146,9 +142,8 @@ public final class DoaKeyboard {
 	/**
 	 * @see java.awt.event.KeyEvent
 	 */
-	public static volatile boolean ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, PRINT_SCREEN, SCROLL_LOCK,
-			PAUSE_BREAK, TILDE, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, BACK_SPACE, INSERT, DELETE,
-			HOME, END, PAGE_UP, PAGE_DOWN, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
-			TAB, CAPS_LOCK, SHIFT, CTRL, WINDOWS, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9,
-			NUM_0, DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT;
+	public static volatile boolean ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, PRINT_SCREEN, SCROLL_LOCK, PAUSE_BREAK, TILDE, ZERO, ONE, TWO,
+	        THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, BACK_SPACE, INSERT, DELETE, HOME, END, PAGE_UP, PAGE_DOWN, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
+	        P, Q, R, S, T, U, V, W, X, Y, Z, TAB, CAPS_LOCK, SHIFT, CTRL, WINDOWS, ALT, NUM_1, NUM_2, NUM_3, NUM_4, NUM_5, NUM_6, NUM_7, NUM_8, NUM_9, NUM_0,
+	        DEL, ENTER, SPACE, SLASH, STAR, DASH, PLUS, KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT;
 }

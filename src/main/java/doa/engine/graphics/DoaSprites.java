@@ -1,5 +1,7 @@
 package doa.engine.graphics;
 
+import static doa.engine.core.DoaGraphicsFunctions.areLightsContributing;
+
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -70,15 +72,18 @@ public final class DoaSprites {
 	 *
 	 * @param spriteName unique name of the sprite that will be created
 	 * @param spriteFile path to the sprite-sheet from which the new sprite will be
-	 *                   cropped from
+	 *        cropped from
 	 * @param boundaries bounding box of the sprite inside the sprite-sheet, i.e.
-	 *                   where the sprite is inside the sprite-sheet
+	 *        where the sprite is inside the sprite-sheet
 	 * @return the newly created sprite in {@link DoaSprites#ORIGINAL_SPRITES} whose
 	 *         name is spriteName
 	 * @throws IOException if sprite-sheet cannot be loaded by DoaEngine
 	 */
 	public static BufferedImage createSpriteFromSpriteSheet(@NotNull final String spriteName, @NotNull final String spriteFile, @NotNull final Rectangle boundaries) throws IOException {
-		final BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)).getSubimage(boundaries.x, boundaries.y, boundaries.width, boundaries.height);
+		final BufferedImage sp = ImageIO.read(DoaSprites.class.getResourceAsStream(spriteFile)).getSubimage(boundaries.x,
+		        boundaries.y,
+		        boundaries.width,
+		        boundaries.height);
 		ORIGINAL_SPRITES.put(spriteName, sp);
 		if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(spriteName).append(" sprite instantiated."));
@@ -99,7 +104,10 @@ public final class DoaSprites {
 	 * @return the sprite in {@link DoaSprites#SHADED_SPRITES} whose name is
 	 *         spriteName
 	 */
-	public static BufferedImage getSprite(@NotNull final String spriteName) { return SHADED_SPRITES.get(spriteName); }
+	public static BufferedImage getSprite(@NotNull final String spriteName) {
+		if (areLightsContributing()) { return SHADED_SPRITES.get(spriteName); }
+		return ORIGINAL_SPRITES.get(spriteName);
+	}
 
 	/**
 	 * Deep copies a DoaSprite
@@ -115,7 +123,7 @@ public final class DoaSprites {
 	 * {@link DoaSprites#ORIGINAL_SPRITES}, nor {@link DoaSprites#SHADED_SPRITES}.
 	 *
 	 * @param sprite DoaSprite to scale
-	 * @param width  width of the scaled DoaSprite
+	 * @param width width of the scaled DoaSprite
 	 * @param height height of the scaled DoaSprite
 	 * @return the scaled instance of the passed DoaSprite
 	 */
@@ -141,7 +149,10 @@ public final class DoaSprites {
 		// obtain the current system graphical settings
 		final GraphicsConfiguration gfxConfig = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 
-		/* if image is already compatible and optimized for current system settings, simply return it */
+		/*
+		 * if image is already compatible and optimized for current system settings,
+		 * simply return it
+		 */
 		if (sp.getColorModel().equals(gfxConfig.getColorModel())) { return sp; }
 
 		// image is not optimized, so create a new image that is

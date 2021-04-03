@@ -2,6 +2,7 @@ package doa.engine.core;
 
 import static doa.engine.log.DoaLogger.LOGGER;
 
+import java.awt.Dimension;
 import java.io.Serializable;
 
 import doa.engine.input.DoaMouse;
@@ -39,10 +40,23 @@ public final class DoaCamera implements Serializable {
 	private static float tweenAmountY = 0.005f;
 	private static float tweenAmountZ = 0.025f;
 
+	private static Dimension refResolution;
+	private static Dimension actResolution;
+	private static DoaVector scaleFactor;
+
 	/**
 	 * Constructor.
 	 */
 	private DoaCamera() {}
+
+	/**
+	 * Initializes the dimensions of the camera.
+	 */
+	static void init(final Dimension refResolution, final Dimension actResolution) {
+		DoaCamera.refResolution = refResolution;
+		DoaCamera.actResolution = actResolution;
+		scaleFactor = new DoaVector((float) actResolution.width / refResolution.width, (float) actResolution.height / refResolution.height);
+	}
 
 	/**
 	 * Re-initialises the object to follow, min/max X/Y values of the camera
@@ -62,8 +76,9 @@ public final class DoaCamera implements Serializable {
 		DoaCamera.minY = minY;
 		DoaCamera.maxX = maxX;
 		DoaCamera.maxY = maxY;
-		LOGGER.finer(new StringBuilder(256).append("DoaMouse has been adjusted. minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(
-		        maxX).append(", maxY: ").append(maxY).toString());
+		LOGGER.finer(
+		        new StringBuilder(256).append("DoaCamera has been adjusted. minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(
+		                maxX).append(", maxY: ").append(maxY).toString());
 	}
 
 	/**
@@ -81,7 +96,7 @@ public final class DoaCamera implements Serializable {
 		isMouseZoomingEnabled = true;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
-		LOGGER.finer(new StringBuilder(512).append("DoaMouse zoom has been enabled. Focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(
+		LOGGER.finer(new StringBuilder(512).append("DoaCamera zoom has been enabled. Focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(
 		        minZ).append(", maxZ: ").append(maxZ).toString());
 	}
 
@@ -96,17 +111,19 @@ public final class DoaCamera implements Serializable {
 	 */
 	public static void disableMouseZoom() { isMouseZoomingEnabled = false; }
 
-	static void tick(final int width, final int height) {
+	static void tick() {
 		if (isObjectToFollowInitialized) {
 			final DoaVector pos = objectToFollow.transform.position;
-			x += (pos.x - x - width / 2.0) * tweenAmountX;
-			y += (pos.y - y - height / 2.0) * tweenAmountY;
+			final float posX = pos.x / refResolution.width * actResolution.width;
+			final float posY = pos.y / refResolution.height * actResolution.height;
+			x += (posX - x - actResolution.width / 2.0) * tweenAmountX;
+			y += (posY - y - actResolution.height / 2.0) * tweenAmountY;
 		}
 		if (isMouseZoomingEnabled) {
 			z += (DoaMouse.WHEEL - z) * tweenAmountZ;
 		}
-		x = DoaMath.clamp(x, minX, maxX - width);
-		y = DoaMath.clamp(y, minY, maxY - height);
+		x = DoaMath.clamp(x, minX / refResolution.width * actResolution.width, maxX / refResolution.width * actResolution.width - actResolution.width);
+		y = DoaMath.clamp(y, minY / refResolution.height * actResolution.height, maxY / refResolution.height * actResolution.height - actResolution.height);
 		z = DoaMath.clamp(z, minZ, maxZ);
 	}
 

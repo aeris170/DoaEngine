@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- * Objects of this class are responsible for providing support for sprite based animations. In order
- * to facilitate this class' objects, one must use the factory methods inside DoaAnimations class.
+ * Objects of this class are responsible for providing support for sprite based
+ * animations. In order to facilitate this class' objects, one must use the
+ * factory methods inside DoaAnimations class.
  * <ul>
  * <li>{@link DoaAnimations#createAnimation(String, String, long)}</li>
  * <li>{@link DoaAnimations#createAnimation(String, List, long)}</li>
@@ -16,7 +17,7 @@ import java.util.List;
  * @version 3.0
  * @see doa.engine.graphics.DoaAnimations
  */
-public class DoaAnimation {
+public final class DoaAnimation {
 
 	private List<BufferedImage> frames;
 	private long delay;
@@ -30,56 +31,43 @@ public class DoaAnimation {
 	/**
 	 * @return a list containing the frames of this animation
 	 */
-	public List<BufferedImage> getFrames() {
-		return frames;
-	}
+	public List<BufferedImage> getFrames() { return frames; }
 
 	/**
 	 * @return the delay between each frame of this animation in milliseconds
 	 */
-	public long getDelay() {
-		return delay;
-	}
+	public long getDelay() { return delay; }
 
 	/**
 	 * @return the number of frames of this animation
 	 */
-	public int getFrameCount() {
-		return frames.size();
-	}
+	public int getFrameCount() { return frames.size(); }
 
 	/**
 	 * Retrieves the sprite at sprite pointer.
 	 *
 	 * @return current sprite to render
 	 */
-	public BufferedImage current() {
-		return frames.get((index + frames.size()) % frames.size());
-	}
+	public BufferedImage current() { return frames.get((index + frames.size()) % frames.size()); }
 
 	/**
-	 * Advances the sprite pointer to the next index, retrieves the sprite at that index; loops back to
-	 * beginning if there are no more sprites on the buffer, and returns the sprite.
+	 * Advances the sprite pointer to the next index, retrieves the sprite at that
+	 * index; loops back to beginning if there are no more sprites on the buffer,
+	 * and returns the sprite.
 	 *
 	 * @return the next sprite to render
 	 */
-	public BufferedImage next() {
-		return frames.get((index++ + frames.size()) % frames.size());
-	}
+	public BufferedImage next() { return frames.get((index++ + frames.size()) % frames.size()); }
 
 	/**
 	 * Resets the next sprite to render to the first frame in the animation.
 	 */
-	public void reset() {
-		index = 0;
-	}
+	public void reset() { index = 0; }
 
 	/**
 	 * Returns the current index of the sprite to render.
 	 *
 	 * @return the sprite to renders index
 	 */
-	public int getIndex() {
-		return index;
-	}
+	public int getIndex() { return index; }
 }

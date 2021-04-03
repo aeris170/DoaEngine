@@ -37,7 +37,7 @@ public class DoaRectRenderer extends DoaRenderer {
 
 	/**
 	 * When true, the shape will be filled, when false, the shape will only be
-	 * drawn.
+	 * drawn. Default value is true.
 	 */
 	protected boolean fill = true;
 
@@ -48,8 +48,8 @@ public class DoaRectRenderer extends DoaRenderer {
 	 * @param offset offset of this renderer
 	 */
 	public void setOffset(@NotNull DoaVector offset) {
-		rect.x = (int) (offset.x - rect.width / 2);
-		rect.y = (int) (offset.y - rect.height / 2);
+		rect.x = (int) (offset.x);
+		rect.y = (int) (offset.y);
 	}
 
 	/**
@@ -60,8 +60,6 @@ public class DoaRectRenderer extends DoaRenderer {
 	public void setDimensions(@NotNull DoaVector dimensions) {
 		rect.width = (int) (dimensions.x);
 		rect.height = (int) (dimensions.y);
-		rect.x = rect.x - rect.width / 2;
-		rect.y = rect.y - rect.height / 2;
 	}
 
 	public void setColor(@NotNull Color color) { this.color = color; }

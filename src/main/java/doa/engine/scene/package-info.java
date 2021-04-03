@@ -1,4 +1,4 @@
 /**
- * Scene, scene object and builders.
+ * Scene, scene object, component.
  */
 package doa.engine.scene;

@@ -5,7 +5,7 @@ import com.google.errorprone.annotations.ForOverride;
 import doa.engine.scene.DoaComponent;
 
 /**
- * Script blueprint.
+ * Script contract.
  * 
  * @author Doga Oruc
  * @since DoaEngine 3.0
@@ -16,8 +16,8 @@ public abstract class DoaScript extends DoaComponent {
 	private static final long serialVersionUID = -6820458805754686219L;
 
 	/**
-	 * <strong>Do not call this method.</strong> This method is called by DoaEngine
-	 * when:
+	 * <strong>Do not call this method, merely override it.</strong> This method is
+	 * called by DoaEngine when:
 	 * <ol>
 	 * <li>This script is added to a DoaObject,</li>
 	 * <li>The DoaObject this script is added to, is added to a DoaScene,</li>
@@ -28,4 +28,10 @@ public abstract class DoaScript extends DoaComponent {
 	@ForOverride
 	public abstract void tick();
 
+	/**
+	 * <strong>Do not call this method, merely override it.</strong> Called when
+	 * {@link DoaComponent#debugRender} is set to true.
+	 */
+	@ForOverride
+	public void debugRender() {}
 }

@@ -1,5 +1,6 @@
 package doa.engine.graphics;
 
+import static doa.engine.core.DoaGraphicsFunctions.areLightsContributing;
 import static doa.engine.log.DoaLogger.LOGGER;
 
 import java.awt.image.BufferedImage;
@@ -48,7 +49,7 @@ public final class DoaAnimations {
 	 * @param animationFile path to the animation(.gif) on the disk
 	 * @param delay delay between each frame of animation in milliseconds
 	 * @return the animation in {@code DoaSprites.ORIGINAL_ANIMATIONS} whose name is
-	 * animationName
+	 *         animationName
 	 * @throws IOException if sprite cannot be loaded by DoaEngine
 	 */
 	public static DoaAnimation createAnimation(@NotNull final String animationName, @NotNull final String animationFile, final long delay) throws IOException {
@@ -62,10 +63,7 @@ public final class DoaAnimations {
 		final DoaAnimation anim = new DoaAnimation(frames, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
 		if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
-			LOGGER.finest(new StringBuilder(128).append(animationName)
-				.append(" animation instantiated with ")
-				.append(delay)
-				.append(" ms frame time."));
+			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append(" ms frame time."));
 		} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(animationName).append(" animation instantiated."));
 		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
@@ -84,16 +82,13 @@ public final class DoaAnimations {
 	 * @param keyframes list that contains the frames of the animation
 	 * @param delay delay between each frame of animation in milliseconds
 	 * @return the animation in {@code DoaSprites.ORIGINAL_ANIMATIONS} whose name is
-	 * animationName
+	 *         animationName
 	 */
 	public static DoaAnimation createAnimation(final String animationName, final List<BufferedImage> keyframes, final long delay) {
 		final DoaAnimation anim = new DoaAnimation(keyframes, delay);
 		ORIGINAL_ANIMATIONS.put(animationName, anim);
 		if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
-			LOGGER.finest(new StringBuilder(128).append(animationName)
-				.append(" animation instantiated with ")
-				.append(delay)
-				.append("ms frame time."));
+			LOGGER.finest(new StringBuilder(128).append(animationName).append(" animation instantiated with ").append(delay).append("ms frame time."));
 		} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 			LOGGER.finer(new StringBuilder(128).append(animationName).append(" animation instantiated."));
 		} else if (LOGGER.getLevel().compareTo(LogLevel.FINE) >= 0) {
@@ -111,9 +106,10 @@ public final class DoaAnimations {
 	 *
 	 * @param animationName name of the animation that is trying to be retrieved
 	 * @return the sprite in {@code DoaSprites.SHADED_ANIMATIONS} whose name is
-	 * spriteName
+	 *         spriteName
 	 */
 	public static DoaAnimation getAnimation(final String animationName) {
-		return SHADED_ANIMATIONS.get(animationName);
+		if (areLightsContributing()) { return SHADED_ANIMATIONS.get(animationName); }
+		return ORIGINAL_ANIMATIONS.get(animationName);
 	}
 }

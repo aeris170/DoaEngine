@@ -75,5 +75,5 @@ public class DoaSpriteRenderer extends DoaRenderer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void render() { drawImage(sprite, offset.x - dimensions.x / 2, offset.y - dimensions.y / 2, dimensions.x, dimensions.y); }
+	public void render() { drawImage(sprite, offset.x, offset.y, dimensions.x, dimensions.y); }
 }

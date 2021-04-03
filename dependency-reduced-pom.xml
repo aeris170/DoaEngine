@@ -30,21 +30,21 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>${compiler-plugin.version}</version>
         <configuration>
           <compilerArgs>--enable-preview</compilerArgs>
-          <source>15</source>
-          <target>15</target>
-          <release>15</release>
+          <source>16</source>
+          <target>16</target>
+          <release>16</release>
           <encoding>UTF-8</encoding>
           <excludes>
-            <exclude>doa/main/**</exclude>
+            <exclude>doa/main/test/**</exclude>
           </excludes>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>${source-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -64,7 +64,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>${javadoc-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -74,20 +74,26 @@
           </execution>
         </executions>
         <configuration>
-          <source>14</source>
+          <release>16</release>
+          <doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
+          <docletArtifact>
+            <groupId>nl.talsmasoftware</groupId>
+            <artifactId>umldoclet</artifactId>
+            <version>2.0.12</version>
+          </docletArtifact>
           <additionalOptions>--enable-preview</additionalOptions>
           <windowtitle>${project.name} ${project.version} API Documentation</windowtitle>
           <doctitle>${project.name} ${project.version} API Documentation</doctitle>
           <overview>${basedir}/overview.html</overview>
           <stylesheetfile>${basedir}/stylesheet.css</stylesheetfile>
           <show>protected</show>
-          <excludePackageNames>doa.main</excludePackageNames>
+          <excludePackageNames>doa.main.test</excludePackageNames>
           <failOnError>false</failOnError>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
+        <version>${shade-plugin.version}</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -99,6 +105,50 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>lwjgl-natives-linux-amd64</id>
+      <properties>
+        <lwjgl.natives>natives-linux</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-linux-aarch64</id>
+      <properties>
+        <lwjgl.natives>natives-linux-arm64</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-linux-arm</id>
+      <properties>
+        <lwjgl.natives>natives-linux-arm32</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-linux-arm32</id>
+      <properties>
+        <lwjgl.natives>natives-linux-arm32</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-macos-amd64</id>
+      <properties>
+        <lwjgl.natives>natives-macos</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-windows-amd64</id>
+      <properties>
+        <lwjgl.natives>natives-windows</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-windows-x86</id>
+      <properties>
+        <lwjgl.natives>natives-windows-x86</lwjgl.natives>
+      </properties>
+    </profile>
+  </profiles>
   <repositories>
     <repository>
       <id>jitpack.io</id>
@@ -118,7 +168,34 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.lwjgl</groupId>
+        <artifactId>lwjgl-bom</artifactId>
+        <version>${lwjgl.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <properties>
+    <validation.version>2.0.1.Final</validation.version>
+    <lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
+    <waifupnp.version>master</waifupnp.version>
+    <joml.version>1.10.1</joml.version>
+    <jbox2d.version>2.2.1.1</jbox2d.version>
+    <steamworks4j.version>1.8.0</steamworks4j.version>
+    <guava.version>30.1.1-jre</guava.version>
+    <javatuples.version>1.2</javatuples.version>
+    <compiler-plugin.version>3.8.1</compiler-plugin.version>
+    <lwjgl.version>3.2.3</lwjgl.version>
+    <source-plugin.version>3.2.1</source-plugin.version>
+    <discord.version>0.3</discord.version>
+    <ffsampledsp.version>0.9.32</ffsampledsp.version>
+    <steamworks4j-server.version>1.8.0</steamworks4j-server.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javadoc-plugin.version>3.2.0</javadoc-plugin.version>
+    <shade-plugin.version>3.2.4</shade-plugin.version>
   </properties>
 </project>

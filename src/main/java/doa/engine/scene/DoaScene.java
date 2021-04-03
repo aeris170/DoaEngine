@@ -21,6 +21,7 @@ import doa.engine.Internal;
 import doa.engine.core.DoaCamera;
 import doa.engine.log.DoaLogger;
 import doa.engine.log.LogLevel;
+import doa.engine.scene.elements.physics.DoaRigidBody;
 
 /**
  * Responsible for keeping DoaObjects. A scene is composed of zero or more
@@ -41,40 +42,49 @@ public class DoaScene implements Serializable {
 
 	private static final DoaLogger LOGGER = DoaLogger.getInstance();
 
-	// TODO!!!!
+	// TODO make serializable!!!!
 	private final Multimap<Integer, DoaObject> OBJECTS = MultimapBuilder.treeKeys().arrayListValues().build();
+	final DoaPhysics physics = new DoaPhysics();
 
 	String name;
 	boolean isLoaded = false;
 
 	private transient List<Entry<Integer, DoaObject>> cachedObjects = new ArrayList<>();
+	private transient List<DoaObject> toRemove = new ArrayList<>();
 
 	DoaScene(@NotNull final String sceneName) { name = sceneName; }
 
+	/**
+	 * @hidden
+	 */
+	@SuppressWarnings("javadoc")
 	@Internal
-	public void tick() {
+	public void tick(int ticks) {
+		removeScheduled();
 		cachedObjects = new ArrayList<>(OBJECTS.entries());
 		for (int i = cachedObjects.size() - 1; i >= 0; i--) {
 			cachedObjects.get(i).getValue().tick();
 		}
+		physics.tick(ticks);
 	}
 
+	/**
+	 * @hidden
+	 */
 	@Internal
 	public void render() {
 		resetAll();
 		for (int i = 0; i < cachedObjects.size(); i++) {
 			DoaObject object = cachedObjects.get(i).getValue();
-			if (object instanceof DoaFixedObject) {
-				turnOffLightContribution();
-				pushTransform();
-				object.render();
-				popTransform();
-			} else {
+			if (object.isDynamic()) {
 				turnOnLightContribution();
 				pushTransform();
 				translate(-DoaCamera.getX(), -DoaCamera.getY());
 				object.render();
 				popTransform();
+			} else {
+				turnOffLightContribution();
+				object.render();
 			}
 		}
 	}
@@ -97,22 +107,32 @@ public class DoaScene implements Serializable {
 			LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully added to ").append(name).append("."));
 		}
 		o.scene = this;
+		o.onAddToScene(this);
 	}
 
 	/**
-	 * Removes the specified DoaObject from this scene.
+	 * Schedules the removal of the specified DoaObject from this scene. This method
+	 * schedules the object for removal, the removal will take place in the start of
+	 * next tick.
 	 *
 	 * @param o object to remove from this scene
 	 */
-	public void remove(@NotNull final DoaObject o) {
-		OBJECTS.entries().removeIf(x -> x.getValue().equals(o));
-		if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
-			LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(
-			        ". It was at zOrder: ").append(o.getzOrder()).append("."));
-		} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
-			LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
+	public void remove(@NotNull final DoaObject o) { toRemove.add(o); }
+
+	private void removeScheduled() {
+		for (DoaObject o : toRemove) {
+			if (OBJECTS.entries().removeIf(x -> x.getValue().equals(o))) {
+				if (LOGGER.getLevel().compareTo(LogLevel.FINEST) >= 0) {
+					LOGGER.finest(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append(
+					        ". It was at zOrder: ").append(o.getzOrder()).append("."));
+				} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
+					LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
+				}
+				o.scene = null;
+				o.onRemoveFromScene(this);
+			}
 		}
-		o.scene = null;
+		toRemove.clear();
 	}
 
 	/**
@@ -131,7 +151,12 @@ public class DoaScene implements Serializable {
 	 * this method returns.
 	 */
 	public void clear() {
+		List<Entry<Integer, DoaObject>> objects = new ArrayList<>(OBJECTS.entries());
 		OBJECTS.clear();
+		for (Entry<Integer, DoaObject> entry : objects) {
+			entry.getValue().scene = null;
+			entry.getValue().onRemoveFromScene(this);
+		}
 		LOGGER.info(new StringBuilder(128).append(name).append(" is now empty."));
 	}
 
@@ -147,9 +172,24 @@ public class DoaScene implements Serializable {
 
 	public int size() { return OBJECTS.size(); }
 
+	/**
+	 * @hidden
+	 */
 	@Internal
 	public void updatezOrder(final DoaObject o, final int newzOrder) {
 		OBJECTS.remove(o.getzOrder(), o);
 		OBJECTS.put(newzOrder, o);
 	}
+
+	/**
+	 * @hidden
+	 */
+	@Internal
+	public void registerBody(@NotNull final DoaRigidBody rigidBody) { physics.registerBody(rigidBody); }
+
+	/**
+	 * @hidden
+	 */
+	@Internal
+	public void deleteBody(@NotNull final DoaRigidBody rigidBody) { physics.deleteBody(rigidBody); }
 }

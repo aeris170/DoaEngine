@@ -19,9 +19,10 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.Map;
 
+import org.lwjgl.opengl.awt.GLData;
+
 import doa.engine.input.DoaKeyboard;
 import doa.engine.input.DoaMouse;
-import doa.engine.physics.DoaPhysics;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
 
@@ -68,6 +69,9 @@ public final class DoaEngine {
 		refResolution = esettings.REFERENCE_RESOLUTION;
 		actResolution = new Dimension(wSettings.DM.getWidth(), wSettings.DM.getHeight());
 
+		GLData data = new GLData();
+		data.samples = 4;
+		data.swapInterval = 0;
 		surface = new Canvas();
 		surface.addKeyListener(DoaKeyboard.INPUT);
 		surface.addMouseListener(DoaMouse.INPUT);
@@ -87,19 +91,19 @@ public final class DoaEngine {
 
 	private class GameThread extends Thread {
 
-		private GameThread() { setName("DoaEngine Game Loop"); }
+		private GameThread() {
+			setName("DoaEngine Game Loop");
+			DoaCamera.init(refResolution, actResolution);
+		}
 
 		private void tick() {
 			DoaKeyboard.tick();
 			DoaMouse.tick();
 			final DoaScene loadedScene = DoaSceneHandler.getLoadedScene();
 			if (loadedScene != null) {
-				loadedScene.tick();
+				loadedScene.tick(ticksPerSecond);
 			}
-			DoaPhysics.tick(ticksPerSecond);
-
-			final Component parent = surface.getParent();
-			DoaCamera.tick(parent.getWidth(), parent.getHeight());
+			DoaCamera.tick();
 		}
 
 		private void render() {

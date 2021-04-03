@@ -1,5 +1,7 @@
 package doa.engine.scene;
 
+import static doa.engine.core.DoaGraphicsFunctions.popAll;
+import static doa.engine.core.DoaGraphicsFunctions.pushAll;
 import static doa.engine.core.DoaGraphicsFunctions.rotate;
 import static doa.engine.core.DoaGraphicsFunctions.translate;
 import static doa.engine.log.DoaLogger.LOGGER;
@@ -15,9 +17,9 @@ import javax.validation.constraints.NotNull;
 import com.google.errorprone.annotations.OverridingMethodsMustInvokeSuper;
 
 import doa.engine.maths.DoaMath;
-import doa.engine.physics.DoaPhysics;
 import doa.engine.scene.elements.DoaEssentialComponent;
 import doa.engine.scene.elements.DoaTransform;
+import doa.engine.scene.elements.physics.DoaCollider;
 import doa.engine.scene.elements.physics.DoaRigidBody;
 import doa.engine.scene.elements.renderers.DoaRenderer;
 import doa.engine.scene.elements.scripts.DoaScript;
@@ -49,6 +51,8 @@ public class DoaObject implements Serializable {
 	@NotNull
 	public String name;
 
+	private boolean dynamic = true;
+
 	/**
 	 * Constructor. Constructs an empty DoaObject.
 	 */
@@ -63,6 +67,30 @@ public class DoaObject implements Serializable {
 		this.name = name;
 		components.add(transform);
 	}
+
+	/**
+	 * Makes the DoaObject static. Static DoaObjects are in screen-space. They
+	 * aren't moved by DoaCamera and aren't shaded by DoaEngine. Particularly useful
+	 * when implementing UI.
+	 * 
+	 * @return this
+	 */
+	public DoaObject makeStatic() {
+		dynamic = false;
+		return this;
+	}
+
+	/**
+	 * Makes the DoaObject dynamic. Dynamic DoaObjects are in world-space.
+	 * 
+	 * @return this
+	 */
+	public DoaObject makeDynamic() {
+		dynamic = true;
+		return this;
+	}
+
+	public boolean isDynamic() { return dynamic; }
 
 	/**
 	 * Returns the scene which this DoaObject is in. Returns null if this DoaObject
@@ -113,6 +141,20 @@ public class DoaObject implements Serializable {
 		this.zOrder = zOrder;
 	}
 
+	@OverridingMethodsMustInvokeSuper
+	public void onAddToScene(final DoaScene scene) {
+		if (rigidBody != null) {
+			scene.registerBody(rigidBody);
+		}
+	}
+
+	@OverridingMethodsMustInvokeSuper
+	public void onRemoveFromScene(final DoaScene scene) {
+		if (rigidBody != null) {
+			scene.deleteBody(rigidBody);
+		}
+	}
+
 	/**
 	 * Add the specified DoaComponent to this DoaObject. If the component is already
 	 * added to another DoaObject, it is first removed from that DoaObject prior.
@@ -136,11 +178,10 @@ public class DoaObject implements Serializable {
 				LOGGER.warning(new StringBuilder(64).append("DoaObject").append(name).append(" already has a DoaRigidBody. Add failed."));
 			}
 			this.rigidBody = rigidBody;
-			component.owner = this;
-			DoaPhysics.registerBody(rigidBody);
 		}
 		components.add(component);
 		component.owner = this;
+		component.onAdd(this);
 		LOGGER.fine(new StringBuilder(64).append("Component ").append(component.name).append(" is succesfully added to object ").append(name).append("."));
 	}
 
@@ -159,9 +200,9 @@ public class DoaObject implements Serializable {
 				renderers.remove(renderer);
 			} else if (component instanceof DoaRigidBody rigidBody) {
 				this.rigidBody = null;
-				DoaPhysics.deleteBody(rigidBody);
 			}
 			component.owner = null;
+			component.onRemove(this);
 			LOGGER.fine(
 			        new StringBuilder(128).append("Component ").append(component.name).append(" is succesfully removed from object ").append(name).append("."));
 		} else {
@@ -182,6 +223,7 @@ public class DoaObject implements Serializable {
 	}
 
 	final void render() {
+		pushAll();
 		translate(transform.position.x, transform.position.y);
 		rotate(DoaMath.toRadians(transform.rotation));
 		renderers.forEach(ren -> {
@@ -189,5 +231,13 @@ public class DoaObject implements Serializable {
 				ren.render();
 			}
 		});
+
+		if (rigidBody != null && rigidBody.debugRender) {
+			rigidBody.colliders.forEach(DoaCollider::debugRender);
+		}
+		scripts.stream().filter(scr -> scr.isEnabled() && scr.debugRender).forEach(DoaScript::debugRender);
+		renderers.stream().filter(ren -> ren.isEnabled() && ren.debugRender).forEach(DoaRenderer::debugRender);
+		// want to consider parallelStream's here? check that
+		popAll();
 	}
 }

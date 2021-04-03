@@ -88,9 +88,7 @@ public final class DoaMouse extends MouseInputAdapter {
 		public synchronized void mouseDragged(final MouseEvent e) { mouseMoved(e); }
 
 		@Override
-		public synchronized void mouseWheelMoved(final MouseWheelEvent e) {
-			mouseZ -= e.getPreciseWheelRotation() * 0.05;
-		}
+		public synchronized void mouseWheelMoved(final MouseWheelEvent e) { mouseZ -= e.getPreciseWheelRotation() * 0.05; }
 	};
 
 	static boolean[] press = new boolean[20];
@@ -145,7 +143,7 @@ public final class DoaMouse extends MouseInputAdapter {
 	public static volatile boolean MB1, MB2, MB3;
 	public static volatile boolean MB1_HOLD, MB2_HOLD, MB3_HOLD;
 	public static volatile boolean MB1_RELEASE, MB2_RELEASE, MB3_RELEASE;
-	public static volatile double X = mouseX;
-	public static volatile double Y = mouseY;
-	public static volatile double WHEEL = mouseZ;
+	public static volatile float X = mouseX;
+	public static volatile float Y = mouseY;
+	public static volatile float WHEEL = mouseZ;
 }

@@ -11,14 +11,14 @@ import doa.engine.maths.DoaVector;
  * @since DoaEngine 3.0
  * @version 3.0
  */
-public class DoaArbitraryShapeCollider implements DoaCollider {
+public class DoaArbitraryShapeCollider extends DoaCollider {
 
 	private static final long serialVersionUID = 7937279848107433232L;
 
 	/**
 	 * List of points from which the shape of this component will be derived.
 	 */
-	private List<DoaVector> points;
+	protected List<DoaVector> points;
 
 	/**
 	 * Constructor. Colinear points are allowed but may lead poor performance. The

@@ -1,5 +1,9 @@
 package doa.engine.scene.elements.physics;
 
+import static doa.engine.core.DoaGraphicsFunctions.drawRect;
+import static doa.engine.core.DoaGraphicsFunctions.setColor;
+
+import java.awt.Color;
 import java.util.List;
 
 import doa.engine.maths.DoaVector;
@@ -11,7 +15,7 @@ import doa.engine.maths.DoaVector;
  * @since DoaEngine 3.0
  * @version 3.0
  */
-public class DoaBoxCollider implements DoaCollider {
+public class DoaBoxCollider extends DoaCollider {
 
 	private static final long serialVersionUID = 3596967320371375193L;
 
@@ -45,5 +49,31 @@ public class DoaBoxCollider implements DoaCollider {
 	 */
 	@Override
 	public List<DoaVector> getPoints() { return null; }
+
+	/**
+	 * Renders the collider. For debug only.
+	 */
+	@Override
+	public void debugRender() {
+		if (isTrigger()) {
+			setColor(Color.CYAN);
+		} else {
+			switch (type) {
+			case STATIC:
+				setColor(Color.RED);
+				break;
+			case DYNAMIC:
+				setColor(Color.GREEN);
+				break;
+			case KINEMATIC:
+				setColor(Color.BLUE);
+				break;
+			default:
+				setColor(Color.PINK);
+				break;
+			}
+		}
+		drawRect(offset.x - dimensions.x / 2, offset.y - dimensions.y / 2, dimensions.x, dimensions.y);
+	}
 
 }

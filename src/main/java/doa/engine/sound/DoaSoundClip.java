@@ -16,7 +16,7 @@ import doa.engine.task.DoaTasker;
  * @version 3.0
  * @see Clip
  */
-public class DoaSoundClip {
+public final class DoaSoundClip {
 
 	/**
 	 * Constant for looping forever.
