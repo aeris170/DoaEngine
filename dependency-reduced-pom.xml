@@ -33,9 +33,9 @@
         <version>${compiler-plugin.version}</version>
         <configuration>
           <compilerArgs>--enable-preview</compilerArgs>
-          <source>16</source>
-          <target>16</target>
-          <release>16</release>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <release>${java.version}</release>
           <encoding>UTF-8</encoding>
           <excludes>
             <exclude>doa/main/test/**</exclude>
@@ -74,7 +74,7 @@
           </execution>
         </executions>
         <configuration>
-          <release>16</release>
+          <release>${java.version}</release>
           <doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
           <docletArtifact>
             <groupId>nl.talsmasoftware</groupId>
@@ -105,50 +105,6 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>lwjgl-natives-linux-amd64</id>
-      <properties>
-        <lwjgl.natives>natives-linux</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-linux-aarch64</id>
-      <properties>
-        <lwjgl.natives>natives-linux-arm64</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-linux-arm</id>
-      <properties>
-        <lwjgl.natives>natives-linux-arm32</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-linux-arm32</id>
-      <properties>
-        <lwjgl.natives>natives-linux-arm32</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-macos-amd64</id>
-      <properties>
-        <lwjgl.natives>natives-macos</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-windows-amd64</id>
-      <properties>
-        <lwjgl.natives>natives-windows</lwjgl.natives>
-      </properties>
-    </profile>
-    <profile>
-      <id>lwjgl-natives-windows-x86</id>
-      <properties>
-        <lwjgl.natives>natives-windows-x86</lwjgl.natives>
-      </properties>
-    </profile>
-  </profiles>
   <repositories>
     <repository>
       <id>jitpack.io</id>
@@ -168,28 +124,15 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.lwjgl</groupId>
-        <artifactId>lwjgl-bom</artifactId>
-        <version>${lwjgl.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <properties>
     <validation.version>2.0.1.Final</validation.version>
-    <lwjgl3-awt.version>0.1.8</lwjgl3-awt.version>
+    <java.version>16</java.version>
     <waifupnp.version>master</waifupnp.version>
-    <joml.version>1.10.1</joml.version>
     <jbox2d.version>2.2.1.1</jbox2d.version>
     <steamworks4j.version>1.8.0</steamworks4j.version>
     <guava.version>30.1.1-jre</guava.version>
     <javatuples.version>1.2</javatuples.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
-    <lwjgl.version>3.2.3</lwjgl.version>
     <source-plugin.version>3.2.1</source-plugin.version>
     <discord.version>0.3</discord.version>
     <ffsampledsp.version>0.9.32</ffsampledsp.version>

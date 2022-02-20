@@ -30,6 +30,7 @@ import java.util.Map;
 import doa.engine.Internal;
 import doa.engine.graphics.DoaAnimation;
 import doa.engine.graphics.DoaLights;
+import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaObject;
 import doa.engine.scene.elements.DoaTransform;
 import doa.engine.task.DoaTaskGuard;
@@ -1581,10 +1582,10 @@ public final class DoaGraphicsFunctions {
 	 */
 	public static void popColor() { setColor(colors.pop()); }
 
-	static void set(Graphics2D drawGraphics, Dimension refResolution, Dimension actResolution) {
+	static void set(Graphics2D drawGraphics, DoaVector refResolution, DoaVector actResolution) {
 		g = drawGraphics;
-		referenceResolution = refResolution;
-		actualResolution = actResolution;
+		referenceResolution = new Dimension((int)refResolution.x, (int)refResolution.y);
+		actualResolution = new Dimension((int)actResolution.x, (int)actResolution.y);
 	}
 
 	private static int[] warpX(float[] xs) {

@@ -14,3 +14,4 @@ doa.engine.sound
 doa.engine.task
 doa.engine.utils
 doa.engine.utils.discordapi
+doa.main

@@ -7,6 +7,7 @@ import static doa.engine.core.DoaGraphicsFunctions.pushTransform;
 import static doa.engine.core.DoaGraphicsFunctions.setClip;
 import static doa.engine.core.DoaGraphicsFunctions.translate;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.Ellipse2D;
 import java.io.IOException;
 
@@ -106,6 +107,7 @@ public class PhysicsTest extends DoaGame {
 	public void initialize(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		eSettings.AXIS_HELPERS = true;
 
+		wSettings.RESOLUTION_OD = new DoaVector(1920,1080);
 		wSettings.TITLE = "DoaEngine " + DoaEngine.VERSION + " Physics Test";
 	}
 }

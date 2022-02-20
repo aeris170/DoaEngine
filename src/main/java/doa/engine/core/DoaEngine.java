@@ -19,10 +19,9 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
 import java.util.Map;
 
-import org.lwjgl.opengl.awt.GLData;
-
 import doa.engine.input.DoaKeyboard;
 import doa.engine.input.DoaMouse;
+import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
 
@@ -48,8 +47,8 @@ public final class DoaEngine {
 	private Color clearColor;
 	private Map<RenderingHints.Key, Object> hints;
 	private boolean axisHelpers;
-	private Dimension refResolution;
-	private Dimension actResolution;
+	private DoaVector refResolution;
+	private DoaVector actResolution;
 
 	/**
 	 * Constructor. Creates a new instance of DoaEngine.
@@ -67,11 +66,13 @@ public final class DoaEngine {
 		};
 		axisHelpers = esettings.AXIS_HELPERS;
 		refResolution = esettings.REFERENCE_RESOLUTION;
-		actResolution = new Dimension(wSettings.DM.getWidth(), wSettings.DM.getHeight());
+		if (wSettings.RESOLUTION_OD != null) {
+			actResolution = new DoaVector(wSettings.RESOLUTION_OD.x, wSettings.RESOLUTION_OD.y);	
+		} else {
+			actResolution = new DoaVector(wSettings.DM.getWidth(), wSettings.DM.getHeight());
+		}
+		
 
-		GLData data = new GLData();
-		data.samples = 4;
-		data.swapInterval = 0;
 		surface = new Canvas();
 		surface.addKeyListener(DoaKeyboard.INPUT);
 		surface.addMouseListener(DoaMouse.INPUT);
@@ -128,9 +129,9 @@ public final class DoaEngine {
 			if (axisHelpers) {
 				setStroke(new BasicStroke(2));
 				setColor(Color.RED);
-				drawLine(0, actResolution.height * .5f - 1, actResolution.width, actResolution.height * .5f - 1);
+				drawLine(0, actResolution.y * .5f - 1, actResolution.x, actResolution.y * .5f - 1);
 				setColor(Color.GREEN);
-				drawLine(actResolution.width * .5f - 1, 0, actResolution.width * 0.5f - 1, actResolution.height);
+				drawLine(actResolution.x * .5f - 1, 0, actResolution.x * 0.5f - 1, actResolution.y);
 			}
 			frames++;
 

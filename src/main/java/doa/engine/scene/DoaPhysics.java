@@ -159,6 +159,7 @@ public final class DoaPhysics {
 	/**
 	 * @hidden
 	 */
+	@SuppressWarnings("javadoc")
 	@Internal
 	public void tick(final int ticks) {
 		box2DWorld.setContactListener(CollisionListener);

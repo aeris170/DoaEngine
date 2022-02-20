@@ -1,7 +1,7 @@
 package doa.engine.scene.elements.renderers;
 
-import static doa.engine.core.DoaGraphicsFunctions.draw;
-import static doa.engine.core.DoaGraphicsFunctions.fill;
+import static doa.engine.core.DoaGraphicsFunctions.drawPolygon;
+import static doa.engine.core.DoaGraphicsFunctions.fillPolygon;
 import static doa.engine.core.DoaGraphicsFunctions.popAll;
 import static doa.engine.core.DoaGraphicsFunctions.pushAll;
 
@@ -75,9 +75,9 @@ public class DoaArbitraryShapeRenderer extends DoaRenderer {
 		pushAll();
 		DoaGraphicsFunctions.setColor(color);
 		if (fill) {
-			fill(polygon);
+			fillPolygon(polygon);
 		} else {
-			draw(polygon);
+			drawPolygon(polygon);
 		}
 		popAll();
 	}

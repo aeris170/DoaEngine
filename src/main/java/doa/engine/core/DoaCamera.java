@@ -40,8 +40,8 @@ public final class DoaCamera implements Serializable {
 	private static float tweenAmountY = 0.005f;
 	private static float tweenAmountZ = 0.025f;
 
-	private static Dimension refResolution;
-	private static Dimension actResolution;
+	private static DoaVector refResolution;
+	private static DoaVector actResolution;
 
 	/**
 	 * Constructor.
@@ -51,7 +51,7 @@ public final class DoaCamera implements Serializable {
 	/**
 	 * Initializes the dimensions of the camera.
 	 */
-	static void init(final Dimension refResolution, final Dimension actResolution) {
+	static void init(final DoaVector refResolution, final DoaVector actResolution) {
 		DoaCamera.refResolution = refResolution;
 		DoaCamera.actResolution = actResolution;
 	}
@@ -112,16 +112,16 @@ public final class DoaCamera implements Serializable {
 	static void tick() {
 		if (isObjectToFollowInitialized) {
 			final DoaVector pos = objectToFollow.transform.position;
-			final float posX = pos.x / refResolution.width * actResolution.width;
-			final float posY = pos.y / refResolution.height * actResolution.height;
-			x += (posX - x - actResolution.width / 2.0) * tweenAmountX;
-			y += (posY - y - actResolution.height / 2.0) * tweenAmountY;
+			final float posX = pos.x / refResolution.x * actResolution.x;
+			final float posY = pos.y / refResolution.y * actResolution.y;
+			x += (posX - x - actResolution.x / 2.0) * tweenAmountX;
+			y += (posY - y - actResolution.y / 2.0) * tweenAmountY;
 		}
 		if (isMouseZoomingEnabled) {
 			z += (DoaMouse.WHEEL - z) * tweenAmountZ;
 		}
-		x = DoaMath.clamp(x, minX / refResolution.width * actResolution.width, maxX / refResolution.width * actResolution.width - actResolution.width);
-		y = DoaMath.clamp(y, minY / refResolution.height * actResolution.height, maxY / refResolution.height * actResolution.height - actResolution.height);
+		x = DoaMath.clamp(x, minX / refResolution.x * actResolution.x, maxX / refResolution.x * actResolution.x - actResolution.x);
+		y = DoaMath.clamp(y, minY / refResolution.y * actResolution.y, maxY / refResolution.y * actResolution.y - actResolution.y);
 		z = DoaMath.clamp(z, minZ, maxZ);
 	}
 

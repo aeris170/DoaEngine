@@ -11,6 +11,8 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import doa.engine.maths.DoaVector;
+
 /**
  * Responsible for being the window for the game.
  *
@@ -25,6 +27,9 @@ public final class DoaWindow {
 	private String title;
 	private GraphicsDevice screen;
 	private DisplayMode dm;
+	private DoaVector resolutionOD;	
+	private Integer refreshRateOD;
+	private Integer bppOD;
 	private Cursor[] cursors;
 	private Image icon;
 
@@ -32,6 +37,9 @@ public final class DoaWindow {
 		title = settings.TITLE;
 		screen = settings.SCREEN;
 		dm = settings.DM;
+		resolutionOD = settings.RESOLUTION_OD;
+		refreshRateOD = settings.REFRESH_RATE_OD;
+		bppOD = settings.BPP_OD;
 		cursors = new Cursor[14];
 		cursors[0] = settings.DEFAULT_CURSOR;
 		cursors[1] = settings.CROSSHAIR_CURSOR;
@@ -69,6 +77,29 @@ public final class DoaWindow {
 			window.setExtendedState(Frame.MAXIMIZED_BOTH);
 		}
 		if (screen.isDisplayChangeSupported()) {
+			if (resolutionOD != null || refreshRateOD != null || bppOD != null) {
+				if (resolutionOD == null) {
+					resolutionOD = new DoaVector(dm.getWidth(), dm.getHeight());
+				}
+				if (refreshRateOD == null) {
+					refreshRateOD = dm.getRefreshRate();
+				}
+				if (bppOD == null) {
+					bppOD = dm.getBitDepth(); 
+				}
+					
+				var modes = screen.getDisplayModes();
+				for (var mode : modes) {
+					if (resolutionOD.x == mode.getWidth() && resolutionOD.y == mode.getHeight() &&
+						refreshRateOD == mode.getRefreshRate() &&
+						bppOD == mode.getBitDepth()) {
+						System.out.println(dm == mode);
+						dm = mode;
+						
+						break;
+					} 
+				}
+			}
 			try {
 				screen.setDisplayMode(dm);
 			} catch (IllegalArgumentException e) {

@@ -18,6 +18,7 @@ doa\engine\scene\DoaPhysics$1.class
 doa\engine\core\DoaGraphicsFunctions.class
 doa\engine\scene\elements\physics\DoaCollider.class
 doa\engine\scene\elements\physics\DoaEllipseCollider.class
+doa\main\PhysicsTest.class
 doa\engine\core\DoaWindowSettings.class
 doa\engine\scene\DoaObjectInstantiationException.class
 doa\engine\scene\DoaScene.class
@@ -56,7 +57,6 @@ doa\engine\scene\elements\physics\DoaBoxCollider$1.class
 doa\engine\net\DoaServer.class
 doa\engine\net\PacketType.class
 doa\engine\scene\DoaObject.class
-doa\engine\core\DoaEngine$2.class
 doa\engine\scene\DoaObjectBuilder.class
 doa\engine\scene\DoaPhysics.class
 doa\engine\utils\discordapi\DoaDiscordService.class
@@ -67,3 +67,4 @@ doa\engine\scene\elements\DoaTransform.class
 doa\engine\input\DoaKeyboard.class
 doa\engine\log\LogLevel.class
 doa\engine\scene\DoaPhysics$CollisionListener.class
+doa\main\PhysicsTest$1.class

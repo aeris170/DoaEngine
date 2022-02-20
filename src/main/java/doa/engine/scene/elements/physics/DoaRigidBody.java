@@ -1,6 +1,7 @@
 package doa.engine.scene.elements.physics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
@@ -73,7 +74,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Shape of the body.
 	 */
 	@NotNull
-	public final ArrayList<DoaCollider> colliders = new ArrayList<>();
+	public final List<DoaCollider> colliders = new ArrayList<>();
 
 	/**
 	 * When true, the body will not rotate.

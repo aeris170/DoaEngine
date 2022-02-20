@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
+import doa.engine.maths.DoaVector;
+
 /**
  * An object of this class is supplied as an argument to
  * {@link DoaGame#initialize(DoaEngineSettings, DoaWindowSettings, String...)}.
@@ -135,7 +137,7 @@ public final class DoaEngineSettings {
 	 * its contents. The default value is 1920x1080.
 	 */
 	@NotNull
-	public Dimension REFERENCE_RESOLUTION = new Dimension(1920, 1080);
+	public DoaVector REFERENCE_RESOLUTION = new DoaVector(1920, 1080);
 
 	DoaEngineSettings() {}
 }

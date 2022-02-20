@@ -9,8 +9,10 @@ import static doa.engine.core.DoaGraphicsFunctions.turnOnLightContribution;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.validation.constraints.NotNull;
 
@@ -50,7 +52,7 @@ public class DoaScene implements Serializable {
 	boolean isLoaded = false;
 
 	private transient List<Entry<Integer, DoaObject>> cachedObjects = new ArrayList<>();
-	private transient List<DoaObject> toRemove = new ArrayList<>();
+	private transient List<DoaObject> toRemove = new CopyOnWriteArrayList<>();
 
 	DoaScene(@NotNull final String sceneName) { name = sceneName; }
 
@@ -175,6 +177,7 @@ public class DoaScene implements Serializable {
 	/**
 	 * @hidden
 	 */
+	@SuppressWarnings("javadoc")
 	@Internal
 	public void updatezOrder(final DoaObject o, final int newzOrder) {
 		OBJECTS.remove(o.getzOrder(), o);
@@ -184,12 +187,14 @@ public class DoaScene implements Serializable {
 	/**
 	 * @hidden
 	 */
+	@SuppressWarnings("javadoc")
 	@Internal
 	public void registerBody(@NotNull final DoaRigidBody rigidBody) { physics.registerBody(rigidBody); }
 
 	/**
 	 * @hidden
 	 */
+	@SuppressWarnings("javadoc")
 	@Internal
 	public void deleteBody(@NotNull final DoaRigidBody rigidBody) { physics.deleteBody(rigidBody); }
 }

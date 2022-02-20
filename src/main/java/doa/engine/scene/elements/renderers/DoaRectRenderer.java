@@ -1,7 +1,7 @@
 package doa.engine.scene.elements.renderers;
 
-import static doa.engine.core.DoaGraphicsFunctions.draw;
-import static doa.engine.core.DoaGraphicsFunctions.fill;
+import static doa.engine.core.DoaGraphicsFunctions.drawRect;
+import static doa.engine.core.DoaGraphicsFunctions.fillRect;
 import static doa.engine.core.DoaGraphicsFunctions.popAll;
 import static doa.engine.core.DoaGraphicsFunctions.pushAll;
 
@@ -82,9 +82,9 @@ public class DoaRectRenderer extends DoaRenderer {
 		pushAll();
 		DoaGraphicsFunctions.setColor(color);
 		if (fill) {
-			fill(rect);
+			fillRect(rect.x, rect.y, rect.width, rect.height);
 		} else {
-			draw(rect);
+			drawRect(rect.x, rect.y, rect.width, rect.height);
 		}
 		popAll();
 	}

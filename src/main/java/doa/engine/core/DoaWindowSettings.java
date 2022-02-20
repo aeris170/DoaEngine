@@ -8,6 +8,8 @@ import java.awt.Image;
 
 import javax.validation.constraints.NotNull;
 
+import doa.engine.maths.DoaVector;
+
 /**
  * An object of this class is supplied as an argument to
  * {@link DoaGame#initialize(DoaEngineSettings, DoaWindowSettings, String...)}. Applications can
@@ -36,6 +38,9 @@ public final class DoaWindowSettings {
 	 */
 	@NotNull
 	public DisplayMode DM = SCREEN.getDisplayMode();
+	public DoaVector RESOLUTION_OD = null;	
+	public Integer REFRESH_RATE_OD = null;
+	public Integer BPP_OD = null;
 
 	/**
 	 * 
