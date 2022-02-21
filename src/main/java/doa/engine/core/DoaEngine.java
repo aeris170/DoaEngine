@@ -13,7 +13,6 @@ import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferStrategy;
@@ -67,12 +66,11 @@ public final class DoaEngine {
 		axisHelpers = esettings.AXIS_HELPERS;
 		refResolution = esettings.REFERENCE_RESOLUTION;
 		if (wSettings.RESOLUTION_OD != null) {
-			actResolution = new DoaVector(wSettings.RESOLUTION_OD.x, wSettings.RESOLUTION_OD.y);	
+			actResolution = wSettings.RESOLUTION_OD;	
 		} else {
-			actResolution = new DoaVector(wSettings.DM.getWidth(), wSettings.DM.getHeight());
+			actResolution = wSettings.DM.getResolution();
 		}
 		
-
 		surface = new Canvas();
 		surface.addKeyListener(DoaKeyboard.INPUT);
 		surface.addMouseListener(DoaMouse.INPUT);
@@ -116,12 +114,8 @@ public final class DoaEngine {
 
 			setRenderingHints(hints);
 
-			final Component parent = surface.getParent();
-			final int width = parent.getWidth();
-			final int height = parent.getHeight();
-
 			setColor(clearColor);
-			fillRect(0, 0, width, height);
+			fillRect(0, 0, refResolution.x, refResolution.y);
 
 			final DoaScene loadedScene = DoaSceneHandler.getLoadedScene();
 			loadedScene.render();
@@ -129,9 +123,9 @@ public final class DoaEngine {
 			if (axisHelpers) {
 				setStroke(new BasicStroke(2));
 				setColor(Color.RED);
-				drawLine(0, actResolution.y * .5f - 1, actResolution.x, actResolution.y * .5f - 1);
+				drawLine(0, refResolution.y * .5f - 1, refResolution.x, refResolution.y * .5f - 1);
 				setColor(Color.GREEN);
-				drawLine(actResolution.x * .5f - 1, 0, actResolution.x * 0.5f - 1, actResolution.y);
+				drawLine(refResolution.x * .5f - 1, 0, refResolution.x * 0.5f - 1, refResolution.y);
 			}
 			frames++;
 

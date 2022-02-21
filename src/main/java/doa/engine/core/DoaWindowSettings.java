@@ -1,7 +1,6 @@
 package doa.engine.core;
 
 import java.awt.Cursor;
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -37,10 +36,11 @@ public final class DoaWindowSettings {
 	 * Information related to window's resolution and refresh rate and etc.
 	 */
 	@NotNull
-	public DisplayMode DM = SCREEN.getDisplayMode();
+	public DoaDisplayMode DM = new DoaDisplayMode(SCREEN.getDisplayMode());
 	public DoaVector RESOLUTION_OD = null;	
 	public Integer REFRESH_RATE_OD = null;
 	public Integer BPP_OD = null;
+	public DoaWindowMode WM = DoaWindowMode.FULLSCREEN;
 
 	/**
 	 * 

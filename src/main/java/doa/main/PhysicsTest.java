@@ -18,6 +18,7 @@ import doa.engine.Internal;
 import doa.engine.core.DoaEngine;
 import doa.engine.core.DoaEngineSettings;
 import doa.engine.core.DoaGame;
+import doa.engine.core.DoaWindowMode;
 import doa.engine.core.DoaWindowSettings;
 import doa.engine.graphics.DoaSprites;
 import doa.engine.log.DoaLogger;
@@ -107,7 +108,8 @@ public class PhysicsTest extends DoaGame {
 	public void initialize(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		eSettings.AXIS_HELPERS = true;
 
-		wSettings.RESOLUTION_OD = new DoaVector(1920,1080);
+		wSettings.RESOLUTION_OD = new DoaVector(1600, 900);
+		wSettings.WM = DoaWindowMode.WINDOWED;
 		wSettings.TITLE = "DoaEngine " + DoaEngine.VERSION + " Physics Test";
 	}
 }

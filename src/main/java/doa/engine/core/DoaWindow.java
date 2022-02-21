@@ -2,16 +2,27 @@ package doa.engine.core;
 
 import static doa.engine.log.DoaLogger.LOGGER;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import doa.engine.log.DoaLogger;
 import doa.engine.maths.DoaVector;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.val;
 
 /**
  * Responsible for being the window for the game.
@@ -26,10 +37,11 @@ public final class DoaWindow {
 
 	private String title;
 	private GraphicsDevice screen;
-	private DisplayMode dm;
+	private DoaDisplayMode dm;
 	private DoaVector resolutionOD;	
 	private Integer refreshRateOD;
 	private Integer bppOD;
+	private DoaWindowMode wm;
 	private Cursor[] cursors;
 	private Image icon;
 
@@ -40,6 +52,7 @@ public final class DoaWindow {
 		resolutionOD = settings.RESOLUTION_OD;
 		refreshRateOD = settings.REFRESH_RATE_OD;
 		bppOD = settings.BPP_OD;
+		wm = settings.WM;
 		cursors = new Cursor[14];
 		cursors[0] = settings.DEFAULT_CURSOR;
 		cursors[1] = settings.CROSSHAIR_CURSOR;
@@ -61,7 +74,6 @@ public final class DoaWindow {
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		window.setLocationByPlatform(true);
 		window.setTitle(title);
-		window.setUndecorated(true);
 		window.setCursor(cursors[0]);
 		window.setIconImage(icon);
 		window.setResizable(false);
@@ -70,45 +82,74 @@ public final class DoaWindow {
 		window.setIgnoreRepaint(true);
 
 		window.add(engine.surface);
-
-		if (screen.isFullScreenSupported()) {
-			screen.setFullScreenWindow(window);
-		} else {
-			window.setExtendedState(Frame.MAXIMIZED_BOTH);
-		}
-		if (screen.isDisplayChangeSupported()) {
-			if (resolutionOD != null || refreshRateOD != null || bppOD != null) {
-				if (resolutionOD == null) {
-					resolutionOD = new DoaVector(dm.getWidth(), dm.getHeight());
-				}
-				if (refreshRateOD == null) {
-					refreshRateOD = dm.getRefreshRate();
-				}
-				if (bppOD == null) {
-					bppOD = dm.getBitDepth(); 
-				}
-					
-				var modes = screen.getDisplayModes();
-				for (var mode : modes) {
-					if (resolutionOD.x == mode.getWidth() && resolutionOD.y == mode.getHeight() &&
-						refreshRateOD == mode.getRefreshRate() &&
-						bppOD == mode.getBitDepth()) {
-						System.out.println(dm == mode);
-						dm = mode;
-						
-						break;
-					} 
-				}
+		
+		window.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Component c = (Component)e.getSource();
+				engine.surface.setSize(c.getSize());
 			}
+		});
+
+		setWindowMode(wm);
+		if (resolutionOD == null) { resolutionOD = dm.getResolution(); }
+		if (refreshRateOD == null) { refreshRateOD = dm.getRefreshRate(); }
+		if (bppOD == null) { bppOD = dm.getBitDepth(); }
+		val displayMode = DoaDisplayMode.findDisplayModeWithCapabilities(screen, resolutionOD, bppOD, refreshRateOD);
+		setDisplayMode(displayMode);
+		
+		engine.start();
+
+		LOGGER.info("DoaWindow succesfully instantiated!");
+	}
+	
+	public static GraphicsDevice[] getGraphicsDevices() { return GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices(); }
+	public GraphicsDevice getGraphicsDevice() { return screen; }
+	public void setGraphicsDevice(@NonNull final GraphicsDevice screen) {
+		this.screen.setFullScreenWindow(null);
+		this.screen = screen;
+		setWindowMode(wm);
+		setDisplayMode(dm);
+	}
+	
+	public DoaDisplayMode getDisplayMode() { return dm; }
+	public void setDisplayMode(@NonNull final DoaDisplayMode dm) {
+		if (wm == DoaWindowMode.WINDOWED) {
+			window.setVisible(false);
+			window.setSize((int)dm.getResolution().x, (int)dm.getResolution().y);
+			this.dm = dm;
+			window.setVisible(true);
+		} else if (screen.isDisplayChangeSupported()) {
 			try {
-				screen.setDisplayMode(dm);
+				screen.setDisplayMode(DoaDisplayMode.toNativeDisplayMode(dm));
+				this.dm = dm;
 			} catch (IllegalArgumentException e) {
 				LOGGER.severe("Invalid display mode!");
 				e.printStackTrace();
 			}
+		} else {
+			LOGGER.warning("Display does not support mode change!");
 		}
-		engine.start();
-
-		LOGGER.info("DoaWindow succesfully instantiated!");
+	}
+	
+	public DoaWindowMode getWindowMode() { return wm; }
+	public void setWindowMode(DoaWindowMode mode) {
+		if (mode == DoaWindowMode.FULLSCREEN) {
+			if (screen.isFullScreenSupported()) {
+				wm = mode;
+				screen.setFullScreenWindow(window);
+			} else {
+				LOGGER.config("Display does not support fullscreen windows, switched to borderless fullscreen");
+				wm = DoaWindowMode.BORDERLESS_FULLSCREEN;
+				window.setUndecorated(true);
+				window.setExtendedState(Frame.MAXIMIZED_BOTH);
+			}
+		} else if (mode == DoaWindowMode.BORDERLESS_FULLSCREEN) {
+			wm = mode;
+			window.setUndecorated(true);
+			window.setExtendedState(Frame.MAXIMIZED_BOTH);
+		} else if (mode == DoaWindowMode.WINDOWED) {
+			wm = mode;
+		}
 	}
 }

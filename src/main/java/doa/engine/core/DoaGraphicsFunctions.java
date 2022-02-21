@@ -21,6 +21,7 @@ import java.awt.Stroke;
 import java.awt.TexturePaint;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.RectangularShape;
 import java.awt.image.BufferedImage;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -562,7 +563,14 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#setClip(Shape)
 	 * @since 1.1
 	 */
-	public static Shape getClip() { return g.getClip(); }
+	public static Shape getClip() {
+		Shape clipp = g.getClip();
+		if (clipp instanceof RectangularShape shape) {
+			var w = unwarp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			shape.setFrame(w[0], w[1], w[2], w[3]);
+		}
+		return clipp;
+	}
 
 	/**
 	 * Returns the bounding rectangle of the current clipping area. This method
@@ -580,7 +588,12 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#setClip(Shape)
 	 * @since 1.1
 	 */
-	public static Rectangle getClipBounds() { return g.getClipBounds(); }
+	public static Rectangle getClipBounds() {
+		Rectangle clip = g.getClipBounds();
+		var w = unwarp((float)clip.getX(), (float)clip.getY(), (float)clip.getWidth(), (float)clip.getHeight());
+		clip.setFrame(w[0], w[1], w[2], w[3]);
+		return clip;
+	}
 
 	/**
 	 * Gets this graphics context's current color.
@@ -625,7 +638,14 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#setClip(int, int, int, int)
 	 * @since 1.1
 	 */
-	public static void setClip(final Shape clip) { g.setClip(clip); }
+	public static void setClip(final Shape clip) {
+		Shape clipp = clip;
+		if (clipp instanceof RectangularShape shape) {
+			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			shape.setFrame(w[0], w[1], w[2], w[3]);
+		}
+		g.setClip(clipp);
+	}
 
 	/**
 	 * Sets the current clip to the rectangle specified by the given coordinates.
@@ -709,9 +729,23 @@ public final class DoaGraphicsFunctions {
 
 	public static void addRenderingHints(final Map<?, ?> hints) { g.addRenderingHints(hints); }
 
-	public static void clip(final Shape s) { g.clip(s); }
+	public static void clip(final Shape s) {
+		Shape clipp = s;
+		if (clipp instanceof RectangularShape shape) {
+			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			shape.setFrame(w[0], w[1], w[2], w[3]);
+		}
+		g.clip(clipp);
+	}
 
-	public static void draw(final Shape s) { g.draw(s); }
+	public static void draw(final Shape s) {
+		Shape clipp = s;
+		if (clipp instanceof RectangularShape shape) {
+			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			shape.setFrame(w[0], w[1], w[2], w[3]);
+		}
+		g.draw(clipp);
+	}
 
 	/**
 	 * Draws the text given by the specified string, using this graphics context's
@@ -748,7 +782,14 @@ public final class DoaGraphicsFunctions {
 		g.drawRect(w[0], w[1], w[2], w[3]);
 	}
 
-	public static void fill(final Shape s) { g.fill(s); }
+	public static void fill(final Shape s) { 
+		Shape clipp = s;
+		if (clipp instanceof RectangularShape shape) {
+			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			shape.setFrame(w[0], w[1], w[2], w[3]);
+		}
+		g.fill(clipp);
+	}
 
 	/**
 	 * Returns the background color used for clearing a region.
@@ -1619,6 +1660,40 @@ public final class DoaGraphicsFunctions {
 		rv[1] = (int) (y / referenceResolution.height * actualResolution.height);
 		rv[2] = (int) (w / referenceResolution.width * actualResolution.width);
 		rv[3] = (int) (h / referenceResolution.height * actualResolution.height);
+		return rv;
+	}
+	
+	private static int[] unwarpX(float[] xs) {
+		var rv = new int[xs.length];
+		var xsint = floatArrToIntArr(xs);
+		for (int i = 0; i < xsint.length; i++) {
+			rv[i] = xsint[i] / actualResolution.width * referenceResolution.width;
+		}
+		return rv;
+	}
+
+	private static int[] unwarpY(float[] ys) {
+		var rv = new int[ys.length];
+		var ysint = floatArrToIntArr(ys);
+		for (int i = 0; i < ysint.length; i++) {
+			rv[i] = ysint[i] / actualResolution.height * referenceResolution.height;
+		}
+		return rv;
+	}
+
+	private static int[] unwarp(float x, float y) {
+		var rv = new int[4];
+		rv[0] = (int) (x / actualResolution.width * referenceResolution.width);
+		rv[1] = (int) (y / actualResolution.height * referenceResolution.height);
+		return rv;
+	}
+
+	private static int[] unwarp(float x, float y, float w, float h) {
+		var rv = new int[4];
+		rv[0] = (int) (x / actualResolution.width * referenceResolution.width);
+		rv[1] = (int) (y / actualResolution.height * referenceResolution.height);
+		rv[2] = (int) (w / actualResolution.width * referenceResolution.width);
+		rv[3] = (int) (h / actualResolution.height * referenceResolution.height);
 		return rv;
 	}
 
