@@ -64,7 +64,7 @@ public class PhysicsTest extends DoaGame {
 		DoaRigidBody rb = new DoaRigidBody();
 		rb.elasticity = 0.6f;
 		rb.colliders.add(new DoaCircleCollider(50));
-		rb.debugRender = true;
+		rb.enableDebugRender = true;
 		o.addComponent(rb);
 		s.add(o);
 
@@ -78,7 +78,7 @@ public class PhysicsTest extends DoaGame {
 		DoaRigidBody rb2 = new DoaRigidBody();
 		rb2.colliders.add(new DoaBoxCollider(r2.getDimensions(), new DoaVector(r2.getDimensions().x / 2, r2.getDimensions().y / 2)));
 		rb2.type = DoaBodyType.STATIC;
-		rb2.debugRender = true;
+		rb2.enableDebugRender = true;
 		o2.addComponent(rb2);
 		s.add(o2);
 
@@ -91,7 +91,7 @@ public class PhysicsTest extends DoaGame {
 		DoaRigidBody rb3 = new DoaRigidBody();
 		rb3.colliders.add(new DoaBoxCollider(r3.getDimensions(), new DoaVector(r3.getDimensions().x / 2, r3.getDimensions().y / 2)));
 		rb3.type = DoaBodyType.STATIC;
-		rb3.debugRender = true;
+		rb3.enableDebugRender = true;
 		o3.addComponent(rb3);
 		s.add(o3);
 

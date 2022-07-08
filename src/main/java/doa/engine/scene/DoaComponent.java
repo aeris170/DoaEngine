@@ -20,7 +20,7 @@ public abstract class DoaComponent implements Serializable {
 	 * Debug flag. Handled internally for components.Programmers who choose to
 	 * directly extend from DoaComponent, must handle this properly.
 	 */
-	public boolean debugRender = false;
+	public boolean enableDebugRender = false;
 
 	protected DoaComponent() {
 		name = getClass().getSimpleName();

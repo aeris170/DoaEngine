@@ -233,11 +233,11 @@ public class DoaObject implements Serializable {
 			}
 		});
 
-		if (rigidBody != null && rigidBody.debugRender) {
+		if (rigidBody != null && rigidBody.enableDebugRender) {
 			rigidBody.colliders.forEach(DoaCollider::debugRender);
 		}
-		scripts.stream().filter(scr -> scr.isEnabled() && scr.debugRender).forEach(DoaScript::debugRender);
-		renderers.stream().filter(ren -> ren.isEnabled() && ren.debugRender).forEach(DoaRenderer::debugRender);
+		scripts.stream().filter(scr -> scr.isEnabled() && scr.enableDebugRender).forEach(DoaScript::debugRender);
+		renderers.stream().filter(ren -> ren.isEnabled() && ren.enableDebugRender).forEach(DoaRenderer::debugRender);
 		// want to consider parallelStream's here? check that
 		popAll();
 	}

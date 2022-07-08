@@ -32,7 +32,7 @@ public abstract class DoaRenderer extends DoaComponent {
 
 	/**
 	 * <strong>Do not call this method, merely override it.</strong> Called when
-	 * {@link DoaComponent#debugRender} is set to true.
+	 * {@link DoaComponent#enableDebugRender} is set to true.
 	 */
 	@ForOverride
 	public void debugRender() {}
