@@ -1,4 +1,4 @@
-package doa.main.test;
+package doa.main;
 
 import java.time.Instant;
 
@@ -11,19 +11,19 @@ public class RPCTest {
 		DoaDiscordService.init(750261216500383765L);
 
 		DoaDiscordActivity act = new DoaDiscordActivity();
-		act.name = "Pufin xD";
-		act.description = "Testing DRPC";
+		act.setName("Pufin xD");
+		act.setDescription("Testing DRPC");
 
-		act.start = Instant.now();
+		act.setStart(Instant.now());
 
-		act.partySize = 1;
-		act.partyMaxSize = 100;
+		act.setPartySize(1);
+		act.setPartyMaxSize(100);
 
-		act.largeImageName = "puffin";
-		act.largeImageText = "you are hovering over a puffin";
+		act.setLargeImageName("puffin");
+		act.setLargeImageText("you are hovering over a puffin");
 
-		act.smallImageName = "gull";
-		act.smallImageText = "what did dat gull ever do to you?";
+		act.setSmallImageName("gull");
+		act.setSmallImageText("what did dat gull ever do to you?");
 
 		DoaDiscordService.switchActivity(act);
 		while (true);

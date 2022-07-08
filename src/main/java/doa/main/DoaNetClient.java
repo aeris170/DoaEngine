@@ -1,4 +1,4 @@
-package doa.main.test;
+package doa.main;
 
 import java.io.Serializable;
 import java.net.UnknownHostException;

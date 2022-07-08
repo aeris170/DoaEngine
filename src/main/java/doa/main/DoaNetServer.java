@@ -1,4 +1,4 @@
-package doa.main.test;
+package doa.main;
 
 import doa.engine.log.DoaLogger;
 import doa.engine.log.LogLevel;

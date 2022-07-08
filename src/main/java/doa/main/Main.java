@@ -1,4 +1,4 @@
-package doa.main.test;
+package doa.main;
 
 import java.awt.Color;
 import java.io.IOException;
