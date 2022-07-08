@@ -9,4 +9,4 @@ script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=aeris170_DoaEngine
 
 jdk:
-  - openjdk16
+  - openjdk17
