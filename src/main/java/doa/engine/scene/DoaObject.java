@@ -117,13 +117,14 @@ public class DoaObject implements Serializable {
 	 * @param type class of the DoaComponent to find
 	 * @return an optional containing either the found DoaComponent or null
 	 */
-	public final <T extends DoaComponent> Optional<DoaComponent> getComponentByType(@NotNull Class<T> type) {
+	public final <T extends DoaComponent> Optional<T> getComponentByType(@NotNull Class<T> type) {
 		var rv = components.stream().filter(type::isInstance).findFirst();
 		if (rv.isEmpty()) {
 			LOGGER.warning(new StringBuilder(128).append("No component of type ").append(type.getName()).append(" is found in object ").append(name).append(
 			        ". Returned an Optional containing null!"));
+			return Optional.of(null);
 		}
-		return rv;
+		return Optional.of((T)rv.get());
 	}
 
 	/**
