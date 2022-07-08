@@ -48,7 +48,7 @@ public class DoaCircleCollider extends DoaCollider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<DoaVector> getPoints() { return null; }
+	public List<DoaVector> getPoints() { return List.of(); }
 
 	/**
 	 * Renders the collider. For debug only.

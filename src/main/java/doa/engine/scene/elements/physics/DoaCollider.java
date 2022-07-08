@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Polygon;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.google.errorprone.annotations.ForOverride;
 
@@ -41,6 +42,14 @@ public abstract class DoaCollider implements Serializable {
 	 * @return the points of the convex hull of the rigidbody
 	 */
 	public abstract List<DoaVector> getPoints();
+	
+	/**
+	 * Returns an iterator of the list of points returned by 
+	 * {@link DoaCollider#getPoints()}.
+	 * 
+	 * @return the points of the convex hull of the rigidbody
+	 */
+	public ListIterator<DoaVector> getPointsIterator() { return getPoints().listIterator(); }
 
 	/**
 	 * Makes the DoaCollider a trigger. Triggers do not participate in collision
