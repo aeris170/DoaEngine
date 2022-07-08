@@ -1,6 +1,5 @@
 package doa.engine.scene.elements.physics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import doa.engine.maths.DoaVector;
@@ -19,7 +18,7 @@ public class DoaArbitraryShapeCollider extends DoaCollider {
 	/**
 	 * List of points from which the shape of this component will be derived.
 	 */
-	protected ArrayList<DoaVector> points;
+	protected List<DoaVector> points;
 
 	/**
 	 * Constructor. Colinear points are allowed but may lead poor performance. The
@@ -28,7 +27,7 @@ public class DoaArbitraryShapeCollider extends DoaCollider {
 	 * 
 	 * @param points the list of points of this collider
 	 */
-	public DoaArbitraryShapeCollider(ArrayList<DoaVector> points) { this.points = points; }
+	public DoaArbitraryShapeCollider(List<DoaVector> points) { this.points = points; }
 
 	/**
 	 * {@inheritDoc}

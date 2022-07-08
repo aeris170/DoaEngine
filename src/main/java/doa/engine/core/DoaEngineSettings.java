@@ -1,7 +1,6 @@
 package doa.engine.core;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.RenderingHints;
 import java.util.Map;
 
