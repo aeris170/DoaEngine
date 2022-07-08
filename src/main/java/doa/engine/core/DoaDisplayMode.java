@@ -24,7 +24,6 @@ public class DoaDisplayMode {
 	 * 
      * @return The current value of this display mode's resolution.
 	 */
-	@SuppressWarnings("javadoc")
 	@Getter private DoaVector resolution = new DoaVector(1920, 1080);
 	
 	/**
@@ -32,7 +31,6 @@ public class DoaDisplayMode {
 	 * 
      * @return The current value of this display mode's refresh rate.
 	 */
-	@SuppressWarnings("javadoc")
 	@Getter private Integer refreshRate = 60;
 	
 	/**
@@ -40,7 +38,6 @@ public class DoaDisplayMode {
 	 * 
      * @return The current value of this display mode's bit depth.
 	 */
-	@SuppressWarnings("javadoc")
 	@Getter private Integer bitDepth = 32;
 	
 	public DoaDisplayMode() {}

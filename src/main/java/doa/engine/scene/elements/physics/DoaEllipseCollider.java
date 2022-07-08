@@ -24,7 +24,6 @@ public class DoaEllipseCollider extends DoaArbitraryShapeCollider {
 	 * @param majorAxis
 	 * @param minorAxis
 	 */
-	@SuppressWarnings("javadoc")
 	public DoaEllipseCollider(float majorAxis, float minorAxis) { this(majorAxis, minorAxis, new DoaVector()); }
 
 	/**
@@ -33,7 +32,6 @@ public class DoaEllipseCollider extends DoaArbitraryShapeCollider {
 	 * @param majorAxis
 	 * @param minorAxis
 	 */
-	@SuppressWarnings("javadoc")
 	public DoaEllipseCollider(float majorAxis, float minorAxis, DoaVector offset) {
 		super(new ArrayList<>(8));
 		float t = 0;

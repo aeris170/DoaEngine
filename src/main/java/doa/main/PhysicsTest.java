@@ -7,12 +7,8 @@ import static doa.engine.core.DoaGraphicsFunctions.pushTransform;
 import static doa.engine.core.DoaGraphicsFunctions.setClip;
 import static doa.engine.core.DoaGraphicsFunctions.translate;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.geom.Ellipse2D;
 import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import doa.engine.Internal;
 import doa.engine.core.DoaEngine;
@@ -38,7 +34,7 @@ import doa.engine.scene.elements.renderers.DoaSpriteRenderer;
 @Internal
 public class PhysicsTest extends DoaGame {
 
-	public static void main(final String... args) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+	public static void main(final String... args) throws IOException {
 		DoaScene s = DoaSceneHandler.createScene("sampleScene");
 
 		DoaLogger.getInstance().setLevel(LogLevel.FINEST);

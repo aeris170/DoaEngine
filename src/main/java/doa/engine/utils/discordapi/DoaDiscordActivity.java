@@ -2,6 +2,9 @@ package doa.engine.utils.discordapi;
 
 import java.time.Instant;
 
+import lombok.Data;
+import lombok.ToString;
+
 /**
  * Please see Discord API documentation for more info.
  * 
@@ -9,24 +12,26 @@ import java.time.Instant;
  * @since DoaEngine 3.0
  * @version 3.0
  */
+@Data
+@ToString(includeFieldNames=true)
 public class DoaDiscordActivity {
 
-	public Instant start = null;
-	public Instant end = null;
+	Instant start = null;
+	Instant end = null;
 
-	public String name = null;
-	public String description = null;
+	String name = null;
+	String description = null;
 
-	public String partyID = null;
-	public int partySize = -1;
-	public int partyMaxSize = -1;
+	String partyID = null;
+	int partySize = -1;
+	int partyMaxSize = -1;
 
-	public String largeImageName = null;
-	public String largeImageText = null;
-	public String smallImageName = null;
-	public String smallImageText = null;
+	String largeImageName = null;
+	String largeImageText = null;
+	String smallImageName = null;
+	String smallImageText = null;
 
-	public String matchSecret = null;
-	public String joinSecret = null;
-	public String spectateSecret = null;
+	String matchSecret = null;
+	String joinSecret = null;
+	String spectateSecret = null;
 }

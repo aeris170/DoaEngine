@@ -9,7 +9,6 @@ import static doa.engine.core.DoaGraphicsFunctions.turnOnLightContribution;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;

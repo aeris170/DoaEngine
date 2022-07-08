@@ -16,7 +16,6 @@ import doa.engine.utils.DoaUtils;
  */
 public final class DoaDiscordService {
 
-	private static CreateParams Params;
 	private static Core Core;
 
 	private static DoaDiscordActivity Activity;
@@ -25,7 +24,7 @@ public final class DoaDiscordService {
 
 	public static void init(long ID) {
 		de.jcm.discordgamesdk.Core.init(new File("src/main/resources/discord_game_sdk.dll"));
-		Params = new CreateParams();
+		CreateParams Params = new CreateParams();
 		Params.setClientID(ID);
 		Params.setFlags(CreateParams.getDefaultFlags());
 		Core = new Core(Params);
