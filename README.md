@@ -1,6 +1,6 @@
 # DoaEngine
 ![Version Number](https://img.shields.io/badge/version-3.0-purple)
-[![Build Status](https://travis-ci.org/aeris170/DoaEngine.svg?branch=master)](https://travis-ci.org/aeris170/DoaEngine)
+[![Build Status](https://app.travis-ci.com/aeris170/DoaEngine.svg?branch=master)](https://app.travis-ci.com/github/aeris170/DoaEngine)
 [![GitHub license](https://img.shields.io/github/license/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/aeris170/DoaEngine)](https://github.com/aeris170/DoaEngine/issues)
 ![GitHub last commit](https://img.shields.io/github/last-commit/aeris170/doaengine)
