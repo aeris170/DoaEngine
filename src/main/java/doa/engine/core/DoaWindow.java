@@ -33,7 +33,7 @@ import lombok.val;
  */
 public final class DoaWindow {
 
-	private JFrame window;
+	JFrame window;
 
 	private String title;
 	private GraphicsDevice screen;

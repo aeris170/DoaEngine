@@ -7,6 +7,13 @@ import com.google.errorprone.annotations.ForOverride;
 import doa.engine.log.DoaLogger;
 
 public abstract class DoaGame {
+	
+	public static DoaGame INSTANCE; 
+	
+	public static DoaGame getInstance() {
+		if(INSTANCE == null) throw new IllegalStateException("Game hasn't launched, cannot get instance of game!");
+		return INSTANCE;
+	}
 
 	private DoaEngine engine;
 	private DoaEngineSettings eSettings;
@@ -54,6 +61,17 @@ public abstract class DoaGame {
 	 * @return has the game launched?
 	 */
 	public boolean isLaunched() { return isLaunched; }
+	
+	/**
+	 * Exits the game by stopping the game thread and disposing of the game window.
+	 * Note that this method does not terminate the Java Virtual Machine.
+	 * Invocation of this method is a one way trip, DoaEngine will enter in an 
+	 * unrecoverable state after this method returns. 
+	 */
+	public void exit() {
+		engine.gameThread.interrupt();
+		window.window.dispose();
+	}
 
 	/**
 	 * This method is used to configure DoaEngine and DoaWindow.

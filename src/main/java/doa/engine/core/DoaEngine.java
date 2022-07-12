@@ -38,6 +38,7 @@ public final class DoaEngine {
 	 */
 	public static final String VERSION = "3.0";
 
+	Thread gameThread;
 	Canvas surface;
 	private int frames = 0;
 
@@ -57,10 +58,10 @@ public final class DoaEngine {
 		ticksPerSecond = esettings.TICK_RATE;
 		clearColor = esettings.CLEAR_COLOR;
 		hints = switch (esettings.RENDERING_MODE) {
-		case QUALITY -> esettings.QUALITY_HINTS;
-		case BALANCED -> esettings.BALANCED_HINTS;
-		case SPEED -> esettings.SPEED_HINTS;
-		case CUSTOM -> esettings.CUSTOM_HINTS;
+			case QUALITY -> esettings.QUALITY_HINTS;
+			case BALANCED -> esettings.BALANCED_HINTS;
+			case SPEED -> esettings.SPEED_HINTS;
+			case CUSTOM -> esettings.CUSTOM_HINTS;
 		};
 		axisHelpers = esettings.AXIS_HELPERS;
 		refResolution = esettings.REFERENCE_RESOLUTION;
@@ -83,7 +84,8 @@ public final class DoaEngine {
 	 * Starts the engine.
 	 */
 	void start() {
-		new GameThread().start();
+		gameThread = new GameThread();
+		gameThread.start();
 		LOGGER.info("DoaEngine started!");
 	}
 
