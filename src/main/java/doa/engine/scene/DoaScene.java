@@ -129,7 +129,7 @@ public class DoaScene implements Serializable {
 				} else if (LOGGER.getLevel().compareTo(LogLevel.FINER) >= 0) {
 					LOGGER.finer(new StringBuilder(128).append(o.getClass().getName()).append(" is succesfully removed from ").append(name).append("."));
 				}
-				o.scene = null;
+				//o.scene = null;
 				o.onRemoveFromScene(this);
 			}
 		}
