@@ -116,13 +116,13 @@ public final class DoaWindow {
 	public DoaDisplayMode getDisplayMode() { return dm; }
 	public void setDisplayMode(@NonNull final DoaDisplayMode dm) {
 		if (wm == DoaWindowMode.WINDOWED) {
+			window.setVisible(true);
 			var insets = window.getInsets();
 			int insetX = insets.left + insets.right;
 			int insetY = insets.top + insets.bottom;
-			window.setVisible(false);
 			window.setSize((int)dm.getResolution().x + insetX, (int)dm.getResolution().y + insetY);
+			window.setVisible(false);
 			this.dm = dm;
-			window.setVisible(true);
 		} else if (screen.isDisplayChangeSupported()) {
 			try {
 				screen.setDisplayMode(DoaDisplayMode.toNativeDisplayMode(dm));
