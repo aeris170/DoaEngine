@@ -77,7 +77,7 @@ public final class DoaWindow {
 		window.setCursor(cursors[0]);
 		window.setIconImage(icon);
 		window.setResizable(false);
-		window.setAlwaysOnTop(true);
+		//window.setAlwaysOnTop(true);
 		window.setAutoRequestFocus(true);
 		window.setIgnoreRepaint(true);
 
@@ -97,7 +97,8 @@ public final class DoaWindow {
 		if (bppOD == null) { bppOD = dm.getBitDepth(); }
 		val displayMode = DoaDisplayMode.findDisplayModeWithCapabilities(screen, resolutionOD, bppOD, refreshRateOD);
 		setDisplayMode(displayMode);
-		
+
+		window.setVisible(true);
 		engine.start();
 
 		LOGGER.info("DoaWindow succesfully instantiated!");
@@ -115,8 +116,11 @@ public final class DoaWindow {
 	public DoaDisplayMode getDisplayMode() { return dm; }
 	public void setDisplayMode(@NonNull final DoaDisplayMode dm) {
 		if (wm == DoaWindowMode.WINDOWED) {
+			var insets = window.getInsets();
+			int insetX = insets.left + insets.right;
+			int insetY = insets.top + insets.bottom;
 			window.setVisible(false);
-			window.setSize((int)dm.getResolution().x, (int)dm.getResolution().y);
+			window.setSize((int)dm.getResolution().x + insetX, (int)dm.getResolution().y + insetY);
 			this.dm = dm;
 			window.setVisible(true);
 		} else if (screen.isDisplayChangeSupported()) {
