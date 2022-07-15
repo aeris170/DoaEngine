@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.validation.constraints.NotNull;
 
-import com.dosse.upnp.UPnP;
+import com.simtechdata.waifupnp.UPnP;
 
 /**
  * Standard issue socket server. An object of this class represents a physical

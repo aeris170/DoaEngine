@@ -132,7 +132,7 @@
   <properties>
     <validation.version>2.0.1.Final</validation.version>
     <java.version>17</java.version>
-    <waifupnp.version>master</waifupnp.version>
+    <waifupnp.version>1.0</waifupnp.version>
     <jbox2d.version>2.2.1.1</jbox2d.version>
     <steamworks4j.version>1.9.0</steamworks4j.version>
     <guava.version>31.1-jre</guava.version>
@@ -140,6 +140,7 @@
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <lombok.version>1.18.24</lombok.version>
     <source-plugin.version>3.2.1</source-plugin.version>
+    <jhardware.version>0.8.6</jhardware.version>
     <discord.version>0.5.5</discord.version>
     <ffsampledsp.version>0.9.46</ffsampledsp.version>
     <steamworks4j-server.version>1.9.0</steamworks4j-server.version>
