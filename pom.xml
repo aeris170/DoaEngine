@@ -39,9 +39,10 @@
 		<jbox2d.version>2.2.1.1</jbox2d.version>
 		<steamworks4j.version>1.9.0</steamworks4j.version>
 		<steamworks4j-server.version>1.9.0</steamworks4j-server.version>
-		<waifupnp.version>master</waifupnp.version>
+		<waifupnp.version>1.0</waifupnp.version>
 		<discord.version>0.5.5</discord.version>
 		<ffsampledsp.version>0.9.46</ffsampledsp.version>
+		<jhardware.version>0.8.6</jhardware.version>
 	</properties>
 	<build>
 		<plugins>
@@ -193,7 +194,7 @@
 		</dependency>
 		<!-- https://github.com/geo-gs/WaifUPnP/ -->
 		<dependency>
-			<groupId>com.github.geo-gs</groupId>
+			<groupId>com.simtechdata</groupId>
 			<artifactId>WaifUPnP</artifactId>
 			<version>${waifupnp.version}</version>
 		</dependency>
@@ -214,6 +215,12 @@
 					<artifactId>ffmpeg</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- https://github.com/profesorfalken/jHardware -->
+		<dependency>
+			<groupId>org.jhardware</groupId>
+			<artifactId>jHardware</artifactId>
+			<version>${jhardware.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -22,6 +22,7 @@ import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
+import lombok.Getter;
 
 /**
  * Responsible for creating and supplying the graphics context used for drawing
@@ -40,7 +41,10 @@ public final class DoaEngine {
 
 	Thread gameThread;
 	Canvas surface;
+	private int ticks = 0;
 	private int frames = 0;
+	int tps = 0;
+	int fps = 0;
 
 	private int ticksPerSecond;
 	private Color clearColor;
@@ -137,7 +141,6 @@ public final class DoaEngine {
 		@Override
 		public void run() {
 			long timer = System.currentTimeMillis();
-			int ticks = 0;
 			surface.requestFocus();
 			long lastTime = System.nanoTime();
 			long thisTime;
@@ -155,9 +158,11 @@ public final class DoaEngine {
 				render();
 				if (System.currentTimeMillis() - timer > 1000) {
 					timer += 1000;
-					LOGGER.fine(new StringBuilder().append("FPS: ").append(frames).append(" TICKS: ").append(ticks));
+					tps = ticks;
+					fps = frames;
 					ticks = 0;
 					frames = 0;
+					LOGGER.fine(new StringBuilder().append("FPS: ").append(fps).append(" TICKS: ").append(tps));
 				}
 			}
 		}

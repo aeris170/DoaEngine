@@ -63,6 +63,16 @@ public abstract class DoaGame {
 	public boolean isLaunched() { return isLaunched; }
 	
 	/**
+	 * @return has the game launched?
+	 */
+	public int getFPS() { return engine.fps; }
+
+	/**
+	 * @return has the game launched?
+	 */
+	public int getTPS() { return engine.tps; }
+	
+	/**
 	 * Exits the game by stopping the game thread and disposing of the game window.
 	 * Note that this method does not terminate the Java Virtual Machine.
 	 * Invocation of this method is a one way trip, DoaEngine will enter in an 

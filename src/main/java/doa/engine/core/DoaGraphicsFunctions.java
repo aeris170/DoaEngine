@@ -1647,8 +1647,8 @@ public final class DoaGraphicsFunctions {
 		return rv;
 	}
 
-	private static int[] warp(float x, float y) {
-		var rv = new int[4];
+	public static int[] warp(float x, float y) {
+		var rv = new int[2];
 		rv[0] = (int) (x / referenceResolution.width * actualResolution.width);
 		rv[1] = (int) (y / referenceResolution.height * actualResolution.height);
 		return rv;
@@ -1681,8 +1681,8 @@ public final class DoaGraphicsFunctions {
 		return rv;
 	}
 
-	private static int[] unwarp(float x, float y) {
-		var rv = new int[4];
+	public static int[] unwarp(float x, float y) {
+		var rv = new int[2];
 		rv[0] = (int) (x / actualResolution.width * referenceResolution.width);
 		rv[1] = (int) (y / actualResolution.height * referenceResolution.height);
 		return rv;
