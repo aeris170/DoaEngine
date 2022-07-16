@@ -37,7 +37,9 @@ public abstract class DoaGame {
 				a.initialize(a.eSettings, a.wSettings, args);
 				a.engine = new DoaEngine(a.eSettings, a.wSettings);
 				a.window = new DoaWindow(a.wSettings, a.engine);
+				INSTANCE = a;
 				a.isLaunched = true;
+				a.engine.start();
 			} else {
 				DoaLogger.getInstance().severe("The class " + callerName + " must subclass " + DoaGame.class.getCanonicalName() + ". Stop.");
 				throw new ClassCastException();

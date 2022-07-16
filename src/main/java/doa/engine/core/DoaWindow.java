@@ -99,7 +99,6 @@ public final class DoaWindow {
 		setDisplayMode(displayMode);
 
 		window.setVisible(true);
-		engine.start();
 
 		LOGGER.info("DoaWindow succesfully instantiated!");
 	}
