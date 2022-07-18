@@ -1,5 +1,7 @@
 package doa.engine.core;
 
+import static doa.engine.core.DoaGraphicsFunctions.set;
+
 import java.lang.reflect.InvocationTargetException;
 
 import com.google.errorprone.annotations.ForOverride;
@@ -34,6 +36,7 @@ public abstract class DoaGame {
 			Class<?> caller = Class.forName(callerName);
 			if (DoaGame.class.isAssignableFrom(caller)) {
 				DoaGame a = (DoaGame) caller.getConstructor().newInstance();
+				set(null, a.eSettings.REFERENCE_RESOLUTION, a.wSettings.RESOLUTION_OD != null ? a.wSettings.RESOLUTION_OD : a.wSettings.DM.getResolution());
 				a.initialize(a.eSettings, a.wSettings, args);
 				a.engine = new DoaEngine(a.eSettings, a.wSettings);
 				a.window = new DoaWindow(a.wSettings, a.engine);

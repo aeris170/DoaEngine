@@ -1628,6 +1628,10 @@ public final class DoaGraphicsFunctions {
 		referenceResolution = new Dimension((int)refResolution.x, (int)refResolution.y);
 		actualResolution = new Dimension((int)actResolution.x, (int)actResolution.y);
 	}
+	
+	public static int warpX(float x) {
+		return (int) (x / referenceResolution.width * actualResolution.width);
+	}
 
 	private static int[] warpX(float[] xs) {
 		var rv = new int[xs.length];
@@ -1636,6 +1640,10 @@ public final class DoaGraphicsFunctions {
 			rv[i] = xsint[i] / referenceResolution.width * actualResolution.width;
 		}
 		return rv;
+	}
+	
+	public static int warpY(float y) {
+		return (int) (y / referenceResolution.height * actualResolution.height);
 	}
 
 	private static int[] warpY(float[] ys) {
@@ -1663,6 +1671,10 @@ public final class DoaGraphicsFunctions {
 		return rv;
 	}
 	
+	public static int unwarpX(float x) {
+		return (int) (x / actualResolution.width * referenceResolution.width);
+	}
+	
 	private static int[] unwarpX(float[] xs) {
 		var rv = new int[xs.length];
 		var xsint = floatArrToIntArr(xs);
@@ -1670,6 +1682,10 @@ public final class DoaGraphicsFunctions {
 			rv[i] = xsint[i] / actualResolution.width * referenceResolution.width;
 		}
 		return rv;
+	}
+	
+	public static int unwarpY(float y) {
+		return (int) (y / actualResolution.height * referenceResolution.height);
 	}
 
 	private static int[] unwarpY(float[] ys) {
