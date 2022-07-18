@@ -121,8 +121,8 @@ public class DoaObject implements Serializable {
 		var rv = components.stream().filter(type::isInstance).findFirst();
 		if (rv.isEmpty()) {
 			LOGGER.warning(new StringBuilder(128).append("No component of type ").append(type.getName()).append(" is found in object ").append(name).append(
-			        ". Returned an Optional containing null!"));
-			return Optional.of(null);
+			        ". Returned an empty Optional!"));
+			return Optional.empty();
 		}
 		return Optional.of((T)rv.get());
 	}
