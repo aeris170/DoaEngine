@@ -22,7 +22,6 @@ import doa.engine.input.DoaMouse;
 import doa.engine.maths.DoaVector;
 import doa.engine.scene.DoaScene;
 import doa.engine.scene.DoaSceneHandler;
-import lombok.Getter;
 
 /**
  * Responsible for creating and supplying the graphics context used for drawing

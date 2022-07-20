@@ -101,11 +101,14 @@ public class PhysicsTest extends DoaGame {
 	}
 
 	@Override
-	public void initialize(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
+	public void initializeEngine(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		eSettings.AXIS_HELPERS = true;
 
 		wSettings.RESOLUTION_OD = new DoaVector(1600, 900);
 		wSettings.WM = DoaWindowMode.WINDOWED;
 		wSettings.TITLE = "DoaEngine " + DoaEngine.VERSION + " Physics Test";
 	}
+	
+	@Override
+	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {}
 }

@@ -44,11 +44,15 @@ public class Main extends DoaGame {
 	}
 
 	@Override
-	public void initialize(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
+	public void initializeEngine(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {
 		eSettings.TICK_RATE = 240;
 		eSettings.CLEAR_COLOR = Color.BLACK;
 		eSettings.AXIS_HELPERS = true;
 
 		wSettings.TITLE = "DoaEngine " + DoaEngine.VERSION;
 	}
+
+	@Override
+	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {}
+
 }

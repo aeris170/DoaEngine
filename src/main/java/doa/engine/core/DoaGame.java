@@ -36,8 +36,9 @@ public abstract class DoaGame {
 			Class<?> caller = Class.forName(callerName);
 			if (DoaGame.class.isAssignableFrom(caller)) {
 				DoaGame a = (DoaGame) caller.getConstructor().newInstance();
+				a.initializeEngine(a.eSettings, a.wSettings, args);
 				set(null, a.eSettings.REFERENCE_RESOLUTION, a.wSettings.RESOLUTION_OD != null ? a.wSettings.RESOLUTION_OD : a.wSettings.DM.getResolution());
-				a.initialize(a.eSettings, a.wSettings, args);
+				a.initializeGame(a.eSettings, a.wSettings, args);
 				a.engine = new DoaEngine(a.eSettings, a.wSettings);
 				a.window = new DoaWindow(a.wSettings, a.engine);
 				INSTANCE = a;
@@ -89,12 +90,32 @@ public abstract class DoaGame {
 	}
 
 	/**
-	 * This method is used to configure DoaEngine and DoaWindow.
+	 * This method is used to configure DoaEngine and DoaWindow. Don't initialize
+	 * your game inside this method as DoaEngine is not initialized until an
+	 * invocation to {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
+	 * is made. Keep your client initialization in {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
 	 * 
 	 * @param eSettings engine settings
 	 * @param wSettings window settings
 	 * @param args command line arguments
 	 */
 	@ForOverride
-	public abstract void initialize(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
+	public abstract void initializeEngine(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
+	
+
+	/**
+	 * This method is used to initialize the game elements. This method is called
+	 * right after {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
+	 * returns. The parameters passed to the method are the same parameters the
+	 * programmer edited in {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}.
+	 * Since DoaEngine and its internals are already initialized, all the params
+	 * this method receives should be treated as read only, as they have no further
+	 * use for DoaEngine and it's internals.
+	 * 
+	 * @param eSettings engine settings, effectively immutable
+	 * @param wSettings window settings, effectively immutable
+	 * @param args command line arguments, effectively immutable
+	 */
+	@ForOverride
+	public abstract void initializeGame(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
 }
