@@ -6,13 +6,30 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public final class DoaEngineInfo {
 
-	@Getter private static final DoaRuntimeInfo runtimeInfo = new DoaRuntimeInfo();
-	@Getter private static final DoaBIOSInfo biosInfo = new DoaBIOSInfo();
-	@Getter private static final DoaDisplayInfo displayInfo = new DoaDisplayInfo();
-	@Getter private static final DoaGPUInfo gpuInfo = new DoaGPUInfo();
-	@Getter private static final DoaMemoryInfo memoryInfo = new DoaMemoryInfo();
-	@Getter private static final DoaMOBOInfo motherboardInfo = new DoaMOBOInfo();
-	@Getter private static final DoaNetworkInfo networkInfo = new DoaNetworkInfo();
-	@Getter private static final DoaOSInfo osInfo = new DoaOSInfo();
-	@Getter private static final DoaCPUInfo cpuInfo = new DoaCPUInfo();
+	@Getter private static boolean isInitialized = false;
+	public static final void initialize() {
+		if (isInitialized) { return; }
+		
+		runtimeInfo = new DoaRuntimeInfo();
+		biosInfo = new DoaBIOSInfo();
+		displayInfo = new DoaDisplayInfo();
+		gpuInfo = new DoaGPUInfo();
+		memoryInfo = new DoaMemoryInfo();
+		motherboardInfo = new DoaMOBOInfo();
+		networkInfo = new DoaNetworkInfo();
+		osInfo = new DoaOSInfo();
+		cpuInfo = new DoaCPUInfo();
+		
+		isInitialized = true;
+	}
+	
+	@Getter private static DoaRuntimeInfo runtimeInfo;
+	@Getter private static DoaBIOSInfo biosInfo;
+	@Getter private static DoaDisplayInfo displayInfo;
+	@Getter private static DoaGPUInfo gpuInfo;
+	@Getter private static DoaMemoryInfo memoryInfo;
+	@Getter private static DoaMOBOInfo motherboardInfo;
+	@Getter private static DoaNetworkInfo networkInfo;
+	@Getter private static DoaOSInfo osInfo;
+	@Getter private static DoaCPUInfo cpuInfo;
 }
