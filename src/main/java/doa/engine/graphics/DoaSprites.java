@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.validation.constraints.NotNull;
@@ -107,6 +108,26 @@ public final class DoaSprites {
 	public static BufferedImage getSprite(@NotNull final String spriteName) {
 		if (areLightsContributing()) { return SHADED_SPRITES.get(spriteName); }
 		return ORIGINAL_SPRITES.get(spriteName);
+	}
+	
+	/**
+	 * Conveniency method. This method exists solely to reduce the amount of typing
+	 * required while trying to retrieve a sprite from DoaSprites class. Calling
+	 * this method is equivalent to calling:
+	 * DoaSprites.SHADED_SPRITES.get(spriteName);
+	 *
+	 * @param spriteName name of the sprite that is trying to be retrieved
+	 * @return the sprite in {@link DoaSprites#SHADED_SPRITES} whose name is
+	 *         spriteName
+	 */
+	public static String getSpriteName(@NotNull final BufferedImage sprite) {
+	    for(Entry<String, BufferedImage> entry : ORIGINAL_SPRITES.entrySet()) {
+	        if(entry.getValue() == sprite) {
+	            return entry.getKey();
+	        }
+	    }
+	    LOGGER.warning("Queried sprite is not registered to DoaSprites, returned empty string!");
+	    return "";
 	}
 
 	/**
