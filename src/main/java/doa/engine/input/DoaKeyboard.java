@@ -2,8 +2,12 @@ package doa.engine.input;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import doa.engine.Internal;
+import lombok.Getter;
 
 /**
  * Responsible for catching all fired keyboard inputs at any logical frame. This
@@ -36,20 +40,33 @@ public final class DoaKeyboard {
 	public static final KeyAdapter INPUT = new KeyAdapter() {
 
 		@Override
-		public synchronized void keyPressed(final KeyEvent e) { press[e.getKeyCode()] = true; }
-
+		public synchronized void keyPressed(final KeyEvent e) {
+			press[e.getKeyCode()] = true;
+			typedChars.add(e.getKeyChar());
+		}
+		
 		@Override
-		public synchronized void keyReleased(final KeyEvent e) { press[e.getKeyCode()] = false; }
+		public synchronized void keyReleased(final KeyEvent e) {
+			press[e.getKeyCode()] = false;
+		}
 	};
 
 	/* VK_WINDOWS IS 524, the array is upper bounded by VK_WINDOWS */
 	static boolean[] press = new boolean[525];
+
+	/* VK_WINDOWS IS 524, the array is upper bounded by VK_WINDOWS */
+	@Getter
+	private static List<Character> typedChars = new ArrayList<>(525);
+	private static List<Character> typedCharsPrevFrame = new ArrayList<>(525);
 
 	/**
 	 * @hidden
 	 */
 	@Internal
 	public static synchronized void tick() {
+		typedChars.removeAll(typedCharsPrevFrame);
+		typedCharsPrevFrame = new ArrayList<>(typedChars);
+		
 		ESCAPE = press[KeyEvent.VK_ESCAPE];
 		F1 = press[KeyEvent.VK_F1];
 		F2 = press[KeyEvent.VK_F2];
