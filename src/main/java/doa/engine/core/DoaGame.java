@@ -84,10 +84,14 @@ public abstract class DoaGame {
 	 * Invocation of this method is a one way trip, DoaEngine will enter in an 
 	 * unrecoverable state after this method returns. 
 	 */
-	public void exit() {
-		engine.gameThread.interrupt();
-		window.window.dispose();
-		onExit();
+	public static synchronized void exit() {
+		if (INSTANCE == null) { 
+			DoaLogger.getInstance().warning("DoaGame#exit is called but DoaGame has no instance. exit will have no effect. returned");
+			return;
+		}
+		DoaEngine.running = false;
+		INSTANCE.window.window.dispose();
+		INSTANCE.onExit();
 	}
 
 	/**

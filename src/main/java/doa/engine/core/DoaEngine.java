@@ -39,6 +39,7 @@ public final class DoaEngine {
 	public static final String VERSION = "3.0";
 
 	Thread gameThread;
+	static volatile boolean running;
 	Canvas surface;
 	private int ticks = 0;
 	private int frames = 0;
@@ -86,7 +87,8 @@ public final class DoaEngine {
 	/**
 	 * Starts the engine.
 	 */
-	void start() {
+	synchronized void start() {
+		running = true;
 		gameThread = new GameThread();
 		gameThread.start();
 		LOGGER.info("DoaEngine started!");
@@ -145,7 +147,7 @@ public final class DoaEngine {
 			long thisTime;
 			final double nanoseconds = 1_000_000_000.0 / ticksPerSecond;
 			double deltaTime = 0;
-			while (true) {
+			while (running) {
 				thisTime = System.nanoTime();
 				deltaTime += (thisTime - lastTime) / nanoseconds;
 				lastTime = thisTime;
