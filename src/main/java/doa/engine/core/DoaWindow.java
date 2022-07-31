@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -88,6 +89,17 @@ public final class DoaWindow {
 			public void componentResized(ComponentEvent e) {
 				Component c = (Component)e.getSource();
 				engine.surface.setSize(c.getSize());
+			}
+		});
+		
+		window.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					DoaGame game = DoaGame.getInstance();
+					game.exit();
+				} catch (final IllegalStateException ex) { /* swallow */ }
 			}
 		});
 

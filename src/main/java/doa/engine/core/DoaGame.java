@@ -87,6 +87,7 @@ public abstract class DoaGame {
 	public void exit() {
 		engine.gameThread.interrupt();
 		window.window.dispose();
+		onExit();
 	}
 
 	/**
@@ -102,7 +103,6 @@ public abstract class DoaGame {
 	@ForOverride
 	public abstract void initializeEngine(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
 	
-
 	/**
 	 * This method is used to initialize the game elements. This method is called
 	 * right after {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
@@ -118,4 +118,10 @@ public abstract class DoaGame {
 	 */
 	@ForOverride
 	public abstract void initializeGame(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
+	
+	/**
+	 * This method is called when DoaEngine exits the game. Perform your clean ups in this method.
+	 */
+	@ForOverride
+	public abstract void onExit();
 }

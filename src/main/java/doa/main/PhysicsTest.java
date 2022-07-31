@@ -111,4 +111,7 @@ public class PhysicsTest extends DoaGame {
 	
 	@Override
 	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {}
+	
+	@Override
+	public void onExit() {}
 }

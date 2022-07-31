@@ -5,7 +5,10 @@ import java.io.File;
 import de.jcm.discordgamesdk.Core;
 import de.jcm.discordgamesdk.CreateParams;
 import de.jcm.discordgamesdk.activity.Activity;
+import doa.engine.core.DoaEngine;
+import doa.engine.core.DoaGame;
 import doa.engine.utils.DoaUtils;
+import lombok.experimental.UtilityClass;
 
 /**
  * Please see Discord API documentation for more info.
@@ -14,13 +17,14 @@ import doa.engine.utils.DoaUtils;
  * @since DoaEngine 3.0
  * @version 3.0
  */
+@UtilityClass
 public final class DoaDiscordService {
 
 	private static Core Core;
 
 	private static DoaDiscordActivity Activity;
-
-	private DoaDiscordService() {}
+	
+	private static volatile boolean running; 
 
 	public static void init(long ID) {
 		de.jcm.discordgamesdk.Core.init(new File("src/main/resources/discord_game_sdk.dll"));
@@ -28,13 +32,18 @@ public final class DoaDiscordService {
 		Params.setClientID(ID);
 		Params.setFlags(CreateParams.getDefaultFlags());
 		Core = new Core(Params);
-
+		
+		running = true;
 		new Thread(() -> {
-			while (true) {
+			while (running) {
 				Core.runCallbacks();
 				DoaUtils.sleepFor(50);
 			}
 		}, "DoaEngine Discord Rich Presence Service").start();
+	}
+	
+	public static void destroy() {
+		running = false;
 	}
 
 	public static void switchActivity(DoaDiscordActivity activity) {
