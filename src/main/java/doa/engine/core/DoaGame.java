@@ -17,10 +17,10 @@ public abstract class DoaGame {
 		return INSTANCE;
 	}
 
-	private DoaEngine engine;
+	DoaEngine engine;
 	private DoaEngineSettings eSettings;
 
-	private DoaWindow window;
+	DoaWindow window;
 	private DoaWindowSettings wSettings;
 
 	private boolean isLaunched = false;

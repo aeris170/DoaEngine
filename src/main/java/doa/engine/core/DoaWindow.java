@@ -15,6 +15,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -116,6 +117,7 @@ public final class DoaWindow {
 	}
 	
 	public static GraphicsDevice[] getGraphicsDevices() { return GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices(); }
+	public static void dumpFrameBufferTo(BufferedImage image) { DoaGame.getInstance().window.window.paint(image.getGraphics()); }
 	public GraphicsDevice getGraphicsDevice() { return screen; }
 	public void setGraphicsDevice(@NonNull final GraphicsDevice screen) {
 		this.screen.setFullScreenWindow(null);
