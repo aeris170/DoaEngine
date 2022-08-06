@@ -35,12 +35,12 @@ import doa.engine.scene.elements.scripts.DoaScript;
  */
 public class DoaObject implements Serializable {
 
-	private static final long serialVersionUID = -3293257583358544377L;
-
+	private static final long serialVersionUID = 8106325842296691691L;
+	
 	public final DoaTransform transform = new DoaTransform();
 	public DoaRigidBody rigidBody = null;
 
-	DoaScene scene = null;
+	transient DoaScene scene = null;
 	private int zOrder = 0;
 
 	protected final ArrayList<DoaComponent> components = new ArrayList<>();
