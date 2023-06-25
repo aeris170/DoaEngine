@@ -9,7 +9,11 @@ import static doa.engine.log.DoaLogger.LOGGER;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Stream;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -47,6 +51,7 @@ public class DoaObject implements Serializable {
 
 	private final List<DoaScript> scripts = new ArrayList<>();
 	private final List<DoaRenderer> renderers = new ArrayList<>();
+	private final Map<DoaRoutine, Integer> routines = new HashMap<>();
 
 	@NotNull
 	public String name;
@@ -211,8 +216,36 @@ public class DoaObject implements Serializable {
 			        ". Couldn't remove anything."));
 		}
 	}
+	
+	/**
+	 * Schedules a routine to run on next tick, before any scripts. Invocation of this
+	 * function is equivalent to {@code doAfterTicks(routine, 0);}.
+	 * 
+	 * @param routine to execute on next tick
+	 */
+	public final void doOnNextTick(DoaRoutine routine) { routines.put(routine, 0); }
+	
+	/**
+	 * Schedules a routine to run after {@code ticks} amount of ticks, before any scripts.
+	 * 
+	 * @param routine to execute after {@code ticks} amount of ticks
+	 * @param ticks
+	 */
+	public final void doAfterTicks(DoaRoutine routine, int ticks) { routines.put(routine, ticks); }
 
 	final void tick() {
+		List<DoaRoutine> toBeProcessed = routines
+			.entrySet()
+			.stream()
+			.filter(e -> e.getValue() == 0)
+			.map(Entry::getKey)
+			.toList();
+		toBeProcessed.forEach(k -> {
+			k.doJob();
+			routines.remove(k);
+		});
+		routines.replaceAll((k, v) -> v - 1);
+		
 		if (rigidBody != null) {
 			rigidBody.tick();
 		}
