@@ -118,7 +118,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>1.18.28</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -135,14 +135,14 @@
     <waifupnp.version>1.0</waifupnp.version>
     <jbox2d.version>2.2.1.1</jbox2d.version>
     <steamworks4j.version>1.9.0</steamworks4j.version>
-    <guava.version>31.1-jre</guava.version>
+    <guava.version>32.0.1-jre</guava.version>
     <javatuples.version>1.2</javatuples.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
-    <lombok.version>1.18.24</lombok.version>
+    <lombok.version>1.18.28</lombok.version>
     <source-plugin.version>3.2.1</source-plugin.version>
     <jhardware.version>0.8.6</jhardware.version>
     <discord.version>0.5.5</discord.version>
-    <ffsampledsp.version>0.9.46</ffsampledsp.version>
+    <ffsampledsp.version>0.9.50</ffsampledsp.version>
     <steamworks4j-server.version>1.9.0</steamworks4j-server.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javadoc-plugin.version>3.4.0</javadoc-plugin.version>
