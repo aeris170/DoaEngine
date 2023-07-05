@@ -49,87 +49,59 @@ public final class DoaEngineSettings {
 
 	/**
 	 * User defined rendering hints. Initially, this map has default values set by
-	 * {@link RenderingHints}. If none of the default rendering protocols suffice,
+	 * {@link RenderingHints}. If none of the three default rendering protocols suffice,
 	 * programmers can set the {@link DoaEngineSettings#RENDERING_MODE} to
-	 * {@link DoaRenderingMode#CUSTOM} and add their own RenderingHints to this map.
+	 * {@link DoaRenderingMode#CUSTOM} and apply their own RenderingHints into this map.
 	 * This way, the rendering will take place using the user defined Hints.
 	 */
 	@NotNull
-	public final Map<RenderingHints.Key, Object> CUSTOM_HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION,
-	        RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT,
-	        RenderingHints.KEY_ANTIALIASING,
-	        RenderingHints.VALUE_ANTIALIAS_DEFAULT,
-	        RenderingHints.KEY_COLOR_RENDERING,
-	        RenderingHints.VALUE_COLOR_RENDER_DEFAULT,
-	        RenderingHints.KEY_DITHERING,
-	        RenderingHints.VALUE_DITHER_DEFAULT,
-	        RenderingHints.KEY_FRACTIONALMETRICS,
-	        RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT,
-	        RenderingHints.KEY_INTERPOLATION,
-	        RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-	        RenderingHints.KEY_RENDERING,
-	        RenderingHints.VALUE_RENDER_DEFAULT,
-	        RenderingHints.KEY_STROKE_CONTROL,
-	        RenderingHints.VALUE_STROKE_DEFAULT,
-	        RenderingHints.KEY_TEXT_ANTIALIASING,
-	        RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT);
+	public final Map<RenderingHints.Key, Object> CUSTOM_HINTS = Map.of(
+		RenderingHints.KEY_ALPHA_INTERPOLATION,	RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT,
+		RenderingHints.KEY_ANTIALIASING,		RenderingHints.VALUE_ANTIALIAS_DEFAULT,
+		RenderingHints.KEY_COLOR_RENDERING,		RenderingHints.VALUE_COLOR_RENDER_DEFAULT,
+		RenderingHints.KEY_DITHERING,			RenderingHints.VALUE_DITHER_DEFAULT,
+		RenderingHints.KEY_FRACTIONALMETRICS,	RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT,
+		RenderingHints.KEY_INTERPOLATION,		RenderingHints.VALUE_INTERPOLATION_BILINEAR,
+		RenderingHints.KEY_RENDERING,			RenderingHints.VALUE_RENDER_DEFAULT,
+		RenderingHints.KEY_STROKE_CONTROL,		RenderingHints.VALUE_STROKE_DEFAULT,
+		RenderingHints.KEY_TEXT_ANTIALIASING,	RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT
+	);
 
-	final Map<RenderingHints.Key, Object> QUALITY_HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION,
-	        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
-	        RenderingHints.KEY_ANTIALIASING,
-	        RenderingHints.VALUE_ANTIALIAS_ON,
-	        RenderingHints.KEY_COLOR_RENDERING,
-	        RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-	        RenderingHints.KEY_DITHERING,
-	        RenderingHints.VALUE_DITHER_ENABLE,
-	        RenderingHints.KEY_FRACTIONALMETRICS,
-	        RenderingHints.VALUE_FRACTIONALMETRICS_ON,
-	        RenderingHints.KEY_INTERPOLATION,
-	        RenderingHints.VALUE_INTERPOLATION_BICUBIC,
-	        RenderingHints.KEY_RENDERING,
-	        RenderingHints.VALUE_RENDER_QUALITY,
-	        RenderingHints.KEY_STROKE_CONTROL,
-	        RenderingHints.VALUE_STROKE_NORMALIZE,
-	        RenderingHints.KEY_TEXT_ANTIALIASING,
-	        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	final Map<RenderingHints.Key, Object> QUALITY_HINTS = Map.of(
+		RenderingHints.KEY_ALPHA_INTERPOLATION,	RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
+		RenderingHints.KEY_ANTIALIASING,		RenderingHints.VALUE_ANTIALIAS_ON,
+		RenderingHints.KEY_COLOR_RENDERING,		RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+		RenderingHints.KEY_DITHERING,			RenderingHints.VALUE_DITHER_ENABLE,
+		RenderingHints.KEY_FRACTIONALMETRICS,	RenderingHints.VALUE_FRACTIONALMETRICS_ON,
+		RenderingHints.KEY_INTERPOLATION,		RenderingHints.VALUE_INTERPOLATION_BICUBIC,
+		RenderingHints.KEY_RENDERING,			RenderingHints.VALUE_RENDER_QUALITY,
+		RenderingHints.KEY_STROKE_CONTROL,		RenderingHints.VALUE_STROKE_NORMALIZE,
+		RenderingHints.KEY_TEXT_ANTIALIASING,	RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+	);
 
-	final Map<RenderingHints.Key, Object> BALANCED_HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION,
-	        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
-	        RenderingHints.KEY_ANTIALIASING,
-	        RenderingHints.VALUE_ANTIALIAS_ON,
-	        RenderingHints.KEY_COLOR_RENDERING,
-	        RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-	        RenderingHints.KEY_DITHERING,
-	        RenderingHints.VALUE_DITHER_DISABLE,
-	        RenderingHints.KEY_FRACTIONALMETRICS,
-	        RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
-	        RenderingHints.KEY_INTERPOLATION,
-	        RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-	        RenderingHints.KEY_RENDERING,
-	        RenderingHints.VALUE_RENDER_QUALITY,
-	        RenderingHints.KEY_STROKE_CONTROL,
-	        RenderingHints.VALUE_STROKE_PURE,
-	        RenderingHints.KEY_TEXT_ANTIALIASING,
-	        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	final Map<RenderingHints.Key, Object> BALANCED_HINTS = Map.of(
+		RenderingHints.KEY_ALPHA_INTERPOLATION,	RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY,
+		RenderingHints.KEY_ANTIALIASING,		RenderingHints.VALUE_ANTIALIAS_ON,
+		RenderingHints.KEY_COLOR_RENDERING,		RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+		RenderingHints.KEY_DITHERING,			RenderingHints.VALUE_DITHER_DISABLE,
+		RenderingHints.KEY_FRACTIONALMETRICS,	RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
+		RenderingHints.KEY_INTERPOLATION,		RenderingHints.VALUE_INTERPOLATION_BILINEAR,
+		RenderingHints.KEY_RENDERING,			RenderingHints.VALUE_RENDER_QUALITY,
+		RenderingHints.KEY_STROKE_CONTROL,		RenderingHints.VALUE_STROKE_PURE,
+		RenderingHints.KEY_TEXT_ANTIALIASING,	RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+	);
 
-	final Map<RenderingHints.Key, Object> SPEED_HINTS = Map.of(RenderingHints.KEY_ALPHA_INTERPOLATION,
-	        RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED,
-	        RenderingHints.KEY_ANTIALIASING,
-	        RenderingHints.VALUE_ANTIALIAS_OFF,
-	        RenderingHints.KEY_COLOR_RENDERING,
-	        RenderingHints.VALUE_COLOR_RENDER_SPEED,
-	        RenderingHints.KEY_DITHERING,
-	        RenderingHints.VALUE_DITHER_DISABLE,
-	        RenderingHints.KEY_FRACTIONALMETRICS,
-	        RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
-	        RenderingHints.KEY_INTERPOLATION,
-	        RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR,
-	        RenderingHints.KEY_RENDERING,
-	        RenderingHints.VALUE_RENDER_SPEED,
-	        RenderingHints.KEY_STROKE_CONTROL,
-	        RenderingHints.VALUE_STROKE_PURE,
-	        RenderingHints.KEY_TEXT_ANTIALIASING,
-	        RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+	final Map<RenderingHints.Key, Object> SPEED_HINTS = Map.of(
+		RenderingHints.KEY_ALPHA_INTERPOLATION,	RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED,
+		RenderingHints.KEY_ANTIALIASING,		RenderingHints.VALUE_ANTIALIAS_OFF,
+		RenderingHints.KEY_COLOR_RENDERING,		RenderingHints.VALUE_COLOR_RENDER_SPEED,
+		RenderingHints.KEY_DITHERING,			RenderingHints.VALUE_DITHER_DISABLE,
+		RenderingHints.KEY_FRACTIONALMETRICS,	RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
+		RenderingHints.KEY_INTERPOLATION,		RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR,
+		RenderingHints.KEY_RENDERING,			RenderingHints.VALUE_RENDER_SPEED,
+		RenderingHints.KEY_STROKE_CONTROL,		RenderingHints.VALUE_STROKE_PURE,
+		RenderingHints.KEY_TEXT_ANTIALIASING,	RenderingHints.VALUE_TEXT_ANTIALIAS_OFF
+	);
 
 	/**
 	 * The reference resolution DoaEngine will use when scaling the game window and
