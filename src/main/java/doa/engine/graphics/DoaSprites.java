@@ -111,14 +111,12 @@ public final class DoaSprites {
 	}
 	
 	/**
-	 * Conveniency method. This method exists solely to reduce the amount of typing
-	 * required while trying to retrieve a sprite from DoaSprites class. Calling
-	 * this method is equivalent to calling:
-	 * DoaSprites.SHADED_SPRITES.get(spriteName);
+	 * Finds the key-value pair where value == sprite and returns the key.
+	 * K = String, V = BufferedImage
 	 *
-	 * @param spriteName name of the sprite that is trying to be retrieved
-	 * @return the sprite in {@link DoaSprites#SHADED_SPRITES} whose name is
-	 *         spriteName
+	 * @param sprite the sprite to match in value
+	 * @return the name of the sprite in either {@link DoaSprites#ORIGINAL_SPRITES}
+	 * or {@link DoaSprites#SHADED_SPRITES}
 	 */
 	public static String getSpriteName(@NotNull final BufferedImage sprite) {
 		for(Entry<String, BufferedImage> entry : ORIGINAL_SPRITES.entrySet()) {
