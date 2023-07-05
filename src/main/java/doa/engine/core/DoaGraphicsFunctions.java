@@ -732,19 +732,27 @@ public final class DoaGraphicsFunctions {
 	public static void clip(final Shape s) {
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
+			var oldFrame = shape.getFrame();
 			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
 			shape.setFrame(w[0], w[1], w[2], w[3]);
+			g.clip(clipp);
+			shape.setFrame(oldFrame);
+		} else {
+			g.draw(clipp);
 		}
-		g.clip(clipp);
 	}
 
 	public static void draw(final Shape s) {
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
+			var oldFrame = shape.getFrame();
 			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
 			shape.setFrame(w[0], w[1], w[2], w[3]);
+			g.draw(clipp);
+			shape.setFrame(oldFrame);
+		} else {
+			g.draw(clipp);
 		}
-		g.draw(clipp);
 	}
 
 	/**
@@ -785,10 +793,14 @@ public final class DoaGraphicsFunctions {
 	public static void fill(final Shape s) { 
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
+			var oldFrame = shape.getFrame();
 			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
 			shape.setFrame(w[0], w[1], w[2], w[3]);
+			g.fill(clipp);
+			shape.setFrame(oldFrame);
+		} else {
+			g.fill(clipp);
 		}
-		g.fill(clipp);
 	}
 
 	/**
