@@ -121,13 +121,18 @@ public final class DoaSprites {
 	 *         spriteName
 	 */
 	public static String getSpriteName(@NotNull final BufferedImage sprite) {
-	    for(Entry<String, BufferedImage> entry : ORIGINAL_SPRITES.entrySet()) {
-	        if(entry.getValue() == sprite) {
-	            return entry.getKey();
-	        }
-	    }
-	    LOGGER.warning("Queried sprite is not registered to DoaSprites, returned empty string!");
-	    return "";
+		for(Entry<String, BufferedImage> entry : ORIGINAL_SPRITES.entrySet()) {
+			if(entry.getValue() == sprite) {
+				return entry.getKey();
+			}
+		}
+		for(Entry<String, BufferedImage> entry : SHADED_SPRITES.entrySet()) {
+			if(entry.getValue() == sprite) {
+				return entry.getKey();
+			}
+		}
+		LOGGER.warning("Queried sprite is not registered to DoaSprites, returned empty string!");
+		return "";
 	}
 
 	/**
