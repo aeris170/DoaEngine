@@ -161,7 +161,7 @@ public final class DoaSprites {
 			throw new IllegalArgumentException("height < 0");
 		}
 		final Image i = sprite.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-		if (i instanceof BufferedImage) { return (BufferedImage) i; }
+		if (i instanceof BufferedImage buf) { return buf; }
 		final BufferedImage bimage = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D bGr = bimage.createGraphics();
 		bGr.drawImage(i, 0, 0, null);
