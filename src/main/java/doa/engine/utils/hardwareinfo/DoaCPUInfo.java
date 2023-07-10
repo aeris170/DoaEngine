@@ -17,5 +17,4 @@ public final class DoaCPUInfo {
 
 	private org.jutils.jhardware.model.ProcessorInfo cpu = org.jutils.jhardware.HardwareInfo.getProcessorInfo();
 	DoaCPUInfo() {}
-
 }

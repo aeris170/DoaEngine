@@ -10,7 +10,7 @@ public final class DoaNetworkInterface {
 	public String getTransmittedPackets() { return network.getTransmittedPackets(); }
 	public String getReceivedBytes() { return network.getReceivedBytes(); }
 	public String getTransmittedBytes() { return network.getTransmittedBytes(); }
-	
+
 	private org.jutils.jhardware.model.NetworkInterfaceInfo network;
 	DoaNetworkInterface(org.jutils.jhardware.model.NetworkInterfaceInfo network) { this.network = network; }
 }

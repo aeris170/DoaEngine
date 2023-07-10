@@ -23,7 +23,7 @@ import com.simtechdata.waifupnp.UPnP;
  * server which can send and receive messages to/from connected clients.<br>
  * <br>
  * In order to create and use a server, refer to the code segment below. *
- * 
+ *
  * <pre>
  * <code>
  * DoaServer sv = new DoaServer(); // create a server instance
@@ -33,7 +33,7 @@ import com.simtechdata.waifupnp.UPnP;
  * sv.close(); // disconnect from all the clients and close the server
  * </code>
  * </pre>
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -60,7 +60,7 @@ public class DoaServer {
 	 * between 0 and 65535. A port number of zero will let the system pick up an
 	 * ephemeral port in a bind operation. Port forwarding is required to receive
 	 * connection from outside the LAN.
-	 * 
+	 *
 	 * @param port the port number this server will get bound to
 	 * @return the port number bounded to server or -1 upon failure to bind
 	 */
@@ -126,7 +126,7 @@ public class DoaServer {
 	 * Sends a message to all connected clients, except the sender itself. A
 	 * senderID of -1 indicates the server itself is the sender of the broadcast,
 	 * any other valid ID indicates a client with that ID is the sender.
-	 * 
+	 *
 	 * @param senderID ID of the sender, -1 for server sourced broadcast
 	 * @param packet message to send
 	 */

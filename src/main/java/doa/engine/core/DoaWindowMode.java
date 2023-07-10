@@ -8,17 +8,17 @@ package doa.engine.core;
  * @version {@value DoaEngine#VERSION}
  */
 public enum DoaWindowMode {
-	
+
 	/**
 	 * Fullscreen window mode.
 	 */
 	FULLSCREEN,
-	
+
 	/**
 	 * Borderless fullscreen window mode.
 	 */
 	BORDERLESS_FULLSCREEN,
-	
+
 	/**
 	 * Windowed window mode.
 	 */

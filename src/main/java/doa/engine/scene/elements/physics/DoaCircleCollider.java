@@ -10,7 +10,7 @@ import doa.engine.maths.DoaVector;
 
 /**
  * A collider shaped as a circle.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -24,14 +24,14 @@ public class DoaCircleCollider extends DoaCollider {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param radius radius of the collider
 	 */
 	public DoaCircleCollider(float radius) { this(radius, new DoaVector()); }
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param radius radius of the collider
 	 * @param offset offset of the collider
 	 */

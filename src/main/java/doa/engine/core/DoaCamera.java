@@ -2,7 +2,6 @@ package doa.engine.core;
 
 import static doa.engine.log.DoaLogger.LOGGER;
 
-import java.awt.Dimension;
 import java.io.Serializable;
 
 import doa.engine.input.DoaMouse;
@@ -74,9 +73,17 @@ public final class DoaCamera implements Serializable {
 		DoaCamera.minY = minY;
 		DoaCamera.maxX = maxX;
 		DoaCamera.maxY = maxY;
-		LOGGER.finer(
-		        new StringBuilder(256).append("DoaCamera has been adjusted. minX: ").append(minX).append(", minY: ").append(minY).append(", maxX: ").append(
-		                maxX).append(", maxY: ").append(maxY).toString());
+		LOGGER.finer(new StringBuilder(256)
+			.append("DoaCamera has been adjusted. minX: ")
+			.append(minX)
+			.append(", minY: ")
+			.append(minY)
+			.append(", maxX: ")
+			.append(maxX)
+			.append(", maxY: ")
+			.append(maxY)
+			.toString()
+		);
 	}
 
 	/**
@@ -94,8 +101,15 @@ public final class DoaCamera implements Serializable {
 		isMouseZoomingEnabled = true;
 		DoaCamera.minZ = minZ;
 		DoaCamera.maxZ = maxZ;
-		LOGGER.finer(new StringBuilder(512).append("DoaCamera zoom has been enabled. Focus: ").append(objectToZoomInto.toString()).append(", minZ: ").append(
-		        minZ).append(", maxZ: ").append(maxZ).toString());
+		LOGGER.finer(new StringBuilder(512)
+			.append("DoaCamera zoom has been enabled. Focus: ")
+			.append(objectToZoomInto.toString())
+			.append(", minZ: ")
+			.append(minZ)
+			.append(", maxZ: ")
+			.append(maxZ)
+			.toString()
+		);
 	}
 
 	/**
@@ -129,12 +143,10 @@ public final class DoaCamera implements Serializable {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#x ").append(x).append(" -> ").append(newX).toString());
 		x = newX;
 	}
-
 	public static void setY(final float newY) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#y ").append(y).append(" -> ").append(newY).toString());
 		y = newY;
 	}
-
 	public static void setZ(final float newZ) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#z ").append(z).append(" -> ").append(newZ).toString());
 		y = newZ;
@@ -144,12 +156,10 @@ public final class DoaCamera implements Serializable {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#minX ").append(minX).append(" -> ").append(newMinX).toString());
 		minX = newMinX;
 	}
-
 	public static void setMinY(final float newMinY) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#minY ").append(minY).append(" -> ").append(newMinY).toString());
 		minY = newMinY;
 	}
-
 	public static void setMinZ(final float newMinZ) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#minZ ").append(minZ).append(" -> ").append(newMinZ).toString());
 		minZ = newMinZ;
@@ -159,12 +169,10 @@ public final class DoaCamera implements Serializable {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#maxX ").append(maxX).append(" -> ").append(newMaxX).toString());
 		maxX = newMaxX;
 	}
-
 	public static void setMaxY(final float newMaxY) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#maxY ").append(maxY).append(" -> ").append(newMaxY).toString());
 		maxY = newMaxY;
 	}
-
 	public static void setMaxZ(final float newMaxZ) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#maxZ ").append(maxZ).append(" -> ").append(newMaxZ).toString());
 		maxY = newMaxZ;
@@ -174,46 +182,34 @@ public final class DoaCamera implements Serializable {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#tweenAmountX ").append(tweenAmountX).append(" -> ").append(newTweenAmountX).toString());
 		tweenAmountX = newTweenAmountX;
 	}
-
 	public static void setTweenAmountY(final float newTweenAmountY) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#tweenAmountY ").append(tweenAmountY).append(" -> ").append(newTweenAmountY).toString());
 		tweenAmountY = newTweenAmountY;
 	}
-
 	public static void setTweenAmountZ(final float newTweenAmountZ) {
 		LOGGER.finest(new StringBuilder(64).append("DoaCamera#tweenAmountZ ").append(tweenAmountZ).append(" -> ").append(newTweenAmountZ).toString());
 		tweenAmountZ = newTweenAmountZ;
 	}
 
 	public static DoaObject getObjectToFollow() { return objectToFollow; }
-
 	public static DoaObject getObjectToZoomInto() { return objectToZoomInto; }
 
 	public static float getX() { return x; }
-
 	public static float getY() { return y; }
-
 	public static float getZ() { return z; }
 
 	public static float getMinX() { return minX; }
-
 	public static float getMinY() { return minY; }
-
 	public static float getMinZ() { return minZ; }
 
 	public static float getMaxX() { return maxX; }
-
 	public static float getMaxY() { return maxY; }
-
 	public static float getMaxZ() { return maxZ; }
 
 	public static float getTweenAmountX() { return tweenAmountX; }
-
 	public static float getTweenAmountY() { return tweenAmountY; }
-
 	public static float getTweenAmountZ() { return tweenAmountZ; }
 
 	public static boolean isObjectToFollowInitialized() { return isObjectToFollowInitialized; }
-
 	public static boolean isMouseZoomingEnabled() { return isMouseZoomingEnabled; }
 }

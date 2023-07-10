@@ -108,10 +108,10 @@ public class PhysicsTest extends DoaGame {
 		wSettings.WM = DoaWindowMode.WINDOWED;
 		wSettings.TITLE = "DoaEngine " + DoaEngine.VERSION + " Physics Test";
 	}
-	
+
 	@Override
 	public void initializeGame(DoaEngineSettings eSettings, DoaWindowSettings wSettings, String... args) {}
-	
+
 	@Override
 	public void onExit() {}
 }

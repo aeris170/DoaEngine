@@ -2,7 +2,7 @@ package doa.engine.scene.elements.physics;
 
 /**
  * Physics body types.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 1.0
  * @version 3.0

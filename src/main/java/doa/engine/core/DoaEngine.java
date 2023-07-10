@@ -70,11 +70,11 @@ public final class DoaEngine {
 		axisHelpers = esettings.AXIS_HELPERS;
 		refResolution = esettings.REFERENCE_RESOLUTION;
 		if (wSettings.RESOLUTION_OD != null) {
-			actResolution = wSettings.RESOLUTION_OD;	
+			actResolution = wSettings.RESOLUTION_OD;
 		} else {
 			actResolution = wSettings.DM.getResolution();
 		}
-		
+
 		surface = new Canvas();
 		surface.addKeyListener(DoaKeyboard.INPUT);
 		surface.addMouseListener(DoaMouse.INPUT);

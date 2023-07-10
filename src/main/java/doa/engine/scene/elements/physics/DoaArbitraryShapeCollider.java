@@ -1,13 +1,13 @@
 package doa.engine.scene.elements.physics;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import doa.engine.maths.DoaVector;
 
 /**
  * A collider of arbitrary convex shape.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -25,7 +25,7 @@ public class DoaArbitraryShapeCollider extends DoaCollider {
 	 * Constructor. Colinear points are allowed but may lead poor performance. The
 	 * physics engine will produce a convex hull out of the points. Please see
 	 * {@link DoaCollider#getPoints()} for more details.
-	 * 
+	 *
 	 * @param points the list of points of this collider
 	 */
 	public DoaArbitraryShapeCollider(List<DoaVector> points) { this.points = new ArrayList<>(points); }

@@ -4,25 +4,20 @@ import static doa.engine.log.DoaLogger.LOGGER;
 
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import doa.engine.log.DoaLogger;
 import doa.engine.maths.DoaVector;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
 
@@ -40,7 +35,7 @@ public final class DoaWindow {
 	private String title;
 	private GraphicsDevice screen;
 	private DoaDisplayMode dm;
-	private DoaVector resolutionOD;	
+	private DoaVector resolutionOD;
 	private Integer refreshRateOD;
 	private Integer bppOD;
 	private DoaWindowMode wm;
@@ -84,7 +79,7 @@ public final class DoaWindow {
 		window.setIgnoreRepaint(true);
 
 		window.add(engine.surface);
-		
+
 		window.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -92,9 +87,9 @@ public final class DoaWindow {
 				engine.surface.setSize(c.getSize());
 			}
 		});
-		
+
 		window.addWindowListener(new WindowAdapter() {
-			
+
 			@Override
 			public void windowClosing(WindowEvent e) {
 				try {
@@ -115,7 +110,7 @@ public final class DoaWindow {
 
 		LOGGER.info("DoaWindow succesfully instantiated!");
 	}
-	
+
 	public static GraphicsDevice[] getGraphicsDevices() { return GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices(); }
 	public static void dumpFrameBufferTo(BufferedImage image) { DoaGame.getInstance().window.window.paint(image.getGraphics()); }
 	public GraphicsDevice getGraphicsDevice() { return screen; }
@@ -125,7 +120,7 @@ public final class DoaWindow {
 		setWindowMode(wm);
 		setDisplayMode(dm);
 	}
-	
+
 	public DoaDisplayMode getDisplayMode() { return dm; }
 	public void setDisplayMode(@NonNull final DoaDisplayMode dm) {
 		if (wm == DoaWindowMode.WINDOWED) {
@@ -148,7 +143,7 @@ public final class DoaWindow {
 			LOGGER.warning("Display does not support mode change!");
 		}
 	}
-	
+
 	public DoaWindowMode getWindowMode() { return wm; }
 	public void setWindowMode(DoaWindowMode mode) {
 		if (mode == DoaWindowMode.FULLSCREEN) {

@@ -10,7 +10,7 @@ import doa.engine.scene.DoaComponent;
 
 /**
  * Transform component.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -36,7 +36,7 @@ public final class DoaTransform extends DoaComponent implements DoaEssentialComp
 	/**
 	 * Calculates and returns the smallest axis-aligned bounding box of the
 	 * transform. This operation is costly.
-	 * 
+	 *
 	 * @return the smallest axis-aligned bounding box of this transform
 	 */
 	public Shape AABB() { return getPreciseBounds().getBounds(); }
@@ -44,7 +44,7 @@ public final class DoaTransform extends DoaComponent implements DoaEssentialComp
 	/**
 	 * Calculates and returns the quad completely subsuming this transform. The
 	 * returned shape is the shape with the smallest area.
-	 * 
+	 *
 	 * @return bounds of this transform
 	 */
 	public Shape getPreciseBounds() {

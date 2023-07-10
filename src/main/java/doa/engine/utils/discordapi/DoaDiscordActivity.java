@@ -7,7 +7,7 @@ import lombok.ToString;
 
 /**
  * Please see Discord API documentation for more info.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -34,24 +34,24 @@ public class DoaDiscordActivity {
 	String matchSecret = null;
 	String joinSecret = null;
 	String spectateSecret = null;
-	
+
 	public DoaDiscordActivity() {}
 	public DoaDiscordActivity(DoaDiscordActivity other) {
 		start = other.start;
 		end = other.end;
-		
+
 		name = other.name;
 		description = other.description;
-		
+
 		partyID = other.partyID;
 		partySize = other.partySize;
 		partyMaxSize = other.partyMaxSize;
-		
+
 		largeImageName = other.largeImageName;
 		largeImageText = other.largeImageText;
 		smallImageName = other.smallImageName;
 		smallImageText = other.smallImageText;
-		
+
 		matchSecret = other.matchSecret;
 		joinSecret = other.joinSecret;
 		spectateSecret = other.spectateSecret;

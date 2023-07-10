@@ -11,5 +11,4 @@ public final class DoaMOBOInfo {
 
 	private org.jutils.jhardware.model.MotherboardInfo mobo = org.jutils.jhardware.HardwareInfo.getMotherboardInfo();
 	DoaMOBOInfo() {}
-
 }

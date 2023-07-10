@@ -15,7 +15,7 @@ import doa.engine.maths.DoaVector;
 
 /**
  * Rectangle shape renderer.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -44,7 +44,7 @@ public class DoaRectRenderer extends DoaRenderer {
 	/**
 	 * Sets the offset of the rectangle. The offset is calculated from the owner of
 	 * this renderer's transform's position.
-	 * 
+	 *
 	 * @param offset offset of this renderer
 	 */
 	public void setOffset(@NotNull DoaVector offset) {
@@ -54,7 +54,7 @@ public class DoaRectRenderer extends DoaRenderer {
 
 	/**
 	 * Sets the dimensions of this rectangle.
-	 * 
+	 *
 	 * @param dimensions dimensions of rectangle
 	 */
 	public void setDimensions(@NotNull DoaVector dimensions) {

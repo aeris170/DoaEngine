@@ -1384,16 +1384,16 @@ public final class DoaGraphicsFunctions {
 	 * Pushes the current transform into a stack of transforms. Informally, saving
 	 * it. A subsequent call to {@link #popTransform()} will restore the last
 	 * transform pushed into the said stack.
-	 * 
+	 *
 	 * <pre>
 	 * 		Transform oldTranform = g.getTransform();
 	 * 		...
 	 * 		...
 	 *		g.setTransfom(oldTransform);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushTransform();
 	 * 		...
@@ -1407,16 +1407,16 @@ public final class DoaGraphicsFunctions {
 	 * Pops the top-most transform from the stack of transforms. Informally,
 	 * restoring it. A call to this method will restore the last transform pushed
 	 * into the said stack. The popped transform will replace the current transform.
-	 * 
+	 *
 	 * <pre>
 	 * 		Transform oldTranform = g.getTransform();
 	 * 		...
 	 * 		...
 	 *		g.setTransfom(oldTransform);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushTransform();
 	 * 		...
@@ -1437,16 +1437,16 @@ public final class DoaGraphicsFunctions {
 	 * Pushes the current composite into a stack composites. Informally, saving it.
 	 * A subsequent call to {@link #popComposite()} will restore the last composite
 	 * pushed into the said stack.
-	 * 
+	 *
 	 * <pre>
 	 * 		Composite oldComposite = g.getComposite();
 	 * 		...
 	 * 		...
 	 *		g.setTransfom(oldComposite);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushComposite();
 	 * 		...
@@ -1460,16 +1460,16 @@ public final class DoaGraphicsFunctions {
 	 * Pops the top-most composite from the composites stack. Informally, restoring
 	 * it. A call to this method will restore the last composite pushed into the
 	 * said stack. The popped composite will replace the current composite.
-	 * 
+	 *
 	 * <pre>
 	 * 		Composite oldComposite = g.getComposite();
 	 * 		...
 	 * 		...
 	 *		g.setTransfom(oldComposite);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushComposite();
 	 * 		...
@@ -1489,16 +1489,16 @@ public final class DoaGraphicsFunctions {
 	 * Pushes the current clip into a stack clips. Informally, saving it. A
 	 * subsequent call to {@link #popClip()} will restore the last clip pushed into
 	 * the said stack.
-	 * 
+	 *
 	 * <pre>
 	 * 		Clip oldClip = g.getClip();
 	 * 		...
 	 * 		...
 	 *		g.setClip(oldClip);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushClip();
 	 * 		...
@@ -1512,16 +1512,16 @@ public final class DoaGraphicsFunctions {
 	 * Pops the top-most clip from the stack of clips. Informally, restoring it. A
 	 * call to this method will restore the last clip pushed into the said stack.
 	 * The popped clip will replace the current clip.
-	 * 
+	 *
 	 * <pre>
 	 * 		Clip oldClip = g.getClip();
 	 * 		...
 	 * 		...
 	 *		g.setClip(oldClip);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushClip();
 	 * 		...
@@ -1541,16 +1541,16 @@ public final class DoaGraphicsFunctions {
 	 * Pushes the current stroke into a stack of strokes. Informally, saving it. A
 	 * subsequent call to {@link #popStroke()} will restore the last stroke pushed
 	 * into the said stack.
-	 * 
+	 *
 	 * <pre>
 	 * 		Stroke oldStroke = g.getStroke();
 	 * 		...
 	 * 		...
 	 *		g.setStroke(oldStroke);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushStroke();
 	 * 		...
@@ -1564,16 +1564,16 @@ public final class DoaGraphicsFunctions {
 	 * Pops the top-most stroke from the strokes stack. Informally, restoring it. A
 	 * call to this method will restore the last stroke pushed into the said stack.
 	 * The popped stroke will replace the current stroke.
-	 * 
+	 *
 	 * <pre>
 	 * 		Stroke oldStroke = g.getStroke();
 	 * 		...
 	 * 		...
 	 *		g.setStroke(oldStroke);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		g.pushStroke();
 	 * 		...
@@ -1593,16 +1593,16 @@ public final class DoaGraphicsFunctions {
 	 * Pushes the current color into a stack of colors. Informally, saving it. A
 	 * subsequent call to {@link #popColor()} will restore the last color pushed
 	 * into the said stack.
-	 * 
+	 *
 	 * <pre>
 	 * 		Color oldColor = getColor();
 	 * 		...
 	 * 		...
 	 *		setColor(oldColor);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		pushColor();
 	 * 		...
@@ -1616,16 +1616,16 @@ public final class DoaGraphicsFunctions {
 	 * Pops the top-most color from the colors stack. Informally, restoring it. A
 	 * call to this method will restore the last colors pushed into the said stack.
 	 * The popped color will replace the current color.
-	 * 
+	 *
 	 * <pre>
 	 * 		Color oldColor = getColor();
 	 * 		...
 	 * 		...
 	 *		setColor(oldColor);
 	 * </pre>
-	 * 
+	 *
 	 * is equivalent to
-	 * 
+	 *
 	 * <pre>
 	 * 		pushColor();
 	 * 		...
@@ -1644,7 +1644,6 @@ public final class DoaGraphicsFunctions {
 	public static float warpX(float x) {
 		return x / referenceResolution.width * actualResolution.width;
 	}
-
 	private static float[] warpX(float[] xs) {
 		var rv = new float[xs.length];
 		for (int i = 0; i < xs.length; i++) {
@@ -1652,11 +1651,9 @@ public final class DoaGraphicsFunctions {
 		}
 		return rv;
 	}
-
 	public static float warpY(float y) {
 		return y / referenceResolution.height * actualResolution.height;
 	}
-
 	private static float[] warpY(float[] ys) {
 		var rv = new float[ys.length];
 		for (int i = 0; i < ys.length; i++) {
@@ -1664,14 +1661,12 @@ public final class DoaGraphicsFunctions {
 		}
 		return rv;
 	}
-
 	public static float[] warp(float x, float y) {
 		var rv = new float[2];
 		rv[0] = x / referenceResolution.width * actualResolution.width;
 		rv[1] = y / referenceResolution.height * actualResolution.height;
 		return rv;
 	}
-
 	private static float[] warp(float x, float y, float w, float h) {
 		var rv = new float[4];
 		rv[0] = x / referenceResolution.width * actualResolution.width;
@@ -1684,7 +1679,6 @@ public final class DoaGraphicsFunctions {
 	public static float unwarpX(float x) {
 		return (int) (x / actualResolution.width * referenceResolution.width);
 	}
-
 	private static float[] unwarpX(float[] xs) {
 		var rv = new float[xs.length];
 		for (int i = 0; i < xs.length; i++) {
@@ -1692,11 +1686,9 @@ public final class DoaGraphicsFunctions {
 		}
 		return rv;
 	}
-
 	public static float unwarpY(float y) {
 		return y / actualResolution.height * referenceResolution.height;
 	}
-
 	private static float[] unwarpY(float[] ys) {
 		var rv = new float[ys.length];
 		for (int i = 0; i < ys.length; i++) {
@@ -1704,14 +1696,12 @@ public final class DoaGraphicsFunctions {
 		}
 		return rv;
 	}
-
 	public static float[] unwarp(float x, float y) {
 		var rv = new float[2];
 		rv[0] = x / actualResolution.width * referenceResolution.width;
 		rv[1] = y / actualResolution.height * referenceResolution.height;
 		return rv;
 	}
-
 	private static float[] unwarp(float x, float y, float w, float h) {
 		var rv = new float[4];
 		rv[0] = x / actualResolution.width * referenceResolution.width;

@@ -127,7 +127,7 @@ public final class DoaSoundClip {
 	/**
 	 * Returns the position of the playhead in terms of microseconds. 1 second =
 	 * 1.000.000 microseconds.
-	 * 
+	 *
 	 * @return playhead position
 	 */
 	public long getMicrosecondPosition() { return microsecondPosition; }
@@ -136,7 +136,7 @@ public final class DoaSoundClip {
 	 * Sets the position of the playhead in terms of microseconds. 1 second =
 	 * 1.000.000 microseconds. For example, passing 10.000.000 into this method will
 	 * result in this clip forwarding to the 10th second.
-	 * 
+	 *
 	 * @param microsecondPosition new playhead position
 	 */
 	public void setMicrosecondPosition(final long microsecondPosition) { this.microsecondPosition = microsecondPosition; }
@@ -144,7 +144,7 @@ public final class DoaSoundClip {
 	/**
 	 * Returns the volume at which this clip is/will be playing at. The returned
 	 * value is always between 0 and 1 inclusive.
-	 * 
+	 *
 	 * @return the volume of the clip
 	 */
 	public float getVolume() { return volume; }
@@ -159,7 +159,7 @@ public final class DoaSoundClip {
 	 * javax.sound.sampled package and has nothing to do with DoaEngine. Programmers
 	 * should not rely on fast volume switches, instead they should make your sound
 	 * designer do that in their DAW.
-	 * 
+	 *
 	 * @param volume the new value of the volume level
 	 * @throws IllegalArgumentException if newVolume is not in range [0, 1]
 	 */

@@ -14,7 +14,7 @@ import doa.engine.scene.DoaPhysics;
  * A simple WASD keys controller. WASD keys translate the transform of which
  * DoaObject this script is attached to. This script is provided for means of
  * quick and easy debug and shouldn't be used in production.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -38,18 +38,12 @@ public class DoaWASDControl extends DoaScript {
 		speed = Math.abs(speed);
 		direction.x = 0;
 		direction.y = 0;
-		if (W)
-			direction.y = -1;
-		if (A)
-			direction.x = -1;
-		if (S)
-			direction.y = 1;
-		if (D)
-			direction.x = 1;
-		if (W && S)
-			direction.y = 0;
-		if (A && D)
-			direction.x = 0;
+		if (W)		{ direction.y = -1; }
+		if (A)		{ direction.x = -1; }
+		if (S)		{ direction.y = 1; }
+		if (D)		{ direction.x = 1; }
+		if (W && S)	{ direction.y = 0; }
+		if (A && D)	{ direction.x = 0; }
 
 		if (direction.magnitude() > 0) {
 			var normalised = DoaVector.normalise(direction);
@@ -64,5 +58,4 @@ public class DoaWASDControl extends DoaScript {
 			}
 		}
 	}
-
 }

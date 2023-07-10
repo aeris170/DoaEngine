@@ -31,7 +31,7 @@ import doa.engine.scene.elements.physics.DoaRigidBody;
 
 /**
  * Physics engine. Config only, never call the methods of this class!
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -88,19 +88,12 @@ public final class DoaPhysics {
 			bodyDef.angularVelocity = rigidBody.angularVelocity;
 			bodyDef.linearVelocity.set(rigidBody.linearVelocity.x / PPM, rigidBody.linearVelocity.y / PPM);
 
-			switch (rigidBody.type) {
-			case STATIC:
-				bodyDef.type = BodyType.STATIC;
-				break;
-			case DYNAMIC:
-				bodyDef.type = BodyType.DYNAMIC;
-				break;
-			case KINEMATIC:
-				bodyDef.type = BodyType.KINEMATIC;
-				break;
-			default:
-				throw new IllegalArgumentException("??");
-			}
+			bodyDef.type = switch (rigidBody.type) {
+				case STATIC -> BodyType.STATIC;
+				case DYNAMIC -> BodyType.DYNAMIC;
+				case KINEMATIC -> BodyType.KINEMATIC;
+				default -> throw new IllegalArgumentException("??");
+			};
 
 			Body body = box2DWorld.createBody(bodyDef);
 			for (DoaCollider collider : rigidBody.colliders) {
@@ -121,8 +114,11 @@ public final class DoaPhysics {
 					        new Vec2(boxCollider.getOffset().x / PPM, boxCollider.getOffset().y / PPM),
 					        0);
 				} else {
-					DoaLogger.LOGGER.warning(new StringBuilder(128).append("Collider of rigidbody of ").append(rigidBody.getOwner().name).append(
-					        " has returned no points. Please correctly implement DoaCollider#getPoints(void)!"));
+					DoaLogger.LOGGER.warning(new StringBuilder(128)
+						.append("Collider of rigidbody of ")
+						.append(rigidBody.getOwner().name)
+						.append(" has returned no points. Please correctly implement DoaCollider#getPoints(void)!")
+					);
 				}
 
 				FixtureDef fixtureDef = new FixtureDef();

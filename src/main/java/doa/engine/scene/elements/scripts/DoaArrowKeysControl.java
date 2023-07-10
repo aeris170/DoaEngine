@@ -14,7 +14,7 @@ import doa.engine.scene.DoaPhysics;
  * A simple arrow keys controller. Arrow keys translate the transform of which
  * DoaObject this script is attached to. This script is provided for means of
  * quick and easy debug and shouldn't be used in production.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -38,18 +38,12 @@ public class DoaArrowKeysControl extends DoaScript {
 		speed = Math.abs(speed);
 		direction.x = 0;
 		direction.y = 0;
-		if (KEY_UP)
-			direction.y = -1;
-		if (KEY_LEFT)
-			direction.x = -1;
-		if (KEY_DOWN)
-			direction.y = 1;
-		if (KEY_RIGHT)
-			direction.x = 1;
-		if (KEY_UP && KEY_DOWN)
-			direction.y = 0;
-		if (KEY_LEFT && KEY_RIGHT)
-			direction.x = 0;
+		if (KEY_UP)					{ direction.y = -1; }
+		if (KEY_LEFT)				{ direction.x = -1; }
+		if (KEY_DOWN)				{ direction.y = 1; }
+		if (KEY_RIGHT)				{ direction.x = 1; }
+		if (KEY_UP && KEY_DOWN)		{ direction.y = 0; }
+		if (KEY_LEFT && KEY_RIGHT)	{ direction.x = 0; }
 
 		if (direction.magnitude() > 0) {
 			var normalised = DoaVector.normalise(direction);

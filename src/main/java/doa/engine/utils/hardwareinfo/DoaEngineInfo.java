@@ -9,7 +9,7 @@ public final class DoaEngineInfo {
 	@Getter private static boolean isInitialized = false;
 	public static final void initialize() {
 		if (isInitialized) { return; }
-		
+
 		runtimeInfo = new DoaRuntimeInfo();
 		biosInfo = new DoaBIOSInfo();
 		displayInfo = new DoaDisplayInfo();
@@ -19,10 +19,10 @@ public final class DoaEngineInfo {
 		networkInfo = new DoaNetworkInfo();
 		osInfo = new DoaOSInfo();
 		cpuInfo = new DoaCPUInfo();
-		
+
 		isInitialized = true;
 	}
-	
+
 	@Getter private static DoaRuntimeInfo runtimeInfo;
 	@Getter private static DoaBIOSInfo biosInfo;
 	@Getter private static DoaDisplayInfo displayInfo;

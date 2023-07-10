@@ -13,7 +13,7 @@ import doa.engine.maths.DoaVector;
  * Sprite renderer. Renders sprites created by
  * {@link DoaSprites#createSprite(String, String)} of
  * {@link DoaSprites#createSpriteFromSpriteSheet(String, String, java.awt.Rectangle)}.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -41,14 +41,14 @@ public class DoaSpriteRenderer extends DoaRenderer {
 	/**
 	 * Sets the sprite to render. Will update the dimensions to the dimensions of
 	 * the passed sprite.
-	 * 
+	 *
 	 * @param sprite new sprite to render
 	 */
 	public void setSprite(@NotNull BufferedImage sprite) { setSprite(sprite, true); }
 
 	/**
 	 * Sets the sprite to render.
-	 * 
+	 *
 	 * @param sprite new sprite to render
 	 * @param useDimensions if true, dimensions are updated to the dimensions of the
 	 *        passed sprite

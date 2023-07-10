@@ -9,11 +9,13 @@ import com.google.errorprone.annotations.ForOverride;
 import doa.engine.log.DoaLogger;
 
 public abstract class DoaGame {
-	
-	public static DoaGame INSTANCE; 
-	
+
+	public static DoaGame INSTANCE;
+
 	public static DoaGame getInstance() {
-		if(INSTANCE == null) throw new IllegalStateException("Game hasn't launched, cannot get instance of game!");
+		if(INSTANCE == null) {
+			throw new IllegalStateException("Game hasn't launched, cannot get instance of game!");
+		}
 		return INSTANCE;
 	}
 
@@ -67,7 +69,7 @@ public abstract class DoaGame {
 	 * @return has the game launched?
 	 */
 	public boolean isLaunched() { return isLaunched; }
-	
+
 	/**
 	 * @return has the game launched?
 	 */
@@ -77,15 +79,15 @@ public abstract class DoaGame {
 	 * @return has the game launched?
 	 */
 	public int getTPS() { return engine.tps; }
-	
+
 	/**
 	 * Exits the game by stopping the game thread and disposing of the game window.
 	 * Note that this method does not terminate the Java Virtual Machine.
-	 * Invocation of this method is a one way trip, DoaEngine will enter in an 
-	 * unrecoverable state after this method returns. 
+	 * Invocation of this method is a one way trip, DoaEngine will enter in an
+	 * unrecoverable state after this method returns.
 	 */
 	public static synchronized void exit() {
-		if (INSTANCE == null) { 
+		if (INSTANCE == null) {
 			DoaLogger.getInstance().warning("DoaGame#exit is called but DoaGame has no instance. exit will have no effect. returned");
 			return;
 		}
@@ -99,14 +101,14 @@ public abstract class DoaGame {
 	 * your game inside this method as DoaEngine is not initialized until an
 	 * invocation to {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
 	 * is made. Keep your client initialization in {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
-	 * 
+	 *
 	 * @param eSettings engine settings
 	 * @param wSettings window settings
 	 * @param args command line arguments
 	 */
 	@ForOverride
 	public abstract void initializeEngine(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
-	
+
 	/**
 	 * This method is used to initialize the game elements. This method is called
 	 * right after {@link DoaGame#initializeEngine(DoaEngineSettings, DoaWindowSettings, String...)}
@@ -115,14 +117,14 @@ public abstract class DoaGame {
 	 * Since DoaEngine and its internals are already initialized, all the params
 	 * this method receives should be treated as read only, as they have no further
 	 * use for DoaEngine and it's internals.
-	 * 
+	 *
 	 * @param eSettings engine settings, effectively immutable
 	 * @param wSettings window settings, effectively immutable
 	 * @param args command line arguments, effectively immutable
 	 */
 	@ForOverride
 	public abstract void initializeGame(final DoaEngineSettings eSettings, final DoaWindowSettings wSettings, final String... args);
-	
+
 	/**
 	 * This method is called when DoaEngine exits the game. Perform your clean ups in this method.
 	 */
