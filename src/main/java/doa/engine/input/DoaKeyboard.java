@@ -3,7 +3,6 @@ package doa.engine.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import doa.engine.Internal;
@@ -32,7 +31,7 @@ public final class DoaKeyboard {
 	 * been pressed at any time, at that time the respective field will be set to
 	 * true and will stay true as long as the key is held down, only when the same
 	 * key has been released it is then corresponding field will be set to false.
-	 * 
+	 *
 	 * @hidden
 	 * @see java.awt.event.KeyAdapter
 	 */
@@ -44,7 +43,7 @@ public final class DoaKeyboard {
 			press[e.getKeyCode()] = true;
 			typedChars.add(e.getKeyChar());
 		}
-		
+
 		@Override
 		public synchronized void keyReleased(final KeyEvent e) {
 			press[e.getKeyCode()] = false;
@@ -66,7 +65,7 @@ public final class DoaKeyboard {
 	public static synchronized void tick() {
 		typedChars.removeAll(typedCharsPrevFrame);
 		typedCharsPrevFrame = new ArrayList<>(typedChars);
-		
+
 		ESCAPE = press[KeyEvent.VK_ESCAPE];
 		F1 = press[KeyEvent.VK_F1];
 		F2 = press[KeyEvent.VK_F2];

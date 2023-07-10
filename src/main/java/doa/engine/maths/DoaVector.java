@@ -285,7 +285,8 @@ public strictfp class DoaVector implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return new StringBuilder(128).append("DoaVector [\n\t{\n\t\tx:")
+		return new StringBuilder(128)
+			.append("DoaVector [\n\t{\n\t\tx:")
 			.append(x)
 			.append(",\n\t\ty:")
 			.append(y)

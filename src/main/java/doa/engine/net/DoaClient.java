@@ -22,7 +22,7 @@ import com.google.errorprone.annotations.ForOverride;
  * <br>
  * In order to create and connect a client, and communicate with it refer to the
  * code segment below.
- * 
+ *
  * <pre>
  * <code>
  * DoaClient cl = new DoaClient(); // create a client instance
@@ -38,7 +38,7 @@ import com.google.errorprone.annotations.ForOverride;
  * cl.disconnect(); // disconnect form the server
  * </code>
  * </pre>
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -79,7 +79,7 @@ public class DoaClient {
 	/**
 	 * Connects to a server. This method blocks until a connection has been made or
 	 * an error occurs.
-	 * 
+	 *
 	 * @param ipAddress IP Address of the server
 	 * @param port port in which the server is listening on
 	 * @throws UnknownHostException thrown when an error occurs while trying to
@@ -151,7 +151,7 @@ public class DoaClient {
 	 * Sends a packet of data to the connected server. A connection must exist prior
 	 * to a call to this method, otherwise this method will throw an
 	 * {@link IllegalStateException}.
-	 * 
+	 *
 	 * @param packet data to send
 	 * @throws IllegalStateException if {@link #isConnected()} returns false
 	 */
@@ -171,7 +171,7 @@ public class DoaClient {
 	/**
 	 * Disconnects from the server. Prior to a call to this method, a connection
 	 * must exist, otherwise an {@link IllegalStateException} is thrown.
-	 * 
+	 *
 	 * @throws IllegalStateException if {@link #isConnected()} returns false
 	 */
 	public synchronized void disconnect() {
@@ -186,7 +186,7 @@ public class DoaClient {
 
 	/**
 	 * Returns the connection state of the client.
-	 * 
+	 *
 	 * @return true if and only if client is already connected to a server and the
 	 * connection has not been ended yet, otherwise false
 	 */
@@ -207,7 +207,7 @@ public class DoaClient {
 
 	/**
 	 * Invoked upon the retrieval of data from the Server.
-	 * 
+	 *
 	 * @param packet data coming from the server
 	 */
 	@ForOverride

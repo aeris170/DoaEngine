@@ -6,7 +6,7 @@ import doa.engine.maths.DoaVector;
 
 /**
  * An approximate ellipse collider.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -20,7 +20,7 @@ public class DoaEllipseCollider extends DoaArbitraryShapeCollider {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param majorAxis
 	 * @param minorAxis
 	 */
@@ -28,7 +28,7 @@ public class DoaEllipseCollider extends DoaArbitraryShapeCollider {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param majorAxis
 	 * @param minorAxis
 	 */

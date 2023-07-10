@@ -11,7 +11,7 @@ public final class DoaNetworkInfo {
 
 	@Getter
 	private ImmutableList<DoaNetworkInterface> networkInterfaces;
-	
+
 	DoaNetworkInfo() {
 		List<org.jutils.jhardware.model.NetworkInterfaceInfo> networks = org.jutils.jhardware.HardwareInfo.getNetworkInfo().getNetworkInterfaces();
 		List<DoaNetworkInterface> doaNetworks = new ArrayList<>();

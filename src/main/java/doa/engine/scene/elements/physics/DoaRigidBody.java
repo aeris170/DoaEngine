@@ -18,7 +18,7 @@ import doa.engine.scene.elements.DoaTransform;
 
 /**
  * A body of simulated physics.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -101,14 +101,14 @@ public class DoaRigidBody extends DoaComponent {
 
 	/**
 	 * Set the linear velocity of the center of mass.
-	 * 
+	 *
 	 * @param v the new linear velocity of the center of mass.
 	 */
 	public void setLinearVelocity(@NotNull final DoaVector v) { box2DBody.setLinearVelocity(new Vec2(v.x, v.y)); }
 
 	/**
 	 * Returns copy the linear velocity of the center of mass.
-	 * 
+	 *
 	 * @return copy of the linear velocity of the center of mass.
 	 */
 	public DoaVector getLinearVelocity() {
@@ -118,14 +118,14 @@ public class DoaRigidBody extends DoaComponent {
 
 	/**
 	 * Set the angular velocity.
-	 * 
+	 *
 	 * @param w the new angular velocity in degrees/second.
 	 */
 	public void setAngularVelocity(final float w) { box2DBody.setAngularVelocity(DoaMath.toRadians(w)); }
 
 	/**
 	 * Returns the angular velocity.
-	 * 
+	 *
 	 * @return the angular velocity in degress/second.
 	 */
 	public float getAngularVelocity() { return box2DBody.getAngularVelocity(); }
@@ -134,7 +134,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Set the transform. Calling this method is ill-advised, all physics motion
 	 * <i>should</i> be left to the physics engine. This method is here for
 	 * compatibility reasons.
-	 * 
+	 *
 	 * @param transform transform to override with
 	 */
 	public void setTransform(@NotNull final DoaTransform transform) {
@@ -143,7 +143,7 @@ public class DoaRigidBody extends DoaComponent {
 
 	/**
 	 * Returns the transform.
-	 * 
+	 *
 	 * @return transform
 	 */
 	public DoaTransform getTransform() {
@@ -158,7 +158,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Apply a force at a world point. If the force is not applied at the center of
 	 * mass, it will generate a torque and affect the angular velocity. This wakes
 	 * up the body.
-	 * 
+	 *
 	 * @param force the world force vector, usually in Newtons (N).
 	 * @param point the world position of the point of application.
 	 */
@@ -168,7 +168,7 @@ public class DoaRigidBody extends DoaComponent {
 
 	/**
 	 * Apply a force to the center of mass. This wakes up the body.
-	 * 
+	 *
 	 * @param force the world force vector, usually in Newtons (N).
 	 */
 	public void applyForceToCenter(@NotNull final DoaVector force) { box2DBody.applyForceToCenter(new Vec2(force.x, force.y)); }
@@ -176,7 +176,7 @@ public class DoaRigidBody extends DoaComponent {
 	/**
 	 * Apply a torque. This affects the angular velocity without affecting the
 	 * linear velocity of the center of mass. This wakes up the body.
-	 * 
+	 *
 	 * @param torque about the z-axis (out of the screen), usually in N-m.
 	 */
 	public void applyTorque(final float torque) { box2DBody.applyTorque(torque); }
@@ -185,7 +185,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Apply an impulse at a point. This immediately modifies the velocity. It also
 	 * modifies the angular velocity if the point of application is not at the
 	 * center of mass. This wakes up the body.
-	 * 
+	 *
 	 * @param impulse the world impulse vector, usually in N-seconds or kg-m/s.
 	 * @param point the world position of the point of application.
 	 */
@@ -195,7 +195,7 @@ public class DoaRigidBody extends DoaComponent {
 
 	/**
 	 * Apply an angular impulse.
-	 * 
+	 *
 	 * @param impulse the angular impulse in units of kg*m*m/s
 	 */
 	public void applyAngularImpulse(final float impulse) { box2DBody.applyAngularImpulse(impulse); }
@@ -238,7 +238,7 @@ public class DoaRigidBody extends DoaComponent {
 	 * Normally, programmers shouldn't need to call this method. This method is on
 	 * the grey when it comes to the {@link Internal} annotation. Call, if you know
 	 * what you are doing.
-	 * 
+	 *
 	 * @return the handle to the native-Box2D Body
 	 */
 	@Internal

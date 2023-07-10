@@ -37,91 +37,91 @@ public final class DoaWindowSettings {
 	 */
 	@NotNull
 	public DoaDisplayMode DM = new DoaDisplayMode(SCREEN.getDisplayMode());
-	public DoaVector RESOLUTION_OD = null;	
+	public DoaVector RESOLUTION_OD = null;
 	public Integer REFRESH_RATE_OD = null;
 	public Integer BPP_OD = null;
 	public DoaWindowMode WM = DoaWindowMode.FULLSCREEN;
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor DEFAULT_CURSOR = Cursor.getDefaultCursor();
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor CROSSHAIR_CURSOR = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor TEXT_CURSOR = Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor WAIT_CURSOR = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor SW_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor SE_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor NW_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor NE_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor N_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor S_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor W_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor E_RESIZE_CURSOR = Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor HAND_CURSOR = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 
 	/**
-	 * 
+	 *
 	 */
 	@NotNull
 	public Cursor MOVE_CURSOR = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);

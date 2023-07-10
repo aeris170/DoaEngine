@@ -17,7 +17,7 @@ import doa.engine.maths.DoaVector;
 
 /**
  * Arbitrary shape renderer.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0

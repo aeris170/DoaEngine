@@ -109,7 +109,7 @@ public final class DoaSprites {
 		if (areLightsContributing()) { return SHADED_SPRITES.get(spriteName); }
 		return ORIGINAL_SPRITES.get(spriteName);
 	}
-	
+
 	/**
 	 * Finds the key-value pair where value == sprite and returns the key.
 	 * K = String, V = BufferedImage

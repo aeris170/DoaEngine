@@ -3,7 +3,7 @@ package doa.engine.utils.hardwareinfo;
 import java.util.Map;
 
 public final class DoaBIOSInfo {
-	
+
 	public String getDate() { return info.getDate(); }
 	public String getManufacturer() { return info.getManufacturer(); }
 	public String getVersion() { return info.getVersion(); }

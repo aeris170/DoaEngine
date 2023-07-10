@@ -48,7 +48,7 @@ public final class DoaLights {
 	 * Note: If this method has not yet been invoked, the ambient light color will
 	 * be {@link Color#WHITE}, meaning rendering will not be affected by ambient
 	 * light at all.
-	 * 
+	 *
 	 * @param newAmbientLightColor color of the new ambient light
 	 */
 	public static void ambientLight(@NotNull final Color newAmbientLightColor) {

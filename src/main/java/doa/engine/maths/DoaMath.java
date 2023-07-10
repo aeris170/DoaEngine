@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since DoaEngine 1.0
  * @version 3.0
  */
-public final strictfp class DoaMath {
+public final class DoaMath {
 
 	private DoaMath() {}
 
@@ -79,7 +79,7 @@ public final strictfp class DoaMath {
 
 	/**
 	 * Calculates and returns the angle in degrees converted from the parameter.
-	 * 
+	 *
 	 * @param radians the angle to convert to degrees, in radians
 	 * @return the angle in degrees
 	 */
@@ -87,7 +87,7 @@ public final strictfp class DoaMath {
 
 	/**
 	 * Calculates and returns the angle in radians converted from the parameter.
-	 * 
+	 *
 	 * @param degrees the angle to convert to radians, in degrees
 	 * @return the angle in radians
 	 */

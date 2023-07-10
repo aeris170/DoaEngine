@@ -11,7 +11,7 @@ public final class DoaDisplayInfo {
 
 	@Getter
 	private ImmutableList<DoaDisplay> displayDevices;
-	
+
 	DoaDisplayInfo() {
 		List<org.jutils.jhardware.model.Display> displays = org.jutils.jhardware.HardwareInfo.getDisplayInfo().getDisplayDevices();
 		List<DoaDisplay> doaDisplays = new ArrayList<>();

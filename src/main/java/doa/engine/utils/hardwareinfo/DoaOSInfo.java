@@ -12,5 +12,4 @@ public final class DoaOSInfo {
 
 	private org.jutils.jhardware.model.OSInfo os = org.jutils.jhardware.HardwareInfo.getOSInfo();
 	DoaOSInfo() {}
-
 }

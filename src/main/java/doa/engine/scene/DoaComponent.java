@@ -37,7 +37,7 @@ public abstract class DoaComponent implements Serializable {
 
 	/**
 	 * Called when this DoaComponent is successfully added to a DoaObject.
-	 * 
+	 *
 	 * @param o the DoaObject this DoaComponent added to
 	 */
 	@ForOverride
@@ -45,7 +45,7 @@ public abstract class DoaComponent implements Serializable {
 
 	/**
 	 * Called when this DoaComponent is successfully removed from a DoaObject.
-	 * 
+	 *
 	 * @param o the DoaObject this DoaComponent is removed from
 	 */
 	@ForOverride
@@ -55,7 +55,7 @@ public abstract class DoaComponent implements Serializable {
 	 * Enabled components participate in logic/rendering. This is handled internally
 	 * for pre-made scripts/renderers. Programmers who choose to directly extend
 	 * from DoaComponent, must handle this properly.
-	 * 
+	 *
 	 * @return true if component is enabled
 	 */
 	public boolean isEnabled() { return isEnabled; }

@@ -6,7 +6,7 @@ import doa.engine.scene.DoaComponent;
 
 /**
  * Script contract.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0

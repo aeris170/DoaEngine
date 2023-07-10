@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Stream;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -31,7 +30,7 @@ import doa.engine.scene.elements.scripts.DoaScript;
 /**
  * Blueprint of all objects that are going to be processed by DoaEngine, all
  * objects that will be processed by DoaEngine <strong>must</strong> either be
- * this class, or its sub-classes.
+ * an object of this class, or an object of one of it's sub-classes.
  *
  * @author Doga Oruc
  * @since DoaEngine 1.0
@@ -40,7 +39,7 @@ import doa.engine.scene.elements.scripts.DoaScript;
 public class DoaObject implements Serializable {
 
 	private static final long serialVersionUID = 8106325842296691691L;
-	
+
 	public final DoaTransform transform = new DoaTransform();
 	public DoaRigidBody rigidBody = null;
 
@@ -65,7 +64,7 @@ public class DoaObject implements Serializable {
 
 	/**
 	 * Constructor. Constructs an empty DoaObject.
-	 * 
+	 *
 	 * @param name name of the DoaObject
 	 */
 	public DoaObject(String name) {
@@ -77,7 +76,7 @@ public class DoaObject implements Serializable {
 	 * Makes the DoaObject static. Static DoaObjects are in screen-space. They
 	 * aren't moved by DoaCamera and aren't shaded by DoaEngine. Particularly useful
 	 * when implementing UI.
-	 * 
+	 *
 	 * @return this
 	 */
 	public DoaObject makeStatic() {
@@ -87,7 +86,7 @@ public class DoaObject implements Serializable {
 
 	/**
 	 * Makes the DoaObject dynamic. Dynamic DoaObjects are in world-space.
-	 * 
+	 *
 	 * @return this
 	 */
 	public DoaObject makeDynamic() {
@@ -100,7 +99,7 @@ public class DoaObject implements Serializable {
 	/**
 	 * Returns the scene which this DoaObject is in. Returns null if this DoaObject
 	 * is not inside a scene.
-	 * 
+	 *
 	 * @return the scene which this DoaObject is in, or null if this DoaObject is
 	 *         not inside one
 	 */
@@ -109,7 +108,7 @@ public class DoaObject implements Serializable {
 	/**
 	 * Returns the zOrder of this DoaObject. A higher zOrder means the DoaObject is
 	 * drawn over DoaObjects with lower zOrder values.
-	 * 
+	 *
 	 * @return the zOrder of this DoaObject
 	 */
 	public final int getzOrder() { return zOrder; }
@@ -117,7 +116,7 @@ public class DoaObject implements Serializable {
 	/**
 	 * Finds and returns the first occurrence of a DoaComponent. This method will
 	 * log a warning message if a DoaComponent of type T cannot be found.
-	 * 
+	 *
 	 * @param <T> type of the DoaComponent to find
 	 * @param type class of the DoaComponent to find
 	 * @return an optional containing either the found DoaComponent or null
@@ -134,7 +133,7 @@ public class DoaObject implements Serializable {
 
 	/**
 	 * Returns an unmodifiable view of the DoaComponents inside this DoaObject.
-	 * 
+	 *
 	 * @return an immutable view of DoaComponents
 	 */
 	public final List<DoaComponent> getComponentsView() { return Collections.unmodifiableList(components); }
@@ -164,7 +163,9 @@ public class DoaObject implements Serializable {
 	/**
 	 * Add the specified DoaComponent to this DoaObject. If the component is already
 	 * added to another DoaObject, it is first removed from that DoaObject prior.
-	 * 
+	 * This functions returns without warnings when attempting to add a component
+	 * of same type twice.
+	 *
 	 * @param component the DoaComponent to add
 	 */
 	public final void addComponent(@NotNull final DoaComponent component) {
@@ -194,7 +195,7 @@ public class DoaObject implements Serializable {
 	/**
 	 * Removes the specified DoaComponent from this DoaObject. This method will log
 	 * a warning message if component is not present in this DoaObject.
-	 * 
+	 *
 	 * @param component the DoaComponent to remove
 	 */
 	public final void removeComponent(@NotNull final DoaComponent component) {
@@ -216,18 +217,18 @@ public class DoaObject implements Serializable {
 			        ". Couldn't remove anything."));
 		}
 	}
-	
+
 	/**
 	 * Schedules a routine to run on next tick, before any scripts. Invocation of this
 	 * function is equivalent to {@code doAfterTicks(routine, 0);}.
-	 * 
+	 *
 	 * @param routine to execute on next tick
 	 */
 	public final void doOnNextTick(DoaRoutine routine) { routines.put(routine, 0); }
-	
+
 	/**
 	 * Schedules a routine to run after {@code ticks} amount of ticks, before any scripts.
-	 * 
+	 *
 	 * @param routine to execute after {@code ticks} amount of ticks
 	 * @param ticks
 	 */
@@ -245,7 +246,7 @@ public class DoaObject implements Serializable {
 			routines.remove(k);
 		});
 		routines.replaceAll((k, v) -> v - 1);
-		
+
 		if (rigidBody != null) {
 			rigidBody.tick();
 		}

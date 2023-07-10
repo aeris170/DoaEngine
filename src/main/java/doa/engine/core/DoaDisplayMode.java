@@ -2,13 +2,12 @@ package doa.engine.core;
 
 import static doa.engine.log.DoaLogger.LOGGER;
 
-import java.awt.GraphicsDevice;
 import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
 
 import doa.engine.maths.DoaVector;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 /**
  * Encapsulates the data of a display mode.
@@ -21,25 +20,25 @@ public class DoaDisplayMode {
 
 	/**
 	 * Resolution of the display mode.
-	 * 
-     * @return The current value of this display mode's resolution.
+	 *
+	 * @return The current value of this display mode's resolution.
 	 */
 	@Getter private DoaVector resolution = new DoaVector(1920, 1080);
-	
+
 	/**
 	 * Refresh rate of the display mode.
-	 * 
-     * @return The current value of this display mode's refresh rate.
+	 *
+	 * @return The current value of this display mode's refresh rate.
 	 */
 	@Getter private Integer refreshRate = 60;
-	
+
 	/**
 	 * Bit depth of the display mode.
-	 * 
-     * @return The current value of this display mode's bit depth.
+	 *
+	 * @return The current value of this display mode's bit depth.
 	 */
 	@Getter private Integer bitDepth = 32;
-	
+
 	public DoaDisplayMode() {}
 	public DoaDisplayMode(@NonNull final DoaVector resolution) { this.resolution = resolution; }
 	public DoaDisplayMode(@NonNull final DoaVector resolution, @NonNull final Integer refreshRate) {
@@ -52,11 +51,11 @@ public class DoaDisplayMode {
 		this.bitDepth = bitDepth;
 	}
 	public DoaDisplayMode(DisplayMode mode) {
-		resolution = new DoaVector(mode.getWidth(), mode.getHeight());	
+		resolution = new DoaVector(mode.getWidth(), mode.getHeight());
 		refreshRate = mode.getRefreshRate();
 		bitDepth = mode.getBitDepth();
 	}
-	
+
 	public static DoaDisplayMode findDisplayModeWithCapabilities(@NonNull final GraphicsDevice screen, @NonNull final DoaVector resolution, @NonNull final Integer bitDepth, @NonNull final Integer refreshRate) {
 		var modes = screen.getDisplayModes();
 		for (var mode : modes) {
@@ -64,11 +63,11 @@ public class DoaDisplayMode {
 				refreshRate == mode.getRefreshRate() &&
 				bitDepth == mode.getBitDepth()) {
 				return new DoaDisplayMode(mode);
-			} 
+			}
 		}
-		LOGGER.warning("Cannot find such display mode with params:" + 
-				" resolution=[" + resolution.x + ", " + resolution.y + "]" + 
-				" bitDepth=" + bitDepth + 
+		LOGGER.warning("Cannot find such display mode with params:" +
+				" resolution=[" + resolution.x + ", " + resolution.y + "]" +
+				" bitDepth=" + bitDepth +
 				" refreshRate=" + refreshRate);
 		return new DoaDisplayMode(screen.getDisplayMode());
 	}

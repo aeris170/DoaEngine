@@ -7,7 +7,7 @@ import java.io.Serializable;
  * through the objects of DoaClient and DoaServer. The data to be sent must
  * implement {@link Serializable} interface. See how Java's {@link Serializable}
  * interface works for more info.
- * 
+ *
  * @author Doga Oruc
  * @since DoaEngine 3.0
  * @version 3.0
@@ -23,14 +23,14 @@ public class DoaNetPacket<T extends Serializable> implements Serializable {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param data object to send
 	 */
 	public DoaNetPacket(final T data) { this(data, PacketType.DATA); }
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param data object to send
 	 */
 	DoaNetPacket(final T data, final PacketType type) {
