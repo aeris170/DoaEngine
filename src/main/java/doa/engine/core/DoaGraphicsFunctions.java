@@ -217,7 +217,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#fillArc
 	 */
 	public static void drawArc(final float x, final float y, final float width, final float height, final float startAngle, final float arcAngle) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.drawArc(w[0], w[1], w[2], w[3], (int) startAngle, (int) arcAngle);
 	}
 
@@ -248,7 +248,7 @@ public final class DoaGraphicsFunctions {
 	 *      int, int)
 	 */
 	public static boolean drawImage(final Image img, final float x, final float y) {
-		var w = warp(x, y);
+		var w = round(warp(x, y));
 		return g.drawImage(img, w[0], w[1], null);
 	}
 
@@ -284,7 +284,7 @@ public final class DoaGraphicsFunctions {
 	 *      int, int)
 	 */
 	public static boolean drawImage(final Image img, final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		return g.drawImage(img, w[0], w[1], w[2], w[3], null);
 	}
 
@@ -335,8 +335,8 @@ public final class DoaGraphicsFunctions {
 	 * @since 1.1
 	 */
 	public static boolean drawImage(final Image img, final float dx1, final float dy1, final float dx2, final float dy2, final float sx1, final float sy1, final float sx2, final float sy2) {
-		var d = warp(dx1, dy1, dx2, dy2);
-		var s = warp(sx1, sy1, sx2, sy2);
+		var d = round(warp(dx1, dy1, dx2, dy2));
+		var s = round(warp(sx1, sy1, sx2, sy2));
 		return g.drawImage(img, d[0], d[1], d[2], d[3], s[0], s[1], s[2], s[3], null);
 	}
 
@@ -351,7 +351,7 @@ public final class DoaGraphicsFunctions {
 	 * @param y2 the second point's <i>y</i> coordinate.
 	 */
 	public static void drawLine(final float x1, final float y1, final float x2, final float y2) {
-		var w = warp(x1, y1, x2, y2);
+		var w = round(warp(x1, y1, x2, y2));
 		g.drawLine(w[0], w[1], w[2], w[3]);
 	}
 
@@ -371,7 +371,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#fillOval
 	 */
 	public static void drawOval(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.drawOval(w[0], w[1], w[2], w[3]);
 	}
 
@@ -395,7 +395,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawPolyline
 	 */
 	public static void drawPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) {
-		g.drawPolygon(warpX(xPoints), warpY(yPoints), nPoints);
+		g.drawPolygon(round(warpX(xPoints)), round(warpY(yPoints)), nPoints);
 	}
 
 	/**
@@ -411,7 +411,7 @@ public final class DoaGraphicsFunctions {
 	 * @since 1.1
 	 */
 	public static void drawPolyline(final float[] xPoints, final float[] yPoints, final int nPoints) {
-		g.drawPolyline(warpX(xPoints), warpY(yPoints), nPoints);
+		g.drawPolyline(round(warpX(xPoints)), round(warpY(yPoints)), nPoints);
 	}
 
 	/**
@@ -429,7 +429,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#fillRoundRect
 	 */
 	public static void drawRoundRect(final float x, final float y, final float width, final float height, final float arcWidth, final float arcHeight) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.drawRoundRect(w[0], w[1], w[2], w[3], (int) arcWidth, (int) arcHeight);
 	}
 
@@ -466,7 +466,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawArc
 	 */
 	public static void fillArc(final float x, final float y, final float width, final float height, final float startAngle, final float arcAngle) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.fillArc(w[0], w[1], w[2], w[3], (int) startAngle, (int) arcAngle);
 	}
 
@@ -482,7 +482,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawOval
 	 */
 	public static void fillOval(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.fillOval(w[0], w[1], w[2], w[3]);
 	}
 
@@ -507,7 +507,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawPolygon(int[], int[], int)
 	 */
 	public static void fillPolygon(final float[] xPoints, final float[] yPoints, final int nPoints) {
-		g.fillPolygon(warpX(xPoints), warpY(yPoints), nPoints);
+		g.fillPolygon(round(warpX(xPoints)), round(warpY(yPoints)), nPoints);
 	}
 
 	/**
@@ -525,7 +525,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawRect
 	 */
 	public static void fillRect(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.fillRect(w[0], w[1], w[2], w[3]);
 	}
 
@@ -545,7 +545,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawRoundRect
 	 */
 	public static void fillRoundRect(final float x, final float y, final float width, final float height, final float arcWidth, final float arcHeight) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.fillRoundRect(w[0], w[1], w[2], w[3], (int) arcWidth, (int) arcHeight);
 	}
 
@@ -641,7 +641,7 @@ public final class DoaGraphicsFunctions {
 	public static void setClip(final Shape clip) {
 		Shape clipp = clip;
 		if (clipp instanceof RectangularShape shape) {
-			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			var w = round(warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight()));
 			shape.setFrame(w[0], w[1], w[2], w[3]);
 		}
 		g.setClip(clipp);
@@ -663,7 +663,7 @@ public final class DoaGraphicsFunctions {
 	 * @since 1.1
 	 */
 	public static void setClip(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.setClip(w[0], w[1], w[2], w[3]);
 	}
 
@@ -733,7 +733,7 @@ public final class DoaGraphicsFunctions {
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
 			var oldFrame = shape.getFrame();
-			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			var w = round(warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight()));
 			shape.setFrame(w[0], w[1], w[2], w[3]);
 			g.clip(clipp);
 			shape.setFrame(oldFrame);
@@ -746,7 +746,7 @@ public final class DoaGraphicsFunctions {
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
 			var oldFrame = shape.getFrame();
-			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			var w = round(warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight()));
 			shape.setFrame(w[0], w[1], w[2], w[3]);
 			g.draw(clipp);
 			shape.setFrame(oldFrame);
@@ -768,7 +768,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawChars
 	 */
 	public static void drawString(final String str, final float x, final float y) {
-		var w = warp(x, y);
+		var w = round(warp(x, y));
 		g.drawString(str, w[0], w[1]);
 	}
 
@@ -786,15 +786,15 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#clearRect
 	 */
 	public static void drawRect(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.drawRect(w[0], w[1], w[2], w[3]);
 	}
 
-	public static void fill(final Shape s) { 
+	public static void fill(final Shape s) {
 		Shape clipp = s;
 		if (clipp instanceof RectangularShape shape) {
 			var oldFrame = shape.getFrame();
-			var w = warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight());
+			var w = round(warp((float)shape.getX(), (float)shape.getY(), (float)shape.getWidth(), (float)shape.getHeight()));
 			shape.setFrame(w[0], w[1], w[2], w[3]);
 			g.fill(clipp);
 			shape.setFrame(oldFrame);
@@ -943,7 +943,7 @@ public final class DoaGraphicsFunctions {
 	 * @param y the y coordinate of the origin of the rotation
 	 */
 	public static void rotate(final float theta, final float x, final float y) {
-		var w = warp(x, y);
+		var w = round(warp(x, y));
 		g.rotate(theta, w[0], w[1]);
 	}
 
@@ -1123,7 +1123,7 @@ public final class DoaGraphicsFunctions {
 	 * @param ty the <i>y</i> coordinate.
 	 */
 	public static void translate(final float tx, final float ty) {
-		var w = warp(tx, ty);
+		var w = round(warp(tx, ty));
 		g.translate(w[0], w[1]);
 	}
 
@@ -1160,7 +1160,7 @@ public final class DoaGraphicsFunctions {
 	 *         clip; false otherwise.
 	 */
 	public static boolean hitClip(final float x, final float y, final float width, final float height) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		return g.hitClip(w[0], w[1], w[2], w[3]);
 	}
 
@@ -1217,7 +1217,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#draw3DRect
 	 */
 	public static void fill3DRect(final float x, final float y, final float width, final float height, final boolean raised) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.fill3DRect(w[0], w[1], w[2], w[3], raised);
 	}
 
@@ -1248,7 +1248,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawString
 	 */
 	public static void drawChars(final char[] data, final int offset, final int length, final float x, final float y) {
-		var w = warp(x, y);
+		var w = round(warp(x, y));
 		g.drawChars(data, offset, length, w[0], w[1]);
 	}
 
@@ -1274,7 +1274,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#drawString
 	 */
 	public static void drawBytes(final byte[] data, final int offset, final int length, final float x, final float y) {
-		var w = warp(x, y);
+		var w = round(warp(x, y));
 		g.drawBytes(data, offset, length, w[0], w[1]);
 	}
 
@@ -1297,7 +1297,7 @@ public final class DoaGraphicsFunctions {
 	 * @see java.awt.Graphics#fill3DRect
 	 */
 	public static void draw3DRect(final float x, final float y, final float width, final float height, final boolean raised) {
-		var w = warp(x, y, width, height);
+		var w = round(warp(x, y, width, height));
 		g.draw3DRect(w[0], w[1], w[2], w[3], raised);
 	}
 
@@ -1640,95 +1640,91 @@ public final class DoaGraphicsFunctions {
 		referenceResolution = new Dimension((int)refResolution.x, (int)refResolution.y);
 		actualResolution = new Dimension((int)actResolution.x, (int)actResolution.y);
 	}
-	
-	public static int warpX(float x) {
-		return (int) (x / referenceResolution.width * actualResolution.width);
+
+	public static float warpX(float x) {
+		return x / referenceResolution.width * actualResolution.width;
 	}
 
-	private static int[] warpX(float[] xs) {
-		var rv = new int[xs.length];
-		var xsint = floatArrToIntArr(xs);
-		for (int i = 0; i < xsint.length; i++) {
-			rv[i] = xsint[i] / referenceResolution.width * actualResolution.width;
-		}
-		return rv;
-	}
-	
-	public static int warpY(float y) {
-		return (int) (y / referenceResolution.height * actualResolution.height);
-	}
-
-	private static int[] warpY(float[] ys) {
-		var rv = new int[ys.length];
-		var ysint = floatArrToIntArr(ys);
-		for (int i = 0; i < ysint.length; i++) {
-			rv[i] = ysint[i] / referenceResolution.height * actualResolution.height;
+	private static float[] warpX(float[] xs) {
+		var rv = new float[xs.length];
+		for (int i = 0; i < xs.length; i++) {
+			rv[i] = xs[i] / referenceResolution.width * actualResolution.width;
 		}
 		return rv;
 	}
 
-	public static int[] warp(float x, float y) {
-		var rv = new int[2];
-		rv[0] = (int) (x / referenceResolution.width * actualResolution.width);
-		rv[1] = (int) (y / referenceResolution.height * actualResolution.height);
+	public static float warpY(float y) {
+		return y / referenceResolution.height * actualResolution.height;
+	}
+
+	private static float[] warpY(float[] ys) {
+		var rv = new float[ys.length];
+		for (int i = 0; i < ys.length; i++) {
+			rv[i] = ys[i] / referenceResolution.height * actualResolution.height;
+		}
 		return rv;
 	}
 
-	private static int[] warp(float x, float y, float w, float h) {
-		var rv = new int[4];
-		rv[0] = (int) (x / referenceResolution.width * actualResolution.width);
-		rv[1] = (int) (y / referenceResolution.height * actualResolution.height);
-		rv[2] = (int) (w / referenceResolution.width * actualResolution.width);
-		rv[3] = (int) (h / referenceResolution.height * actualResolution.height);
+	public static float[] warp(float x, float y) {
+		var rv = new float[2];
+		rv[0] = x / referenceResolution.width * actualResolution.width;
+		rv[1] = y / referenceResolution.height * actualResolution.height;
 		return rv;
 	}
-	
-	public static int unwarpX(float x) {
+
+	private static float[] warp(float x, float y, float w, float h) {
+		var rv = new float[4];
+		rv[0] = x / referenceResolution.width * actualResolution.width;
+		rv[1] = y / referenceResolution.height * actualResolution.height;
+		rv[2] = w / referenceResolution.width * actualResolution.width;
+		rv[3] = h / referenceResolution.height * actualResolution.height;
+		return rv;
+	}
+
+	public static float unwarpX(float x) {
 		return (int) (x / actualResolution.width * referenceResolution.width);
 	}
-	
-	private static int[] unwarpX(float[] xs) {
-		var rv = new int[xs.length];
-		var xsint = floatArrToIntArr(xs);
-		for (int i = 0; i < xsint.length; i++) {
-			rv[i] = xsint[i] / actualResolution.width * referenceResolution.width;
-		}
-		return rv;
-	}
-	
-	public static int unwarpY(float y) {
-		return (int) (y / actualResolution.height * referenceResolution.height);
-	}
 
-	private static int[] unwarpY(float[] ys) {
-		var rv = new int[ys.length];
-		var ysint = floatArrToIntArr(ys);
-		for (int i = 0; i < ysint.length; i++) {
-			rv[i] = ysint[i] / actualResolution.height * referenceResolution.height;
+	private static float[] unwarpX(float[] xs) {
+		var rv = new float[xs.length];
+		for (int i = 0; i < xs.length; i++) {
+			rv[i] = xs[i] / actualResolution.width * referenceResolution.width;
 		}
 		return rv;
 	}
 
-	public static int[] unwarp(float x, float y) {
-		var rv = new int[2];
-		rv[0] = (int) (x / actualResolution.width * referenceResolution.width);
-		rv[1] = (int) (y / actualResolution.height * referenceResolution.height);
+	public static float unwarpY(float y) {
+		return y / actualResolution.height * referenceResolution.height;
+	}
+
+	private static float[] unwarpY(float[] ys) {
+		var rv = new float[ys.length];
+		for (int i = 0; i < ys.length; i++) {
+			rv[i] = ys[i] / actualResolution.height * referenceResolution.height;
+		}
 		return rv;
 	}
 
-	private static int[] unwarp(float x, float y, float w, float h) {
-		var rv = new int[4];
-		rv[0] = (int) (x / actualResolution.width * referenceResolution.width);
-		rv[1] = (int) (y / actualResolution.height * referenceResolution.height);
-		rv[2] = (int) (w / actualResolution.width * referenceResolution.width);
-		rv[3] = (int) (h / actualResolution.height * referenceResolution.height);
+	public static float[] unwarp(float x, float y) {
+		var rv = new float[2];
+		rv[0] = x / actualResolution.width * referenceResolution.width;
+		rv[1] = y / actualResolution.height * referenceResolution.height;
 		return rv;
 	}
 
-	private static int[] floatArrToIntArr(final float[] arrToBeConverted) {
-		final int[] rv = new int[arrToBeConverted.length];
-		for (int i = 0; i < arrToBeConverted.length; i++) {
-			rv[i] = (int) arrToBeConverted[i];
+	private static float[] unwarp(float x, float y, float w, float h) {
+		var rv = new float[4];
+		rv[0] = x / actualResolution.width * referenceResolution.width;
+		rv[1] = y / actualResolution.height * referenceResolution.height;
+		rv[2] = w / actualResolution.width * referenceResolution.width;
+		rv[3] = h / actualResolution.height * referenceResolution.height;
+		return rv;
+	}
+
+	private static int[] round(final float[] values) {
+		final int[] rv = new int[values.length];
+		for (int i = 0; i < values.length; i++) {
+			rv[i] = Math.round(values[i]);
 		}
 		return rv;
 	}
